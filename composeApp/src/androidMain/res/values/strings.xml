@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">DvizExcursion</string>
+    <string name="on_boarding_title">Изучи новое, чтобы найти хорошее место</string>
+    <string name="on_boarding_descr">Путешествуй по миру просто по клику
+        и наслаждайся своим отдыхом</string>
+    <string name="get_started_text">Начать</string>
+    <string name="user_name_hint">Имя</string>
+    <string name="password_hint">Пароль</string>
+    <string name="remember_me_text">Запомнить меня</string>
+    <string name="login_text">Вход</string>
+</resources>

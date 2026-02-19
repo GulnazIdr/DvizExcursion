@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main_purple">#C69FD4</color>
+    <color name="lighter_main_purple">#D3B8DC</color>
+    <color name="dark_purple">#7B0377</color>
+    <color name="super_dark_purple">#280026</color>
+    <color name="light_purple">#A460A1</color>
+    <color name="lighter_purple">#DFCCF1</color>
+    <color name="lighter_orange">#F7E1D3</color>
+    <color name="descr_grey">#707B81</color>
+    <color name="light_grey">#B6B6B6</color>
+    <color name="white">#FFFF</color>
+</resources>

@@ -17,11 +17,7 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 node_modules/
-/composeApp/src/androidMain/kotlin/org/gulnazidr/dviz_excursion/presentation/components/
-/composeApp/src/androidMain/kotlin/org/gulnazidr/dviz_excursion/presentation/navigation/
-/composeApp/src/androidMain/kotlin/org/gulnazidr/dviz_excursion/presentation/themes/
-/composeApp/src/androidMain/kotlin/org/gulnazidr/dviz_excursion/presentation/LoginScreen.kt
-/composeApp/src/androidMain/kotlin/org/gulnazidr/dviz_excursion/presentation/OnBoarding.kt
+
 /composeApp/src/androidMain/res/font/
 /composeApp/src/androidMain/res/values/
-
+/composeApp/src/androidMain/kotlin/org/gulnazidr/dviz_excursion/presentation/

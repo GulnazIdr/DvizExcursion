@@ -20,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -32,18 +33,25 @@ import org.gulnazidr.dviz_excursion.presentation.components.AnimatedBorderCard
 import org.gulnazidr.dviz_excursion.presentation.components.BlurryCircle
 import org.gulnazidr.dviz_excursion.presentation.components.InputField
 import org.gulnazidr.dviz_excursion.presentation.components.NavigationButton
+import org.gulnazidr.dviz_excursion.presentation.components.TopAppBar
 
 @Composable
 fun LoginScreen(
+    onBack: () -> Unit,
 ) {
     var name by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var isRememberChecked by rememberSaveable { mutableStateOf(false) }
 
+    val height = LocalWindowInfo.current.containerDpSize.height.value
+    val width = LocalWindowInfo.current.containerDpSize.width.value
+
     AnimatedBorderCard(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize()  .zIndex(1f)
     ) {
-        Box {
+        Box(
+            modifier = Modifier.padding(top = (height*0.02).dp)
+        ) {
             Column(
                 modifier = Modifier
                     .padding(20.dp)
@@ -51,6 +59,10 @@ fun LoginScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
+                TopAppBar(
+                    onBack = onBack
+                )
+                Spacer(modifier = Modifier.weight(1f))
                 Text(
                     text = stringResource(R.string.login_text),
                     color = colorResource(R.color.super_dark_purple),
@@ -107,25 +119,27 @@ fun LoginScreen(
                     onBtnClick = {},
                     text = stringResource(R.string.login_text)
                 )
+
+                Spacer(modifier = Modifier.weight(1f))
             }
 
             BlurryCircle(
-                offsetX = 20.dp,
-                offsetY = 70.dp,
+                offsetX = (width*0.1).dp,
+                offsetY = (height*0.35).dp,
                 size = 200.dp,
                 color = colorResource(R.color.lighter_orange)
             )
 
             BlurryCircle(
-                offsetX = 60.dp,
-                offsetY = (-220).dp,
-                size = 300.dp,
+                offsetX = (width*0.3).dp,
+                offsetY = (height*0.02).dp,
+                size = 250.dp,
                 color = colorResource(R.color.lighter_main_purple)
             )
 
             BlurryCircle(
-                offsetX = 180.dp,
-                offsetY = 400.dp,
+                offsetX = (width*0.4).dp,
+                offsetY = (height*0.7).dp,
                 size = 180.dp,
                 color = colorResource(R.color.lighter_purple)
             )
@@ -137,6 +151,6 @@ fun LoginScreen(
 @Composable
 private fun LoginScreenPrev() {
     LoginScreen(
-
+        onBack = {}
     )
 }

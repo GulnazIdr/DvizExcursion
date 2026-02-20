@@ -22,7 +22,9 @@ fun NavigationGraph() {
         }
 
         composable<Login>{
-            LoginScreen()
+            LoginScreen(
+                onBack = {navController.navigateUp()}
+            )
         }
     }
 }

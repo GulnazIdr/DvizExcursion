@@ -89,6 +89,7 @@ fun AnimatedBorderCard(
                     width = size.width - 25.dp.toPx(),
                     height = size.height - 20.dp.toPx()
                 ),
+
                 cornerRadius = CornerRadius(80f, 80f)
             )
         }

@@ -39,7 +39,7 @@ import org.gulnazidr.dviz_excursion.presentation.components.TopAppBar
 fun LoginScreen(
     onBack: () -> Unit,
 ) {
-    var name by rememberSaveable { mutableStateOf("") }
+    var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var isRememberChecked by rememberSaveable { mutableStateOf(false) }
 
@@ -47,10 +47,12 @@ fun LoginScreen(
     val width = LocalWindowInfo.current.containerDpSize.width.value
 
     AnimatedBorderCard(
-        modifier = Modifier.fillMaxSize()  .zIndex(1f)
+        modifier = Modifier
+            .fillMaxSize()
+            .zIndex(1f)
     ) {
         Box(
-            modifier = Modifier.padding(top = (height*0.02).dp)
+            modifier = Modifier.padding(top = (height * 0.02).dp)
         ) {
             Column(
                 modifier = Modifier
@@ -74,9 +76,11 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(40.dp))
 
                 InputField(
-                    value = name,
-                    onValueChange = { name = it },
-                    hint = stringResource(R.string.user_name_hint)
+                    value = email,
+                    onValueChange = { email = it },
+                    hint = stringResource(R.string.user_email_hint),
+                    errorMessage = stringResource(R.string.user_email_error),
+                    isError = email.isEmpty()
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -85,7 +89,9 @@ fun LoginScreen(
                     value = password,
                     onValueChange = { password = it },
                     hint = stringResource(R.string.password_hint),
-                    isPasswordField = true
+                    isPasswordField = true,
+                    errorMessage = stringResource(R.string.password_error),
+                    isError = password.isEmpty()
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -124,22 +130,22 @@ fun LoginScreen(
             }
 
             BlurryCircle(
-                offsetX = (width*0.1).dp,
-                offsetY = (height*0.35).dp,
+                offsetX = (width * 0.1).dp,
+                offsetY = (height * 0.35).dp,
                 size = 200.dp,
                 color = colorResource(R.color.lighter_orange)
             )
 
             BlurryCircle(
-                offsetX = (width*0.3).dp,
-                offsetY = (height*0.02).dp,
+                offsetX = (width * 0.3).dp,
+                offsetY = (height * 0.02).dp,
                 size = 250.dp,
                 color = colorResource(R.color.lighter_main_purple)
             )
 
             BlurryCircle(
-                offsetX = (width*0.4).dp,
-                offsetY = (height*0.7).dp,
+                offsetX = (width * 0.4).dp,
+                offsetY = (height * 0.7).dp,
                 size = 180.dp,
                 color = colorResource(R.color.lighter_purple)
             )

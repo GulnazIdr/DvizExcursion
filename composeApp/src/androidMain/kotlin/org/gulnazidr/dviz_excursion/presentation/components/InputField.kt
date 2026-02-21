@@ -3,7 +3,9 @@ package org.gulnazidr.dviz_excursion.presentation.components
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -40,65 +42,82 @@ fun InputField(
     value: String,
     onValueChange: (String) -> Unit,
     hint: String,
+    errorMessage: String,
+    isError: Boolean,
     isPasswordField: Boolean = false
 ) {
     var isPasswordVisible by rememberSaveable { mutableStateOf(false) }
 
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(51.dp)
-            .border(
-                color =
-                    colorResource(R.color.main_purple),
-                width = 1.5.dp,
-                shape = RoundedCornerShape(15.dp)
-            )
-    ){
-        Row(
+    Column{
+        Box(
             modifier = Modifier
-                .fillMaxSize(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+                .fillMaxWidth()
+                .height(51.dp)
+                .border(
+                    color =
+                        if (!isError) colorResource(R.color.main_purple)
+                        else Color.Red,
+                    width = 1.5.dp,
+                    shape = RoundedCornerShape(15.dp)
+                )
         ) {
-            BasicTextField(
-                value = value,
-                onValueChange = { onValueChange(it) },
+            Row(
                 modifier = Modifier
-                    .padding(start = 15.dp),
-                textStyle = TextStyle(
-                    color = Color.Black,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium
-                ),
-                singleLine = true,
-                visualTransformation =
-                    if (isPasswordField && !isPasswordVisible) PasswordVisualTransformation()
-                    else VisualTransformation.None
-            )
+                    .fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                BasicTextField(
+                    value = value,
+                    onValueChange = { onValueChange(it) },
+                    modifier = Modifier
+                        .padding(start = 15.dp),
+                    textStyle = TextStyle(
+                        color = Color.Black,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium
+                    ),
+                    singleLine = true,
+                    visualTransformation =
+                        if (isPasswordField && !isPasswordVisible) PasswordVisualTransformation()
+                        else VisualTransformation.None
+                )
 
-            if (isPasswordField) {
-                IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
-                    Icon(
-                        imageVector =
-                            if (isPasswordVisible) Icons.Default.Visibility
-                            else Icons.Default.VisibilityOff,
-                        contentDescription = "password visibility off"
-                    )
+                if (isPasswordField) {
+                    IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                        Icon(
+                            imageVector =
+                                if (isPasswordVisible) Icons.Default.Visibility
+                                else Icons.Default.VisibilityOff,
+                            contentDescription = "password visibility off"
+                        )
+                    }
                 }
             }
+
+            if (value.isEmpty())
+                Text(
+                    text = hint,
+                    color = colorResource(R.color.descr_grey),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier
+                        .padding(start = 15.dp)
+                        .align(Alignment.CenterStart)
+                )
         }
 
-        if(value.isEmpty())
+        if (isError) {
+            Spacer(modifier = Modifier.height(10.dp))
+
             Text(
-                text = hint,
-                color = colorResource(R.color.descr_grey),
+                text = errorMessage,
+                color = Color.Red,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier
-                    .padding(start = 15.dp)
-                    .align(Alignment.CenterStart)
             )
+        }
     }
 
 }
@@ -107,8 +126,10 @@ fun InputField(
 @Composable
 private fun InputFieldPrev() {
     InputField(
-        hint = stringResource(R.string.user_name_hint),
+        hint = stringResource(R.string.user_email_hint),
         value = "",
-        onValueChange = {}
+        onValueChange = {},
+        errorMessage = "email is wrong",
+        isError = true
     )
 }

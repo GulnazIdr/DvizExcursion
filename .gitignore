@@ -17,7 +17,3 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 node_modules/
-
-/composeApp/src/androidMain/res/font/
-/composeApp/src/androidMain/res/values/
-/composeApp/src/androidMain/kotlin/org/gulnazidr/dviz_excursion/presentation/

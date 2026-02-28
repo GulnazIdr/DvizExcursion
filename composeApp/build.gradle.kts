@@ -1,4 +1,3 @@
-import org.gradle.kotlin.dsl.implementation
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -16,17 +15,29 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
+
+    jvm()
     
     sourceSets {
         androidMain.dependencies {
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
+
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
-            implementation("io.coil-kt.coil3:coil-compose:3.3.0")
-            implementation("io.coil-kt.coil3:coil-network-okhttp:3.3.0")
-            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.2")
-            implementation("androidx.compose.material:material-icons-extended:1.7.0")
+            api(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.lifecycle.viewmodel)
+            implementation(libs.navigation.compose)
+
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.okhttp)
+            implementation(libs.navigation.compose)
+
+            implementation(libs.napier)
 
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
@@ -39,6 +50,11 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+        }
+        jvmMain.dependencies {
+            implementation(compose.desktop.currentOs)
+            implementation(libs.kotlinx.coroutinesSwing)
+
         }
     }
 }
@@ -73,4 +89,17 @@ android {
 dependencies {
     debugImplementation(libs.compose.uiTooling)
 }
+
+compose.desktop {
+    application {
+        mainClass = "org.example.project.MainKt"
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "org.example.project"
+            packageVersion = "1.0.0"
+        }
+    }
+}
+
 

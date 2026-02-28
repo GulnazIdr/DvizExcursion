@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="app_name">DvizExcursion</string>
+    <string name="on_boarding_title">Experience new to find something good</string>
+    <string name="on_boarding_descr">Путешествуй по миру просто по клику
+        и наслаждайся своим отдыхом</string>
+    <string name="get_started_text">Начать</string>
+    <string name="user_email_hint">Почта</string>
+    <string name="password_hint">Пароль</string>
+    <string name="user_email_error">Заполните поле</string>
+    <string name="password_error">Заполните поле</string>
+    <string name="remember_me_text">Remeber me</string>
+    <string name="login_text">Login</string>
+</resources>

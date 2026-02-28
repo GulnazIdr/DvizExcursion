@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import org.example.project.OnBoarding
+import org.gulnazidr.dviz_excursion.presentation.OnBoarding
 import org.example.project.navigation.Login
 import org.example.project.navigation.OnBoarding
 import org.gulnazidr.dviz_excursion.presentation.LoginScreen

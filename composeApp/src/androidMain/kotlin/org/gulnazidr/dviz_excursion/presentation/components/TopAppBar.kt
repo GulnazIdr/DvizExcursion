@@ -3,6 +3,7 @@ package org.gulnazidr.dviz_excursion.presentation.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,7 +25,7 @@ fun TopAppBar(
             modifier = Modifier
                 .clickable(onClick =onBack)
                 .align(Alignment.TopStart),
-            backgroundColor = Color.White,
+            backgroundColor = MaterialTheme.colorScheme.background,
             size = 44.dp,
             iconSize = 22.dp
         )

@@ -4,8 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import org.example.project.OnBoarding
+import org.example.project.navigation.Login
+import org.example.project.navigation.OnBoarding
 import org.gulnazidr.dviz_excursion.presentation.LoginScreen
-import org.gulnazidr.dviz_excursion.presentation.OnBoarding
 
 @Composable
 fun NavigationGraph() {
@@ -15,15 +17,15 @@ fun NavigationGraph() {
         navController = navController,
         startDestination = OnBoarding
     ){
-        composable<OnBoarding>{
+        composable<OnBoarding> {
             OnBoarding(
-                navigateToLogin = {navController.navigate(Login)}
+                navigateToLogin = { navController.navigate(Login) }
             )
         }
 
-        composable<Login>{
+        composable<Login> {
             LoginScreen(
-                onBack = {navController.navigateUp()}
+                onBack = { navController.navigateUp() }
             )
         }
     }

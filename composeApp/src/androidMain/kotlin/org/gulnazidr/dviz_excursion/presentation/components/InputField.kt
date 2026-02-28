@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -55,8 +56,8 @@ fun InputField(
                 .height(51.dp)
                 .border(
                     color =
-                        if (!isError) colorResource(R.color.main_purple)
-                        else Color.Red,
+                        if (!isError) MaterialTheme.colorScheme.onPrimary
+                        else MaterialTheme.colorScheme.error,
                     width = 1.5.dp,
                     shape = RoundedCornerShape(15.dp)
                 )
@@ -98,7 +99,7 @@ fun InputField(
             if (value.isEmpty())
                 Text(
                     text = hint,
-                    color = colorResource(R.color.descr_grey),
+                    color = MaterialTheme.colorScheme.onSecondary,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier

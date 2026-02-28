@@ -10,6 +10,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -35,18 +36,19 @@ fun AnimatedBorderCard(
 ) {
     val colors =
         listOf(
-            colorResource(R.color.light_purple),
-            colorResource(R.color.light_purple),
-            colorResource(R.color.dark_purple),
-            Color.White,
-            colorResource(R.color.dark_purple),
-            Color.White,
-            colorResource(R.color.dark_purple),
-            Color.White,
-            colorResource(R.color.dark_purple),
-            colorResource(R.color.dark_purple),
-            Color.White,
-            colorResource(R.color.light_purple)
+            MaterialTheme.colorScheme.primaryContainer,
+            MaterialTheme.colorScheme.primaryContainer,
+            MaterialTheme.colorScheme.primaryContainer,
+            MaterialTheme.colorScheme.onPrimary,
+            MaterialTheme.colorScheme.background,
+            MaterialTheme.colorScheme.onPrimary,
+            MaterialTheme.colorScheme.background,
+            MaterialTheme.colorScheme.onPrimary,
+            MaterialTheme.colorScheme.background,
+            MaterialTheme.colorScheme.onPrimary,
+            MaterialTheme.colorScheme.onPrimary,
+            MaterialTheme.colorScheme.background,
+            MaterialTheme.colorScheme.primaryContainer
         )
 
     val brush = Brush.sweepGradient(colors)
@@ -68,7 +70,7 @@ fun AnimatedBorderCard(
         Canvas(
             modifier = Modifier
                 .fillMaxSize()
-                .background(colorResource(R.color.dark_purple))
+                .background(MaterialTheme.colorScheme.onPrimary)
         ) {
             rotate(degrees = angle) {
                 drawCircle(

@@ -27,10 +27,10 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun AnimatedBorderCard(
-    backgroundColor: Color = Color.White,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
+    val background =  MaterialTheme.colorScheme.onTertiaryContainer
     val colors =
         listOf(
             MaterialTheme.colorScheme.surface,
@@ -76,7 +76,7 @@ fun AnimatedBorderCard(
             }
 
             drawRoundRect(
-                color = backgroundColor,
+                color = background,
                 topLeft = Offset(13.dp.toPx(), 10.dp.toPx()),
                 size = Size(
                     width = size.width - 25.dp.toPx(),

@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
-    <string name="app_name">DvizExcursion</string>
-    <string name="on_boarding_title">Изучи новое, чтобы найти хорошее место</string>
-    <string name="on_boarding_descr">Путешествуй по миру просто по клику
-        и наслаждайся своим отдыхом</string>
+    <string name="app_name">Reddit</string>
+    <string name="on_boarding_title">Добро пожаловать в Reddit</string>
+    <string name="on_boarding_descr">Найди коммьюнити, внедрись в тему, и будь в тренде, который тебе что-то значит</string>
     <string name="get_started_text">Начать</string>
-    <string name="user_email_hint">Почта</string>
+    <string name="user_name_hint">Имя</string>
     <string name="password_hint">Пароль</string>
-    <string name="user_email_error">Заполните поле</string>
+    <string name="user_name_error">Заполните поле</string>
     <string name="password_error">Заполните поле</string>
     <string name="remember_me_text">Запомнить меня</string>
     <string name="login_text">Вход</string>
+    <string name="post_image_alt">фото поста</string>
+    <string name="share_text">Поделиться</string>
+    <string name="search_hint">Искать все, что угодно</string>
+    <string name="post_title_about">Выставляй посты</string>
+    <string name="post_descr_about">Коммьюнити может делиться контентом, распространяя истории, ссылки, фото и видео.</string>
+    <string name="comment_title_about">Комментируй</string>
+    <string name="comment_descr_about">Комьюнити комментирует посты. Комментарии предоставляют дискуссии и чаще юмор.</string>
+    <string name="vote_title_about">Голосуй</string>
+    <string name="vote_descr_about">На комментарии и посты могут быть поставлены лайки и дизлайки. Самый интересный контент поднимается в топ.</string>
 </resources>

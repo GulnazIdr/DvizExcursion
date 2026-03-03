@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="app_name">Reddit</string>
+    <string name="on_boarding_title">Welcome to Reddit</string>
+    <string name="on_boarding_descr">Discover communities, dive into topic, and stay on top of the trends, that matter to you</string>
+    <string name="get_started_text">Start</string>
+    <string name="user_name_hint">Name</string>
+    <string name="password_hint">Password</string>
+    <string name="user_name_error">Fill the name field</string>
+    <string name="password_error">Fill the password field</string>
+    <string name="remember_me_text">Remeber me</string>
+    <string name="login_text">Login</string>
+    <string name="post_image_alt">post card image</string>
+    <string name="share_text">Send</string>
+    <string name="search_hint">Search anything</string>
+    <string name="post_title_about">Post</string>
+    <string name="post_descr_about">The community can share content by posting stories, links, images, and videos.</string>
+    <string name="comment_title_about">Comment</string>
+    <string name="comment_descr_about">The community comments on posts. Comments provide discussion and often humor.</string>
+    <string name="vote_title_about">Vote</string>
+    <string name="vote_descr_about">Comments and posts can be upvoted or downvoted. The most interesting content rises to the top.</string>
+</resources>

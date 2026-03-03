@@ -23,7 +23,8 @@ val LightColorTheme = lightColorScheme(
     tertiary = Tertiary,
     error = Error,
     tertiaryContainer = LightGreen,
-    surfaceContainer = BananaYellow
+    surfaceContainer = BananaYellow,
+    onTertiaryContainer = Dark
 )
 
 val DarkColorTheme = darkColorScheme(
@@ -43,7 +44,8 @@ val DarkColorTheme = darkColorScheme(
     tertiary = Tertiary,
     error = Error,
     tertiaryContainer = LightGreen,
-    surfaceContainer = BananaYellow
+    surfaceContainer = BananaYellow,
+    onTertiaryContainer = Dark
 )
 
 @Composable

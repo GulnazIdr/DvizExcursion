@@ -44,7 +44,6 @@ fun SearchBar(
 ) {
     var input by remember { mutableStateOf("") }
     var isHintVisible by remember { mutableStateOf(true) }
-    Napier.wtf("focus2", tag = isHintVisible.toString())
 
     Box(
         modifier = modifier

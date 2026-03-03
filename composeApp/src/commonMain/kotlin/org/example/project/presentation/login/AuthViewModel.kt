@@ -18,6 +18,9 @@ import org.example.project.domain.login.LoginRepository
 class AuthViewModel(
     private val loginRepository: LoginRepository
 ): ViewModel() {
+    private val userError =  "Username is empty"
+    private val passwordError =  "Password is empty"
+    private val credentialsError =  "Wrong credentials"
     private val _loginUiState = MutableStateFlow(
         LoginUiState(
             userName = "", password = "", isLoginButtonActive = false, error = ""
@@ -34,8 +37,8 @@ class AuthViewModel(
                 userName = userName,
                 isLoginButtonActive = userName.isNotEmpty() && state.password.isNotEmpty(),
                 error =
-                    if (userName.isEmpty()) "username is empty"
-                    else if (state.password.isEmpty()) "password is empty"
+                    if (userName.isEmpty()) userError
+                    else if (state.password.isEmpty()) passwordError
                     else ""
             )
         }
@@ -47,8 +50,8 @@ class AuthViewModel(
                 password = password,
                 isLoginButtonActive = password.isNotEmpty() && state.userName.isNotEmpty(),
                 error =
-                    if (state.userName.isEmpty()) "username is empty"
-                    else if (password.isEmpty()) "password is empty"
+                    if (state.userName.isEmpty()) userError
+                    else if (password.isEmpty()) passwordError
                     else ""
             )
         }
@@ -64,7 +67,7 @@ class AuthViewModel(
                 else {
                     _loginUiState.update {
                         _loginUiState.value.copy(
-                            error = "Wrong credentials"
+                            error = credentialsError
                         )
                     }
                 }

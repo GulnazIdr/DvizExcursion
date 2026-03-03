@@ -15,14 +15,14 @@ class PostRepositoryImpl: PostRepository {
             ),
             Post(
                 id = 2,
-                text = "something",
+                text = "post",
                 image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsxmzEJF2eN068DCn78Wk7JTi-GWOm0S61eg&s",
                 commentAmount = 8,
                 favoriteAmount = 20
             ),
             Post(
                 id = 3,
-                text = "something",
+                text = "information",
                 image = "https://support.dlvrit.com/hc/article_attachments/4414593730843/mceclip0.png",
                 commentAmount = 23,
                 favoriteAmount = 21

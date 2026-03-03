@@ -30,7 +30,6 @@ fun AnimatedBorderCard(
     backgroundColor: Color = Color.White,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
-
 ) {
     val colors =
         listOf(

@@ -1,4 +1,4 @@
-package org.example.project.presentation.main
+package org.example.project.presentation.main.mappers
 
 import org.example.project.domain.post.Post
 import org.example.project.presentation.main.models.PostUi

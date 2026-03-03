@@ -45,7 +45,7 @@ fun AboutCard(
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodyLarge.copy(
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.onTertiaryContainer
                 ),
                 textAlign = TextAlign.Start
             )
@@ -55,7 +55,7 @@ fun AboutCard(
             Text(
                 text = descr,
                 style = MaterialTheme.typography.bodyMedium.copy(
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.onTertiaryContainer
                 ),
                 textAlign = TextAlign.Start
             )

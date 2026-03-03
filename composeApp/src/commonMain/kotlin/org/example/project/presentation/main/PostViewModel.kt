@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.example.project.domain.post.PostRepository
+import org.example.project.presentation.main.mappers.toPostUi
 import org.example.project.presentation.main.models.PostUi
 
 class PostViewModel(

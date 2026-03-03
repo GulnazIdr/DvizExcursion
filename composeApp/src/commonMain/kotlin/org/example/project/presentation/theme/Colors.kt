@@ -2,6 +2,7 @@ package org.example.project.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
+val Dark = Color(0xFF000000)
 //Light theme
 val Primary = Color(0xFFFF4500)
 val Background = Color.White

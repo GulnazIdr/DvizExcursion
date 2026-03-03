@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun TextCheckBox(
     text: String,
-    modifier: Modifier = Modifier
 ) {
     var isRememberChecked by rememberSaveable { mutableStateOf(false) }
     Row(

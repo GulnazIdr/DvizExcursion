@@ -1,4 +1,4 @@
-package org.example.project.data
+package org.example.project.data.remote
 
 import org.example.project.domain.auth.AuthResult
 import org.example.project.domain.auth.RemoteError

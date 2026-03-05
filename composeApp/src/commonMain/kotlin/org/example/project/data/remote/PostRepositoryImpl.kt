@@ -1,4 +1,4 @@
-package org.example.project.data
+package org.example.project.data.remote
 
 import org.example.project.domain.post.Post
 import org.example.project.domain.post.PostRepository

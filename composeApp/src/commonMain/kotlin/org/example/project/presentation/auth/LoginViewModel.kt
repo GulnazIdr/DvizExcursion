@@ -1,5 +1,7 @@
 package org.example.project.presentation.auth
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,7 +22,7 @@ import org.example.project.presentation.common.asUiText
 
 class LoginViewModel(
     private val loginRepository: LoginRepository,
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
 ): ViewModel() {
     private val _loginUiState = MutableStateFlow(
         LoginUiState( userName = "",

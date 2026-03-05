@@ -1,11 +1,9 @@
 package org.example.project.presentation.onboarding.components
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,35 +23,31 @@ import org.jetbrains.compose.resources.stringResource
 fun AboutBlock(
     modifier: Modifier = Modifier
 ){
-    Box(
+    Column(
         modifier = modifier.fillMaxWidth()
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            AboutCard(
-                title = stringResource(Res.string.post_title_about),
-                descr = stringResource(Res.string.post_descr_about),
-                color = MaterialTheme.colorScheme.tertiaryContainer,
-            )
+        AboutCard(
+            title = stringResource(Res.string.post_title_about),
+            descr = stringResource(Res.string.post_descr_about),
+            color = MaterialTheme.colorScheme.tertiaryContainer,
+        )
 
-            Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
-            AboutCard(
-                title = stringResource(Res.string.comment_title_about),
-                descr = stringResource(Res.string.comment_descr_about),
-                color = MaterialTheme.colorScheme.secondary,
-                modifier = Modifier.align(Alignment.End)
-            )
+        AboutCard(
+            title = stringResource(Res.string.comment_title_about),
+            descr = stringResource(Res.string.comment_descr_about),
+            color = MaterialTheme.colorScheme.secondary,
+            modifier = Modifier.align(Alignment.End)
+        )
 
-            Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
-            AboutCard(
-                title = stringResource(Res.string.vote_title_about),
-                descr = stringResource(Res.string.vote_descr_about),
-                color = MaterialTheme.colorScheme.surfaceContainer
-            )
-        }
+        AboutCard(
+            title = stringResource(Res.string.vote_title_about),
+            descr = stringResource(Res.string.vote_descr_about),
+            color = MaterialTheme.colorScheme.surfaceContainer
+        )
     }
 }
 

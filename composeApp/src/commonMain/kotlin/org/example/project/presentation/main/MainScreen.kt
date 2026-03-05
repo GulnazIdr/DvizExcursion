@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -19,12 +17,10 @@ import org.example.project.presentation.main.components.MainTopAppBar
 import org.example.project.presentation.main.components.SearchBar
 import org.example.project.presentation.main.post.PostCardItem
 import org.koin.compose.viewmodel.koinViewModel
-import javax.security.auth.callback.CallbackHandler
 
 @Composable
-fun MainScreen(
-    postViewModel: PostViewModel = koinViewModel()
-){
+fun MainScreen(){
+    val postViewModel = koinViewModel<PostViewModel>()
     val posts = postViewModel.postStateFlow.collectAsState().value
 
     Scaffold{ paddingValues ->

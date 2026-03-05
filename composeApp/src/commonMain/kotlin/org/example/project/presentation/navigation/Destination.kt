@@ -11,4 +11,7 @@ object OnBoarding: Destination
 object Login: Destination
 
 @Serializable
+object Registration: Destination
+
+@Serializable
 object Main: Destination

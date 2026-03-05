@@ -17,7 +17,7 @@ kotlin {
     }
 
     jvm()
-    
+
     sourceSets {
         androidMain.dependencies {
             implementation(libs.koin.android)
@@ -35,7 +35,6 @@ kotlin {
 
             implementation(libs.coil.compose)
             implementation(libs.coil.network.okhttp)
-            implementation(libs.navigation.compose)
 
             implementation(libs.napier)
 
@@ -54,6 +53,7 @@ kotlin {
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)
+            implementation(libs.androidx.ui.desktop)
 
         }
     }

@@ -6,10 +6,25 @@
     <string name="get_started_text">Начать</string>
     <string name="user_name_hint">Имя</string>
     <string name="password_hint">Пароль</string>
+    <string name="email_hint">Почта</string>
     <string name="user_name_error">Заполните поле</string>
     <string name="password_error">Заполните поле</string>
     <string name="remember_me_text">Запомнить меня</string>
+    <string name="policy_text">Политика конфиденциальности</string>
     <string name="login_text">Вход</string>
+    <string name="registration_text">Регистрация</string>
+
+    <string name="not_enough_characters">Пароль должен содержать хотя бы 6 символов</string>
+    <string name="no_letters">Пароль должен содержать буквы</string>
+    <string name="no_digits">Пароль должен содержать цифры</string>
+    <string name="no_uppers">Пароль должен содержать заглавные буквы</string>
+    <string name="no_symbols">Пароль должен содержать символы</string>
+    <string name="empty_field">Поле не может быть пустым</string>
+    <string name="wrong_creds_field">Неверный логин или пароль</string>
+    <string name="no_internet_field">Отсутствие интернета</string>
+    <string name="wrong_format_field">Неверный формат</string>
+    <string name="policy_unchecked_field">Прочтите политику конфиденциальности</string>
+
     <string name="post_image_alt">фото поста</string>
     <string name="share_text">Поделиться</string>
     <string name="search_hint">Искать все, что угодно</string>

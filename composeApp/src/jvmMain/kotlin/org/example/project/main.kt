@@ -5,7 +5,6 @@ import androidx.compose.ui.window.application
 import org.example.project.di.initKoin
 import org.example.project.presentation.navigation.NavigationGraph
 import org.example.project.presentation.theme.RedditTheme
-
 fun main() {
     initKoin()
     application {

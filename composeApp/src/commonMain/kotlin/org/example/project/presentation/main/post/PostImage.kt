@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import coil3.compose.SubcomposeAsyncImage
 import dvizexcursion.composeapp.generated.resources.Res
 import dvizexcursion.composeapp.generated.resources.post_image_alt
-import org.example.project.presentation.components.common.LoadingGrayBox
+import org.example.project.presentation.components.LoadingGrayBox
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

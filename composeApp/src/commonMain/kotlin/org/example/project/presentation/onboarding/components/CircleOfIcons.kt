@@ -8,8 +8,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -20,16 +18,15 @@ import dvizexcursion.composeapp.generated.resources.game_console
 import dvizexcursion.composeapp.generated.resources.hearts
 import dvizexcursion.composeapp.generated.resources.science
 import dvizexcursion.composeapp.generated.resources.scientific
-import org.example.project.presentation.login.components.RedditLogo
+import org.example.project.presentation.components.getWindowHeight
+import org.example.project.presentation.auth.components.RedditLogo
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun CircleOfIcons(){
-    val height = LocalWindowInfo.current.containerDpSize.height.value
-
     Box(
-        modifier = Modifier.size(((height*(0.35)).dp))
+        modifier = Modifier.size(((getWindowHeight() *(0.35)).dp))
     ){
         CustomCircleIcon(
             resource = Res.drawable.game_console,

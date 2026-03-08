@@ -2,9 +2,9 @@ package org.example.project
 
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import org.example.project.di.initKoin
-import org.example.project.presentation.navigation.NavigationGraph
-import org.example.project.presentation.theme.RedditTheme
+import org.example.project.core.common.di.initKoin
+import org.example.project.core.navigation.NavigationGraph
+import org.example.project.core.designsystem.theme.RedditTheme
 fun main() {
     initKoin()
     application {

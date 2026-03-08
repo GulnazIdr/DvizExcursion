@@ -3,9 +3,7 @@ package org.gulnazidr.dviz_excursion.presentation
 import android.app.Application
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
-import org.example.project.di.initKoin
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
+import org.example.project.core.common.di.initKoin
 
 class RedditApp: Application() {
     override fun onCreate() {

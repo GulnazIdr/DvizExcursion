@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import org.example.project.presentation.navigation.NavigationGraph
-import org.example.project.presentation.theme.RedditTheme
+import org.example.project.core.navigation.NavigationGraph
+import org.example.project.core.designsystem.theme.RedditTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

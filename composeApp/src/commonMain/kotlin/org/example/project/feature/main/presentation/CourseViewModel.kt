@@ -169,6 +169,10 @@ class CourseViewModel(
         }
     }
 
+    fun clearSearchState(){
+        _searchedCourseState.value = emptyList()
+    }
+
     private fun filterCourses(value: String){
         _searchedCourseState.value = _courseList.value
             .filter { course ->

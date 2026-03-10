@@ -51,7 +51,7 @@ fun MainTopAppBar(
                 painter = painterResource(Res.drawable.reddit_logo_text),
                 tint = MaterialTheme.colorScheme.onSecondaryContainer,
                 contentDescription = "reddit logo icon",
-                modifier = Modifier.size(60.dp)
+                modifier = Modifier.size(50.dp)
             )
         }
 

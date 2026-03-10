@@ -15,6 +15,16 @@
     <string name="registration_text">Registration</string>
     <string name="post_image_alt">post card image</string>
 
+    <string name="free_text">Free</string>
+
+    <string name="description_text">Description</string>
+    <string name="target_audience_text">Target Audience</string>
+    <string name="requirements_text">Requirements</string>
+    <string name="skill_acquire_text">Skills You Will Acquire</string>
+    <string name="what_get_text">What You Will Get</string>
+    <string name="learning_format_text">Learning Format</string>
+    <string name="start_lesson_text">Start First Lesson</string>
+
     <string name="not_enough_characters">Password has to contain at least 6 characters</string>
     <string name="no_letters">Password has to contain a letter</string>
     <string name="no_digits">Password has to contain a digit</string>
@@ -24,7 +34,11 @@
     <string name="wrong_creds_field">Wrong login or password</string>
     <string name="wrong_format_field">Wrong format</string>
     <string name="policy_unchecked_field">Read privacy policy</string>
+
     <string name="no_internet_field">No internet connection</string>
+    <string name="request_timeout_field">Request time out</string>
+    <string name="too_many_requests_field">Too many requests. Please, try again later</string>
+    <string name="uknown_error_field">Something went wrong. Please try again later</string>
 
     <string name="share_text">Send</string>
     <string name="search_hint">Search anything</string>

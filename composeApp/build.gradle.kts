@@ -25,8 +25,20 @@ kotlin {
 
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
+
+            implementation("io.ktor:ktor-client-android:3.4.1")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
         }
         commonMain.dependencies {
+            val ktor_version = "3.4.1"
+            implementation("io.ktor:ktor-client-core:$ktor_version")
+            implementation("io.ktor:ktor-client-serialization:${ktor_version}")
+            implementation("io.ktor:ktor-client-logging:${ktor_version}")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+            implementation("io.ktor:ktor-client-content-negotiation:${ktor_version}")
+            implementation("io.ktor:ktor-client-okhttp:${ktor_version}")
+            implementation("io.ktor:ktor-serialization-kotlinx-json:${ktor_version}")
+
             api(libs.datastore.preferences)
             api(libs.datastore)
 

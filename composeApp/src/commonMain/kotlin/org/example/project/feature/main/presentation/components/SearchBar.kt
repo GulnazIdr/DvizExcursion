@@ -35,6 +35,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun SearchBar(
     onValueChanged: (String) -> Unit,
+    onClick: () -> Unit  = {},
     modifier: Modifier = Modifier
 ) {
     var input by remember { mutableStateOf("") }
@@ -54,7 +55,10 @@ fun SearchBar(
             )
             .fillMaxWidth()
             .height(50.dp)
-            .clickable(onClick = {isHintVisible = false})
+            .clickable(onClick = {
+                    onClick()
+                    isHintVisible = false
+                })
     ){
         Row(
             modifier = Modifier.fillMaxSize(),
@@ -66,16 +70,6 @@ fun SearchBar(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Spacer(modifier = Modifier.width(17.dp))
-                    Icon(
-                        painter = painterResource(
-                            Res.drawable.redidit_circle
-                        ),
-                        contentDescription = "search icon",
-                        modifier = Modifier.size(40.dp),
-                        tint = Color.Unspecified
-                    )
-
-                    Spacer(modifier = Modifier.width(7.dp))
 
                     Text(
                         text = stringResource(Res.string.search_hint),

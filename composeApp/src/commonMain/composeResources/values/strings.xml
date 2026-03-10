@@ -14,6 +14,16 @@
     <string name="login_text">Вход</string>
     <string name="registration_text">Регистрация</string>
 
+    <string name="free_text">Бесплатно</string>JО
+
+    <string name="description_text">Описание</string>
+    <string name="target_audience_text">Целевая аудитория</string>
+    <string name="requirements_text">Требования</string>
+    <string name="skill_acquire_text">Навыки, которые вы получите</string>
+    <string name="what_get_text">Что вы получите</string>
+    <string name="learning_format_text">Формат обучения</string>
+    <string name="start_lesson_text">Начать первый урок</string>
+
     <string name="not_enough_characters">Пароль должен содержать хотя бы 6 символов</string>
     <string name="no_letters">Пароль должен содержать буквы</string>
     <string name="no_digits">Пароль должен содержать цифры</string>
@@ -21,9 +31,13 @@
     <string name="no_symbols">Пароль должен содержать символы</string>
     <string name="empty_field">Поле не может быть пустым</string>
     <string name="wrong_creds_field">Неверный логин или пароль</string>
-    <string name="no_internet_field">Отсутствие интернета</string>
     <string name="wrong_format_field">Неверный формат</string>
     <string name="policy_unchecked_field">Прочтите политику конфиденциальности</string>
+
+    <string name="no_internet_field">Отсутствие интернета</string>
+    <string name="request_timeout_field">Превышено время ожидания</string>
+    <string name="too_many_requests_field">Превышено количество попыток. Попробуйте снова позже</string>
+    <string name="uknown_error_field">Что-то пошло не так. Попробуйте снова позже</string>
 
     <string name="post_image_alt">фото поста</string>
     <string name="share_text">Поделиться</string>

@@ -14,4 +14,17 @@ object Login: Destination
 object Registration: Destination
 
 @Serializable
-object Main: Destination
+object MainBlock: Destination{
+    val route: String = "main_route"
+}
+
+@Serializable
+object Main: Destination{
+    val route: String = "main"
+}
+
+@Serializable
+object Search: Destination
+
+@Serializable
+object CourseDetail: Destination

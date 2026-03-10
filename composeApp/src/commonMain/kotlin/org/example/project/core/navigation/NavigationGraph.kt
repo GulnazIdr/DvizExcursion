@@ -1,13 +1,19 @@
 package org.example.project.core.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import org.example.project.feature.auth.presentation.login.LoginScreen
 import org.example.project.feature.auth.presentation.register.RegistrationScreen
+import org.example.project.feature.course_detail.CourseDetailsCard
+import org.example.project.feature.main.presentation.CourseViewModel
 import org.example.project.feature.main.presentation.MainScreen
 import org.example.project.feature.onboarding.Boarding
+import org.example.project.feature.search.SearchScreen
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun NavigationGraph() {
@@ -23,7 +29,7 @@ fun NavigationGraph() {
 
     NavHost(
         navController = navController,
-        startDestination = OnBoarding
+        startDestination = MainBlock.route
     ){
         composable<OnBoarding>{
             Boarding(
@@ -47,8 +53,56 @@ fun NavigationGraph() {
             )
         }
 
-        composable<Main> {
-            MainScreen()
+        navigation(
+            startDestination = Main.route,
+            route = MainBlock.route
+        ) {
+
+            composable(Main.route) { backStackEntry ->
+                val parentEntry = remember(backStackEntry) {
+                    navController.getBackStackEntry(MainBlock.route)
+                }
+                val courseViewmodel = koinViewModel<CourseViewModel>(
+                    viewModelStoreOwner = parentEntry
+                )
+
+                MainScreen(
+                    navigateToSearch = { navController.navigate(Search) },
+                    courseViewModel = courseViewmodel,
+                    navigateToCourseDetail = {navController.navigate(CourseDetail)}
+                )
+            }
+
+            composable<Search> {backStackEntry ->
+                val parentEntry = remember(backStackEntry) {
+                    navController.getBackStackEntry(MainBlock.route)
+                }
+                val courseViewmodel = koinViewModel<CourseViewModel>(
+                    viewModelStoreOwner = parentEntry
+                )
+
+                SearchScreen(
+                    navigateToMain = { navController.navigateUp() },
+                    courseViewModel = courseViewmodel,
+                    navigateToCourseDetail = {navController.navigate(CourseDetail)}
+                )
+            }
+
+            composable<CourseDetail> { backStackEntry ->
+                val parentEntry = remember(backStackEntry) {
+                    navController.getBackStackEntry(MainBlock.route)
+                }
+                val courseViewmodel = koinViewModel<CourseViewModel>(
+                    viewModelStoreOwner = parentEntry
+                )
+
+                CourseDetailsCard(
+                    onStartLessonClick = {},
+                    courseViewModel = courseViewmodel,
+                    navigateToMain = {navController.navigateUp()}
+                )
+
+            }
         }
     }
 }

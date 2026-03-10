@@ -36,9 +36,9 @@ import org.koin.compose.viewmodel.koinViewModel
 fun LoginScreen(
     navigateToMain: () -> Unit,
     navigateToRegistration: () -> Unit,
+    loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
     onBack: () -> Unit
 ) {
-    val loginViewModel = koinViewModel<LoginViewModel>()
     val loginUiState by loginViewModel.loginUiState.collectAsStateWithLifecycle()
     val loginUiEvent = loginViewModel.authUiEvent
 

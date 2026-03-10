@@ -3,7 +3,6 @@ package org.example.project.feature.auth.presentation.mappers
 import dvizexcursion.composeapp.generated.resources.Res
 import dvizexcursion.composeapp.generated.resources.empty_field
 import dvizexcursion.composeapp.generated.resources.no_digits
-import dvizexcursion.composeapp.generated.resources.no_internet_field
 import dvizexcursion.composeapp.generated.resources.no_letters
 import dvizexcursion.composeapp.generated.resources.no_symbols
 import dvizexcursion.composeapp.generated.resources.no_uppers
@@ -58,10 +57,6 @@ fun RemoteError.asUiText(): UiText {
     return when(this) {
         RemoteError.WRONG_CREDENTIALS -> ResourceString(
             Res.string.wrong_creds_field
-        )
-
-        RemoteError.NETWORK_ERROR -> ResourceString(
-            Res.string.no_internet_field
         )
     }
 }

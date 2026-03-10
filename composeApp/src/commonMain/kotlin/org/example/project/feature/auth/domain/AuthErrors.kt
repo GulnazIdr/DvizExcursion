@@ -1,9 +1,9 @@
 package org.example.project.feature.auth.domain
 
-sealed interface Error
+sealed interface AuthError
 
-sealed interface LocalError: Error{
-    enum class PasswordError: Error{
+sealed interface LocalError: AuthError{
+    enum class PasswordError: LocalError{
         NOT_ENOUGH_CHARACTERS,
         NO_LETTERS,
         NO_DIGITS,
@@ -12,14 +12,13 @@ sealed interface LocalError: Error{
         EMPTY_FIELD,
     }
 
-    enum class FieldError: Error {
+    enum class FieldError: LocalError {
         EMPTY_FIELD,
         WRONG_FORMAT,
         POLICY_UNCHECKED
     }
 }
 
-enum class RemoteError: Error{
-    NETWORK_ERROR,
+enum class RemoteError: AuthError{
     WRONG_CREDENTIALS
 }

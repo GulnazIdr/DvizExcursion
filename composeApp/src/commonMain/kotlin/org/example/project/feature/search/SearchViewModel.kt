@@ -55,9 +55,7 @@ class SearchViewModel (
                         _searchedCourseState.value = emptyList()
 
                     }
+                }
         }
-
-        }
-
     }
 }

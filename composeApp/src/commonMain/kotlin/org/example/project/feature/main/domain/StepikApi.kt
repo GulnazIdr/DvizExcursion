@@ -7,4 +7,6 @@ interface StepikApi {
     suspend fun getCourses(page: Int): FetchResult<Stepik, NetworkError>
 
     suspend fun getCourseById(id: Int): FetchResult<StepikDetailed, NetworkError>
+
+    //suspend fun getCourseById(id: Int): FetchResult<StepikDetailed, NetworkError>
 }

@@ -10,19 +10,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.intl.Locale
@@ -33,23 +35,27 @@ import dvizexcursion.composeapp.generated.resources.checkmark
 import dvizexcursion.composeapp.generated.resources.clock
 import dvizexcursion.composeapp.generated.resources.description_text
 import dvizexcursion.composeapp.generated.resources.learning_format_text
-import dvizexcursion.composeapp.generated.resources.refresh
+import dvizexcursion.composeapp.generated.resources.lessons_text
+import dvizexcursion.composeapp.generated.resources.level
+import dvizexcursion.composeapp.generated.resources.requirement
 import dvizexcursion.composeapp.generated.resources.requirements_text
 import dvizexcursion.composeapp.generated.resources.skill
 import dvizexcursion.composeapp.generated.resources.skill_acquire_text
 import dvizexcursion.composeapp.generated.resources.start_lesson_text
 import dvizexcursion.composeapp.generated.resources.target_audience_text
 import dvizexcursion.composeapp.generated.resources.what_get_text
+import org.example.project.core.designsystem.components.BasicTopAppBar
 import org.example.project.core.designsystem.components.ErrorDialog
 import org.example.project.core.designsystem.components.NavigationButton
+import org.example.project.core.designsystem.components.PriceText
+import org.example.project.feature.course_detail.components.DescEnumItem
+import org.example.project.feature.course_detail.components.DescriptionBlock
 import org.example.project.feature.main.presentation.CourseViewModel
-import org.example.project.feature.main.presentation.models.CourseDetailUi
-import org.example.project.feature.search.components.SearchTopAppBar
 import org.example.project.presentation.components.CircleLoading
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CourseDetailsCard(
     onStartLessonClick: () -> Unit,
@@ -59,6 +65,10 @@ fun CourseDetailsCard(
     val courseDetailFetchRes by courseViewModel.fetchedCourseResult.collectAsStateWithLifecycle()
     val scrollState = rememberScrollState()
 
+    BackHandler(
+        onBack = navigateToMain
+    )
+
     Scaffold { paddingValues ->
         Box(
             modifier = Modifier.padding(paddingValues)
@@ -66,18 +76,18 @@ fun CourseDetailsCard(
             Column(
                 modifier = Modifier.padding(horizontal = 20.dp)
             ) {
-                SearchTopAppBar(
-                    onBack = navigateToMain,
-                    onValueChanged = {
-                        courseViewModel.onSearch(
-                            it
-                        )
-                    }
+                BasicTopAppBar(
+                    onBack = navigateToMain
                 )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
                 Card(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.background)
+                    modifier = Modifier.fillMaxSize(),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.onSecondaryContainer
+                    ),
+                    shape = RoundedCornerShape(10.dp)
                 ) {
                     courseDetailFetchRes.Display(
                         onSuccess = { courseDetailUi ->
@@ -94,16 +104,14 @@ fun CourseDetailsCard(
                                 ) {
                                     Text(
                                         text = courseDetailUi.courseUi.title,
-                                        style = MaterialTheme.typography.bodyLarge,
-                                        fontWeight = FontWeight.Bold,
+                                        style = MaterialTheme.typography.bodyLarge.copy(
+                                            color = MaterialTheme.colorScheme.background
+                                        ),
                                         modifier = Modifier.weight(1f)
                                     )
-                                    Text(
-                                        text = "${courseDetailUi.courseUi.price} ₽",
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.primary,
-                                        fontWeight = FontWeight.SemiBold,
-                                        modifier = Modifier.padding(start = 12.dp)
+                                    PriceText(
+                                        courseDetailUi.courseUi.price,
+                                        priceColor = MaterialTheme.colorScheme.background
                                     )
                                 }
 
@@ -112,145 +120,155 @@ fun CourseDetailsCard(
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Icon(
-                                        painter = painterResource(Res.drawable.clock),
-                                        tint = MaterialTheme.colorScheme.primary,
-                                        contentDescription = "",
-                                        modifier = Modifier.size(20.dp)
-                                    )
+                                    if (courseDetailUi.workloadTime.isNotEmpty()) {
+                                        DescEnumItem(
+                                            resource = Res.drawable.clock,
+                                            text = courseDetailUi.workloadTime
+                                        )
 
-                                    Spacer(modifier = Modifier.width(6.dp))
-                                    Text(
-                                        text = courseDetailUi.workloadTime,
-                                        style = MaterialTheme.typography.bodyMedium
-                                    )
+                                        Spacer(modifier = Modifier.width(24.dp))
+                                    }
 
-                                    Spacer(modifier = Modifier.width(24.dp))
-
-                                    Icon(
-                                        painter = painterResource(Res.drawable.refresh),
-                                        tint = MaterialTheme.colorScheme.primary,
-                                        contentDescription = "",
-                                        modifier = Modifier.size(20.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(6.dp))
-                                    Text(
-                                        text = courseDetailUi.difficultyLevel.capitalize(Locale.current),
-                                        style = MaterialTheme.typography.bodyMedium
-                                    )
+                                    if (courseDetailUi.difficultyLevel.isNotEmpty())
+                                        DescEnumItem(
+                                            resource = Res.drawable.level,
+                                            text = courseDetailUi.difficultyLevel.capitalize(
+                                                Locale.current
+                                            )
+                                        )
                                 }
 
-                                Spacer(modifier = Modifier.height(16.dp))
+                                if (courseDetailUi.courseUi.description.isNotEmpty()) {
+                                    Spacer(modifier = Modifier.height(16.dp))
 
-                                Text(
-                                    text = stringResource(Res.string.description_text),
-                                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
-                                )
-                                Spacer(modifier = Modifier.height(6.dp))
-                                Text(
-                                    text = courseDetailUi.courseUi.description,
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
 
-                                Spacer(modifier = Modifier.height(16.dp))
-
-                                Text(
-                                    text = stringResource(Res.string.target_audience_text),
-                                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium)
-                                )
-                                Spacer(modifier = Modifier.height(6.dp))
-                                Text(
-                                    text = courseDetailUi.targetAudience.replace("\\n", "\n"),
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-
-                                Spacer(modifier = Modifier.height(16.dp))
-
-                                Text(
-                                    text = stringResource(Res.string.requirements_text),
-                                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
-                                )
-                                Spacer(modifier = Modifier.height(6.dp))
-                                Text(
-                                    text = courseDetailUi.requirements.replace(Regex("<.*?>"), ""),
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-
-                                Spacer(modifier = Modifier.height(16.dp))
-
-                                Text(
-                                    text = stringResource(Res.string.skill_acquire_text),
-                                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium)
-                                )
-                                Spacer(modifier = Modifier.height(6.dp))
-                                courseDetailUi.acquiredSkills.forEach { skill ->
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        Icon(
-                                            painter = painterResource(Res.drawable.skill),
-                                            tint = MaterialTheme.colorScheme.primary,
-                                            contentDescription = "",
-                                            modifier = Modifier.size(20.dp)
-                                        )
-                                        Spacer(modifier = Modifier.width(8.dp))
+                                    DescriptionBlock(
+                                        title = Res.string.description_text
+                                    ) {
+                                        Spacer(modifier = Modifier.height(6.dp))
                                         Text(
-                                            text = skill,
-                                            style = MaterialTheme.typography.bodyMedium
+                                            text = courseDetailUi.courseUi.description,
+                                            style = MaterialTheme.typography.bodyMedium.copy(
+                                                color = MaterialTheme.colorScheme.background
+                                            ),
                                         )
                                     }
-                                    Spacer(modifier = Modifier.height(4.dp))
                                 }
 
-                                Spacer(modifier = Modifier.height(16.dp))
+                                if (courseDetailUi.targetAudience.isNotEmpty()) {
+                                    Spacer(modifier = Modifier.height(16.dp))
 
-                                Text(
-                                    text = stringResource(Res.string.what_get_text),
-                                    style = MaterialTheme.typography.bodyLarge
-                                        .copy(fontWeight = FontWeight.Medium)
-                                )
-                                Spacer(modifier = Modifier.height(6.dp))
-                                courseDetailUi.acquiredAssets.forEach { asset ->
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        Icon(
-                                            painter = painterResource(Res.drawable.checkmark),
-                                            tint = MaterialTheme.colorScheme.primary,
-                                            contentDescription = "",
-                                            modifier = Modifier.size(20.dp)
-                                        )
-                                        Spacer(modifier = Modifier.width(8.dp))
+                                    DescriptionBlock(
+                                        title = Res.string.target_audience_text
+                                    ) {
+                                        Spacer(modifier = Modifier.height(6.dp))
                                         Text(
-                                            text = asset,
-                                            style = MaterialTheme.typography.bodyMedium
+                                            text = courseDetailUi.targetAudience.replace(
+                                                "\\n", "\n"
+                                            ),
+                                            style = MaterialTheme.typography.bodyMedium.copy(
+                                                color = MaterialTheme.colorScheme.background
+                                            ),
                                         )
                                     }
-                                    Spacer(modifier = Modifier.height(4.dp))
                                 }
 
-                                Spacer(modifier = Modifier.height(16.dp))
+                                if (courseDetailUi.requirements.isNotEmpty()) {
+                                    Spacer(modifier = Modifier.height(16.dp))
 
-                                Text(
-                                    text = stringResource(Res.string.learning_format_text),
-                                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium)
-                                )
-                                Spacer(modifier = Modifier.height(6.dp))
-                                Text(
-                                    text = courseDetailUi.learningFormat.replace(
-                                        Regex("<.*?>"),
-                                        ""
-                                    ),
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
+                                    DescriptionBlock(
+                                        title = Res.string.requirements_text
+                                    ) {
+                                        Spacer(modifier = Modifier.height(6.dp))
+                                        DescEnumItem(
+                                            resource = Res.drawable.requirement,
+                                            text = courseDetailUi.requirements
+                                                .replace(Regex("<.*?>"), "")
+                                                .replace(Regex("-"), "")
+                                        )
+                                    }
+                                }
+
+                                if (courseDetailUi.acquiredSkills.isNotEmpty()) {
+                                    Spacer(modifier = Modifier.height(16.dp))
+
+                                    DescriptionBlock(
+                                        title = Res.string.skill_acquire_text
+                                    ) {
+                                        Spacer(modifier = Modifier.height(6.dp))
+                                        courseDetailUi.acquiredSkills.forEach { skill ->
+                                            Row(verticalAlignment = Alignment.Top) {
+                                                DescEnumItem(
+                                                    resource = Res.drawable.skill,
+                                                    text = skill.replace(
+                                                        Regex("—"), ""
+                                                    )
+                                                )
+                                            }
+                                            Spacer(modifier = Modifier.height(4.dp))
+                                        }
+                                    }
+                                }
+
+                                if ( courseDetailUi.acquiredAssets.isNotEmpty()) {
+                                    Spacer(modifier = Modifier.height(16.dp))
+
+                                    DescriptionBlock(
+                                        title = Res.string.what_get_text
+                                    ) {
+                                        Spacer(modifier = Modifier.height(6.dp))
+                                        courseDetailUi.acquiredAssets.forEach { asset ->
+                                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                                DescEnumItem(
+                                                    resource = Res.drawable.checkmark,
+                                                    text = asset
+                                                )
+                                            }
+                                            Spacer(modifier = Modifier.height(4.dp))
+                                        }
+                                    }
+                                }
+
+                                if (courseDetailUi.learningFormat.isNotEmpty()) {
+                                    Spacer(modifier = Modifier.height(16.dp))
+
+                                    DescriptionBlock(
+                                        title = Res.string.learning_format_text
+                                    ) {
+                                        Spacer(modifier = Modifier.height(6.dp))
+                                        Text(
+                                            text = courseDetailUi.learningFormat.replace(
+                                                Regex("<.*?>"),
+                                                ""
+                                            ),
+                                            style = MaterialTheme.typography.bodyMedium.copy(
+                                                color = MaterialTheme.colorScheme.background
+                                            ),
+                                        )
+                                    }
+                                }
 
                                 Spacer(modifier = Modifier.height(24.dp))
+
+                                Spacer(modifier = Modifier.weight(1f))
 
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.SpaceBetween,
-                                    modifier = Modifier.fillMaxWidth()
+                                    modifier = Modifier.fillMaxWidth(),
                                 ) {
                                     Text(
-                                        text = "Lessons: ${courseDetailUi.lessonsCount}",
-                                        style = MaterialTheme.typography.bodyLarge
+                                        text = stringResource(Res.string.lessons_text) +
+                                                "${courseDetailUi.lessonsCount}",
+                                        style = MaterialTheme.typography.bodyLarge.copy(
+                                            color = MaterialTheme.colorScheme.background
+                                        ),
                                     )
+
+                                    Spacer(
+                                        modifier = Modifier.width(10.dp)
+                                    )
+
                                     NavigationButton(
                                         onBtnClick = onStartLessonClick,
                                         text = stringResource(Res.string.start_lesson_text)
@@ -273,35 +291,3 @@ fun CourseDetailsCard(
         }
     }
 }
-
-//@Preview
-//@Composable
-//private fun CourseDetailPrev(){
-//    CourseDetailsCard(
-//        workload = "2-3 часа в неделю",
-//        targetAudience = "Школьники 5–11 классов.\nЮные блогеры и геймеры, которые хотят понимать, как работает их оборудование.\nВсе, кто готовится к урокам информатики или просто любит гаджеты.",
-//        summary = "Как компьютер общается с миром? В этом курсе мы разберем всё: от обычной мышки до очков виртуальной реальности и промышленных датчиков. Узнаем, что такое порты, зачем нужны драйверы и как информация попадает из ваших рук прямо в процессор. Понятный гид по периферии для учеников 5–11 классов.",
-//        requirements = "Нужно просто уметь пользоваться компьютером на уровне пользователя. Знание устройства системного блока будет плюсом, но не обязательно.",
-//        difficulty = "easy",
-//        acquiredSkills = listOf(
-//            "Отличать устройства ввода от устройств вывода (и знать те, что умеют и то, и другое).",
-//            "Разбираться в современных интерфейсах подключения (USB-C, HDMI, Thunderbolt).",
-//            "Понимать, как работают сенсорные экраны, оптические мыши и биометрические сканеры.",
-//            "Узнавать, зачем компьютеру нужны «переводчики» (драйверы) для общения с принтером или камерой.",
-//            "Ориентироваться в мире внешних накопителей данных."
-//        ),
-//        acquiredAssets = listOf(
-//            "Четкое понимание классификации компьютерного оборудования.",
-//            "Навык подбора правильных кабелей и интерфейсов для разных задач.",
-//            "Базовые знания о передаче данных, которые пригодятся в программировании и робототехнике.",
-//            "Сертификат Stepik в ваше портфолио."
-//        ),
-//        learningFormat = "Курс состоит из 5 интерактивных уроков. В программе: наглядные схемы, видеоразборы, задания на классификацию устройств и тесты на понимание принципов их работы.",
-//        title = "MOOC «Ввод-вывод и периферийные устройства в компьютерных системах»",
-//        price = "3900.00",
-//        lessonsCount = 17,
-//        onStartLessonClick = {
-//            // Navigate to lesson with ID 2264003 here
-//        }
-//    )
-//}

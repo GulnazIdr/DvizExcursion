@@ -55,9 +55,7 @@ fun CourseList(
                 }
         }
 
-        if ((scrollFinished && !isPageEnded) && !isSearchScreen) {
-            Napier.wtf("${courseList.size}")
+        if ((scrollFinished && !isPageEnded) && !isSearchScreen)
             loadMore()
-        }
     }
 }

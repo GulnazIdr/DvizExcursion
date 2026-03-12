@@ -23,7 +23,7 @@ fun CircleLoading(modifier: Modifier = Modifier) {
                 .height(40.dp)
                 .width(40.dp),
             color = MaterialTheme.colorScheme.primary,
-            trackColor = MaterialTheme.colorScheme.onTertiaryContainer
+            trackColor = MaterialTheme.colorScheme.background
         )
     }
 }

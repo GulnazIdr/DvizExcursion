@@ -1,6 +1,7 @@
-package org.example.project.feature.main.data.dto
+package org.example.project.core.network.model
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonElement
 
 @Serializable
 data class CourseDto(
@@ -8,7 +9,8 @@ data class CourseDto(
     val title: String,
     val cover: String? = null,
     val summary: String,
-    val price: String? = null,
+    val price: JsonElement?,
+    val learners_count: Int,
     val certificate_link: String?,
 )
 

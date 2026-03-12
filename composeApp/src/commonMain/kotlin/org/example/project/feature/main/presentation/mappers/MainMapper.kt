@@ -13,7 +13,8 @@ fun Course.toCourseUi(): CourseUi {
         image = image,
         commentAmount = commentAmount,
         favoriteAmount = favoriteAmount,
-        price = price
+        price = price,
+        learnersCount = learnersCount
     )
 }
 

@@ -3,6 +3,7 @@ package org.example.project.feature.main.presentation
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -15,7 +16,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
@@ -70,14 +70,11 @@ class CourseViewModel(
     val searchedCourseState: StateFlow<List<CourseUi>> = _searchedCourseState
 
     private val _searchValues = MutableStateFlow("")
+    val searchValue: StateFlow<String> = _searchValues
 
     init {
         viewModelScope.launch(Dispatchers.IO){
             _searchValues
-                .filter { value ->
-                    _searchedCourseState.value = emptyList()
-                    return@filter value.isNotEmpty()
-                }
                 .debounce(1500)
                 .distinctUntilChanged()
                 .flatMapLatest<String, String> { value ->
@@ -171,6 +168,8 @@ class CourseViewModel(
 
     fun clearSearchState(){
         _searchedCourseState.value = emptyList()
+        _isSearching.value = false
+        _searchValues.value = ""
     }
 
     private fun filterCourses(value: String){
@@ -179,6 +178,9 @@ class CourseViewModel(
                 course.title.lowercase().contains(value) ||
                         course.description.lowercase().contains(value)
             }
+
+        if (value.isEmpty())
+            _searchedCourseState.value = emptyList()
 
         if (_searchedCourseState.value.isEmpty())
             _isSearching.value = false

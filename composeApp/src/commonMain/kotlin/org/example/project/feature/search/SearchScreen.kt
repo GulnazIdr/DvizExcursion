@@ -7,9 +7,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -20,6 +21,7 @@ import org.example.project.feature.search.components.SearchTopAppBar
 import org.example.project.presentation.components.CircleLoading
 import org.koin.compose.viewmodel.koinViewModel
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchScreen(
     navigateToMain: () -> Unit,
@@ -28,12 +30,14 @@ fun SearchScreen(
 ){
     val searchedCourse by courseViewModel.searchedCourseState.collectAsStateWithLifecycle()
     val isSearching by courseViewModel.isSearching
+    val lastSearched by courseViewModel.searchValue.collectAsStateWithLifecycle()
 
-    DisposableEffect(Unit) {
-        onDispose {
+    BackHandler(
+        onBack = {
             courseViewModel.clearSearchState()
+            navigateToMain()
         }
-    }
+    )
 
     Scaffold { paddingValues ->
         Box(
@@ -43,10 +47,14 @@ fun SearchScreen(
                 modifier = Modifier.padding(horizontal = 20.dp)
             ) {
                 SearchTopAppBar(
-                    onBack = navigateToMain,
+                    onBack = {
+                        courseViewModel.clearSearchState()
+                        navigateToMain()
+                    },
                     onValueChanged = { courseViewModel.onSearch(
                         it
-                    ) }
+                    ) },
+                    input = lastSearched
                 )
 
                 if (isSearching && searchedCourse.isEmpty())

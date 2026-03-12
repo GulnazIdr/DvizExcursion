@@ -5,7 +5,8 @@ data class CourseUi(
     val title: String,
     val description: String,
     val image: String,
-    val price: Int,
+    val price: Double,
     val commentAmount: Int,
-    val favoriteAmount: Int
+    val favoriteAmount: Int,
+    val learnersCount: Int
 )

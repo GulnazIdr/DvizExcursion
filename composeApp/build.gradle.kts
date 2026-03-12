@@ -30,6 +30,8 @@ kotlin {
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
         }
         commonMain.dependencies {
+            implementation("org.jetbrains.compose.ui:ui-backhandler:1.10.2")
+
             val ktor_version = "3.4.1"
             implementation("io.ktor:ktor-client-core:$ktor_version")
             implementation("io.ktor:ktor-client-serialization:${ktor_version}")

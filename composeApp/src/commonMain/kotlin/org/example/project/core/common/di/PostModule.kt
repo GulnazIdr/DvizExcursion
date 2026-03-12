@@ -8,7 +8,7 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import org.example.project.feature.main.data.StepikApiImpl
+import org.example.project.core.network.ktor.StepikApiImpl
 import org.example.project.feature.auth.data.LoginRepositoryImpl
 import org.example.project.feature.auth.data.RegisterRepositoryImpl
 import org.example.project.feature.auth.domain.login.LoginRepository

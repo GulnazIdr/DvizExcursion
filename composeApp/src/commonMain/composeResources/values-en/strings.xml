@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
     <string name="app_name">Reddit</string>
-    <string name="on_boarding_title">Welcome to Reddit</string>
+    <string name="on_boarding_title">Welcome to Stepik</string>
     <string name="on_boarding_descr">Discover communities, dive into topic, and stay on top of the trends, that matter to you</string>
     <string name="get_started_text">Start</string>
     <string name="user_name_hint">Name</string>
@@ -23,7 +23,7 @@
     <string name="skill_acquire_text">Skills You Will Acquire</string>
     <string name="what_get_text">What You Will Get</string>
     <string name="learning_format_text">Learning Format</string>
-    <string name="start_lesson_text">Start First Lesson</string>
+    <string name="start_lesson_text">Start</string>
 
     <string name="not_enough_characters">Password has to contain at least 6 characters</string>
     <string name="no_letters">Password has to contain a letter</string>
@@ -41,11 +41,16 @@
     <string name="uknown_error_field">Something went wrong. Please try again later</string>
 
     <string name="share_text">Send</string>
-    <string name="search_hint">Search anything</string>
-    <string name="post_title_about">Post</string>
-    <string name="post_descr_about">The community can share content by posting stories, links, images, and videos.</string>
-    <string name="comment_title_about">Comment</string>
-    <string name="comment_descr_about">The community comments on posts. Comments provide discussion and often humor.</string>
-    <string name="vote_title_about">Vote</string>
-    <string name="vote_descr_about">Comments and posts can be upvoted or downvoted. The most interesting content rises to the top.</string>
+    <string name="search_hint">Search any course</string>
+
+    <string name="lessons_text">Lessons:</string>
+
+    <string name="new_profession_title_about">Learn a new profession from scratch</string>
+    <string name="new_profession_descr_about">Learn from practitioners, solve problems, and build a portfolio.</string>
+    <string name="skills_title_about">Improve your skills for a career</string>
+    <string name="skills_descr_about">Short practical courses. Clear, fast, and to the point</string>
+    <string name="study_title_about">Learn because you want to</string>
+    <string name="study_descr_about">Just from yourself: from psychology to AI, from languages to </string>
+    <string name="stepik_about">Everything new appears on Stepik first</string>
+    <string name="stepik_descr_about">AI, machine learning, no-code, data analysis — everything becomes popular with us before others</string>
 </resources>

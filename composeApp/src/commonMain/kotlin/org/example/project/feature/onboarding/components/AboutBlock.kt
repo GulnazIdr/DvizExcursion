@@ -11,12 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dvizexcursion.composeapp.generated.resources.Res
-import dvizexcursion.composeapp.generated.resources.comment_descr_about
-import dvizexcursion.composeapp.generated.resources.comment_title_about
-import dvizexcursion.composeapp.generated.resources.post_descr_about
-import dvizexcursion.composeapp.generated.resources.post_title_about
-import dvizexcursion.composeapp.generated.resources.vote_descr_about
-import dvizexcursion.composeapp.generated.resources.vote_title_about
+import dvizexcursion.composeapp.generated.resources.new_profession_descr_about
+import dvizexcursion.composeapp.generated.resources.new_profession_title_about
+import dvizexcursion.composeapp.generated.resources.skills_descr_about
+import dvizexcursion.composeapp.generated.resources.skills_title_about
+import dvizexcursion.composeapp.generated.resources.stepik_about
+import dvizexcursion.composeapp.generated.resources.stepik_descr_about
+import dvizexcursion.composeapp.generated.resources.study_descr_about
+import dvizexcursion.composeapp.generated.resources.study_title_about
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -27,16 +29,16 @@ fun AboutBlock(
         modifier = modifier.fillMaxWidth()
     ) {
         AboutCard(
-            title = stringResource(Res.string.post_title_about),
-            descr = stringResource(Res.string.post_descr_about),
+            title = stringResource(Res.string.stepik_about),
+            descr = stringResource(Res.string.stepik_descr_about),
             color = MaterialTheme.colorScheme.tertiaryContainer,
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
         AboutCard(
-            title = stringResource(Res.string.comment_title_about),
-            descr = stringResource(Res.string.comment_descr_about),
+            title = stringResource(Res.string.new_profession_title_about),
+            descr = stringResource(Res.string.new_profession_descr_about),
             color = MaterialTheme.colorScheme.secondary,
             modifier = Modifier.align(Alignment.End)
         )
@@ -44,9 +46,18 @@ fun AboutBlock(
         Spacer(modifier = Modifier.height(20.dp))
 
         AboutCard(
-            title = stringResource(Res.string.vote_title_about),
-            descr = stringResource(Res.string.vote_descr_about),
+            title = stringResource(Res.string.skills_title_about),
+            descr = stringResource(Res.string.skills_descr_about),
             color = MaterialTheme.colorScheme.surfaceContainer
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        AboutCard(
+            title = stringResource(Res.string.study_title_about),
+            descr = stringResource(Res.string.study_descr_about),
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.align(Alignment.End)
         )
     }
 }

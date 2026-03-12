@@ -15,9 +15,13 @@ val SuperDarkRed = Color(0xFF470000)
 val LightPink = Color(0xFFFCBEBE)
 val LighterPurple = Color(0xFFDFCCF1)
 val DescrGrey = Color(0xFF707B81)
-val LightGrey = Color(0xFFD4D4D4)
+
+val LightGrey = Color(0xFFE7E6E6)
+
+val LightBlue = Color(0xFFCAE9F5)
 
 val LightGreen = Color(0XFFF0FFB3)
+val Green = Color(0xFF8DFF18)
 val BananaYellow = Color(0xFFFFF3C0)
 
 val Tertiary = Color(0xFFFFFA00)

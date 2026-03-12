@@ -2,23 +2,25 @@ package org.example.project.core.designsystem.components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import dvizexcursion.composeapp.generated.resources.Res
-import dvizexcursion.composeapp.generated.resources.redidit_circle
+import dvizexcursion.composeapp.generated.resources.stepik_logo
+import dvizexcursion.composeapp.generated.resources.stepik_logo_text
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun RedditLogo(
+fun StepikLogo(
     size: Dp,
     modifier: Modifier = Modifier
 ){
     Icon(
-        painter = painterResource(Res.drawable.redidit_circle),
-        contentDescription = "reddit logo icon",
+        painter = painterResource(Res.drawable.stepik_logo),
+        contentDescription = "stepik logo icon",
         modifier = modifier.size(size),
-        tint = Color.Unspecified
+        tint = MaterialTheme.colorScheme.primary,
     )
 }

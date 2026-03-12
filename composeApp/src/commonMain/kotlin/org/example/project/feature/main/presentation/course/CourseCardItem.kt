@@ -7,26 +7,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dvizexcursion.composeapp.generated.resources.Res
-import dvizexcursion.composeapp.generated.resources.free_text
-import org.example.project.core.designsystem.components.getWindowHeight
+import org.example.project.core.designsystem.components.PriceText
 import org.example.project.feature.main.presentation.models.CourseUi
-import org.example.project.presentation.components.CircleLoading
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun CourseCardItem(
@@ -39,29 +32,29 @@ fun CourseCardItem(
         Box(
             modifier = modifier
                 .fillMaxWidth()
-                .height((getWindowHeight() * 0.14 ).dp)
-                .background(MaterialTheme.colorScheme.background)
-                .clickable(onClick = {onCourse(courseUi.id)})
+                .background(
+                    color = MaterialTheme.colorScheme.outlineVariant,
+                    shape = RoundedCornerShape(10.dp)
+                )
+                .clickable(onClick = { onCourse(courseUi.id) })
         ) {
             Row(
                 modifier = Modifier.fillMaxSize().padding(10.dp),
             ) {
                 Column(
                     modifier.weight(1f),
-                    verticalArrangement = Arrangement.SpaceBetween
-                ){
+                    verticalArrangement = Arrangement.SpaceBetween,
+                ) {
                     CourseImage(
                         image = courseUi.image,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.fillMaxWidth()
                     )
 
-                    Text(
-                        text =
-                            if (courseUi.price == 0) stringResource(Res.string.free_text)
-                            else "${courseUi.price}",
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            color = MaterialTheme.colorScheme.onSecondaryContainer
-                        )
+                    Spacer(modifier = Modifier.height(5.dp))
+
+                    PriceText(
+                        price = courseUi.price,
+                        priceColor = MaterialTheme.colorScheme.onSecondaryContainer
                     )
                 }
 
@@ -81,7 +74,7 @@ fun CourseCardItem(
 
                     Row {
                         Text(
-                            text = "123",
+                            text = courseUi.learnersCount.toString(),
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 color = MaterialTheme.colorScheme.onSecondaryContainer
                             )
@@ -90,7 +83,7 @@ fun CourseCardItem(
                         Spacer(modifier = Modifier.width(10.dp))
 
                         Text(
-                            text = "4.7",
+                            text = "4.7☆",
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 color = MaterialTheme.colorScheme.onSecondaryContainer
                             )
@@ -98,11 +91,10 @@ fun CourseCardItem(
                     }
 
                     Spacer(modifier = Modifier.height(10.dp))
-
                     Text(
                         text =
-                            if (courseUi.description.length > 13)
-                                courseUi.description.take(13) + "..."
+                            if (courseUi.description.length > 40)
+                                courseUi.description.take(41) + "..."
                             else courseUi.description,
                         style = MaterialTheme.typography.bodySmall.copy(
                             color = MaterialTheme.colorScheme.onSecondaryContainer
@@ -112,20 +104,8 @@ fun CourseCardItem(
             }
         }
 
-        if (!isLast) {
-            Spacer(
-                modifier = Modifier.height(5.dp)
-            )
-
-            HorizontalDivider(
-                thickness = 1.dp,
-                color = MaterialTheme.colorScheme.secondaryContainer
-            )
-
-            Spacer(
-                modifier = Modifier.height(5.dp)
-            )
-        }
+        if (!isLast)
+            Spacer(modifier = Modifier.height(10.dp))
     }
 }
 

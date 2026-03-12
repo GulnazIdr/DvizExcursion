@@ -1,4 +1,4 @@
-package org.example.project.feature.main.data.dto
+package org.example.project.core.network.model
 
 import kotlinx.serialization.Serializable
 

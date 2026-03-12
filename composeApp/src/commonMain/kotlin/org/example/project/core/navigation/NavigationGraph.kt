@@ -12,6 +12,7 @@ import org.example.project.feature.course_detail.CourseDetailsCard
 import org.example.project.feature.main.presentation.CourseViewModel
 import org.example.project.feature.main.presentation.MainScreen
 import org.example.project.feature.onboarding.Boarding
+import org.example.project.feature.onboarding.OnBoarding
 import org.example.project.feature.search.SearchScreen
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -20,6 +21,14 @@ fun NavigationGraph() {
     val navController = rememberNavController()
 
     fun navigateAndPopAll(to: Destination){
+        navController.navigate(to){
+            popUpTo(navController.graph.startDestinationId){
+                inclusive = true
+            }
+        }
+    }
+
+    fun navigateAndPopAll(to: String){
         navController.navigate(to){
             popUpTo(navController.graph.startDestinationId){
                 inclusive = true
@@ -40,7 +49,7 @@ fun NavigationGraph() {
         composable<Login>{
             LoginScreen(
                 onBack = { navController.navigateUp() },
-                navigateToMain = { navigateAndPopAll(Main) },
+                navigateToMain = { navigateAndPopAll(MainBlock.route) },
                 navigateToRegistration = { navController.navigate(Registration) }
             )
         }
@@ -48,7 +57,7 @@ fun NavigationGraph() {
         composable<Registration>{
             RegistrationScreen(
                 onBack = { navController.navigateUp() },
-                navigateToMain = { navigateAndPopAll(Main) },
+                navigateToMain = { navigateAndPopAll(MainBlock.route) },
                 navigateToLogin = { navController.navigateUp() }
             )
         }
@@ -57,7 +66,6 @@ fun NavigationGraph() {
             startDestination = Main.route,
             route = MainBlock.route
         ) {
-
             composable(Main.route) { backStackEntry ->
                 val parentEntry = remember(backStackEntry) {
                     navController.getBackStackEntry(MainBlock.route)

@@ -38,9 +38,7 @@ fun MainScreen(
                 modifier = Modifier.padding(horizontal = 20.dp)
             ) {
                 MainTopAppBar(
-                    onMenu = {},
-                    onAddPost = {},
-                    onProfile = {}
+                    onMenu = {}
                 )
 
                 courseFetchResult.Display(

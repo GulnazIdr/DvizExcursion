@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
     <string name="app_name">Reddit</string>
-    <string name="on_boarding_title">Добро пожаловать в Reddit</string>
+    <string name="on_boarding_title">Добро пожаловать в Stepik</string>
     <string name="on_boarding_descr">Найди коммьюнити, внедрись в тему, и будь в тренде, который тебе что-то значит</string>
     <string name="get_started_text">Начать</string>
     <string name="user_name_hint">Имя</string>
@@ -22,7 +22,7 @@
     <string name="skill_acquire_text">Навыки, которые вы получите</string>
     <string name="what_get_text">Что вы получите</string>
     <string name="learning_format_text">Формат обучения</string>
-    <string name="start_lesson_text">Начать первый урок</string>
+    <string name="start_lesson_text">Начать</string>
 
     <string name="not_enough_characters">Пароль должен содержать хотя бы 6 символов</string>
     <string name="no_letters">Пароль должен содержать буквы</string>
@@ -41,11 +41,16 @@
 
     <string name="post_image_alt">фото поста</string>
     <string name="share_text">Поделиться</string>
-    <string name="search_hint">Искать все, что угодно</string>
-    <string name="post_title_about">Выставляй посты</string>
-    <string name="post_descr_about">Коммьюнити может делиться контентом, распространяя истории, ссылки, фото и видео.</string>
-    <string name="comment_title_about">Комментируй</string>
-    <string name="comment_descr_about">Комьюнити комментирует посты. Комментарии предоставляют дискуссии и чаще юмор.</string>
-    <string name="vote_title_about">Голосуй</string>
-    <string name="vote_descr_about">На комментарии и посты могут быть поставлены лайки и дизлайки. Самый интересный контент поднимается в топ.</string>
+    <string name="search_hint">Искать курс</string>
+
+    <string name="lessons_text">Уроки:</string>
+
+    <string name="new_profession_title_about">Освоить новую профессию с нуля</string>
+    <string name="new_profession_descr_about">Учитесь у практиков, решайте задачи и собирайте портфолио.</string>
+    <string name="skills_title_about">Прокачать навыки для карьеры</string>
+    <string name="skills_descr_about">Короткие практические курсы. Четко, быстро и по делу</string>
+    <string name="study_title_about">Учиться, потому что хочется</string>
+    <string name="study_descr_about">Просто от себя: от психологии до ИИ, от языков до </string>
+    <string name="stepik_about">Всё новое появляется на Stepik первым</string>
+    <string name="stepik_descr_about">ИИ, машинное обучение, no-code, анализ данных — всё становится популярным у нас раньше других</string>
 </resources>

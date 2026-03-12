@@ -1,4 +1,4 @@
-package org.example.project.feature.main.data
+package org.example.project.core.network.ktor
 
 object HttpRoutes {
     private const val BASE_URL = "https://stepik.org/api"

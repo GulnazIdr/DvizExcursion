@@ -7,5 +7,6 @@ data class Course(
     val image: String,
     val commentAmount: Int,
     val favoriteAmount: Int,
-    val price: Int
+    val price: Double,
+    val learnersCount: Int
 )

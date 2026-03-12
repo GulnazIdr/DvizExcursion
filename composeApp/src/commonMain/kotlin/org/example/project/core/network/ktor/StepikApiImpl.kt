@@ -1,8 +1,7 @@
-package org.example.project.feature.main.data
+package org.example.project.core.network.ktor
 
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.RedirectResponseException
 import io.ktor.client.plugins.ServerResponseException
@@ -11,12 +10,9 @@ import io.ktor.client.request.parameter
 import org.example.project.core.common.result.FetchResult
 import org.example.project.core.common.result.NetworkError
 import org.example.project.core.common.result.codeMapper
-import org.example.project.feature.main.data.dto.CourseDetailDto
-import org.example.project.feature.main.data.dto.StepikCourseDetailedDto
-import org.example.project.feature.main.data.dto.StepikDto
-import org.example.project.feature.main.data.mappers.toCourseDetail
-import org.example.project.feature.main.data.mappers.toStepik
-import org.example.project.feature.main.domain.CourseDetail
+import org.example.project.core.network.model.StepikCourseDetailedDto
+import org.example.project.core.network.model.StepikDto
+import org.example.project.core.network.ktor.mappers.toStepik
 import org.example.project.feature.main.domain.StepikApi
 import org.example.project.feature.main.domain.Stepik
 import org.example.project.feature.main.domain.StepikDetailed

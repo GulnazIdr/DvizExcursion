@@ -20,10 +20,9 @@ fun CircleLoading(modifier: Modifier = Modifier) {
         CircularProgressIndicator(
             modifier = Modifier
                 .align(Alignment.Center)
-                .height(40.dp)
                 .width(40.dp),
             color = MaterialTheme.colorScheme.primary,
-            trackColor = MaterialTheme.colorScheme.background
+            trackColor = MaterialTheme.colorScheme.onPrimaryContainer
         )
     }
 }

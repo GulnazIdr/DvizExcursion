@@ -6,6 +6,7 @@ val Dark = Color(0xFF000000)
 //Light theme
 val Primary = Color(0xFFFF4500)
 val Background = Color.White
+val White = Color.White
 val Surface = Color(0xFFFF0000)
 val Error = Color(0xFFFF6161)
 val OnSurface = Color(0xFFD3B8DC)

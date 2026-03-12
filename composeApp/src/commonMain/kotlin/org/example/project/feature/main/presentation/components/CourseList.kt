@@ -45,7 +45,7 @@ fun CourseList(
             }
 
 
-            if (isDataLoading || scrollFinished)
+            if ((isDataLoading || scrollFinished) && !isSearchScreen)
                 item {
                     Spacer(modifier = Modifier.height(20.dp))
                     CircleLoading()

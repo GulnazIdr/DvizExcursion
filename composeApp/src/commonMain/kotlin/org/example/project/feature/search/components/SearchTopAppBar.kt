@@ -17,13 +17,15 @@ fun SearchTopAppBar(
     modifier: Modifier = Modifier
 ) {
     BasicTopAppBar(
-        onBack = onBack
+        onBack = onBack,
+        modifier = modifier
     ){
         Spacer(modifier = Modifier.width(10.dp))
 
         SearchBar(
             onValueChanged = onValueChanged,
-            input = input
+            input = input,
+            modifier = modifier
         )
     }
 }

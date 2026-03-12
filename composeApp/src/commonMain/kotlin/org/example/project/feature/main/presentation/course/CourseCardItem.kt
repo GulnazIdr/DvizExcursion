@@ -74,7 +74,7 @@ fun CourseCardItem(
 
                     Row {
                         Text(
-                            text = courseUi.learnersCount.toString(),
+                            text = "${courseUi.learnersCount}\uD83D\uDC64",
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 color = MaterialTheme.colorScheme.onSecondaryContainer
                             )

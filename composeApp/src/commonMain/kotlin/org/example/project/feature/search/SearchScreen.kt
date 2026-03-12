@@ -43,10 +43,11 @@ fun SearchScreen(
                     onValueChanged = { courseViewModel.onSearch(
                         it
                     ) },
-                    input = lastSearched
+                    input = lastSearched,
+                    modifier = Modifier.padding(paddingValues)
                 )
 
-                if (isSearching && searchedCourse.isEmpty())
+                if (isSearching)
                     CircleLoading()
                 else {
                     Spacer(modifier = Modifier.height(20.dp))

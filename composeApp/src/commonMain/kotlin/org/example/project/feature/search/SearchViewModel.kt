@@ -50,13 +50,13 @@ class SearchViewModel (
                             course.title.lowercase().contains(value) ||
                                     course.description.lowercase().contains(value)
                         }
-
-                    if (value.isEmpty())
+                    _isSearching.value = false
+                    if (value.isEmpty()) {
                         _searchedCourseState.value = emptyList()
 
-                    if (_searchedCourseState.value.isEmpty())
-                        _isSearching.value = false
-                }
+                    }
+        }
+
         }
 
     }

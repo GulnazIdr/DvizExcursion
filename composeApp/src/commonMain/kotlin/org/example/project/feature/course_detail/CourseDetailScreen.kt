@@ -1,6 +1,5 @@
 package org.example.project.feature.course_detail
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,13 +19,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.text.capitalize
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -50,20 +49,24 @@ import org.example.project.core.designsystem.components.NavigationButton
 import org.example.project.core.designsystem.components.PriceText
 import org.example.project.feature.course_detail.components.DescEnumItem
 import org.example.project.feature.course_detail.components.DescriptionBlock
-import org.example.project.feature.main.presentation.CourseViewModel
-import org.example.project.presentation.components.CircleLoading
+import org.example.project.core.designsystem.components.CircleLoading
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CourseDetailsCard(
+    courseId: Int,
     onStartLessonClick: () -> Unit,
     navigateToMain: () -> Unit,
-    courseViewModel: CourseViewModel = koinViewModel<CourseViewModel>()
+    courseViewModel: CourseDetailViewModel = koinViewModel<CourseDetailViewModel>()
 ) {
-    val courseDetailFetchRes by courseViewModel.fetchedCourseResult.collectAsStateWithLifecycle()
+    val courseDetailFetchRes by courseViewModel.currentCourseRes.collectAsStateWithLifecycle()
     val scrollState = rememberScrollState()
+
+    LaunchedEffect(Unit){
+        courseViewModel.getCourseById(courseId)
+    }
 
     BackHandler(
         onBack = navigateToMain

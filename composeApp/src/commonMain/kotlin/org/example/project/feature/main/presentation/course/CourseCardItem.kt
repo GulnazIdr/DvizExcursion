@@ -93,8 +93,8 @@ fun CourseCardItem(
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text =
-                            if (courseUi.description.length > 40)
-                                courseUi.description.take(41) + "..."
+                            if (courseUi.description.length > 50)
+                                courseUi.description.take(51) + "..."
                             else courseUi.description,
                         style = MaterialTheme.typography.bodySmall.copy(
                             color = MaterialTheme.colorScheme.onSecondaryContainer

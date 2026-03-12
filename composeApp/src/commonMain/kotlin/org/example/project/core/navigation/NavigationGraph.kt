@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import androidx.navigation.toRoute
 import org.example.project.feature.auth.presentation.login.LoginScreen
 import org.example.project.feature.auth.presentation.register.RegistrationScreen
 import org.example.project.feature.course_detail.CourseDetailsCard
@@ -28,17 +29,9 @@ fun NavigationGraph() {
         }
     }
 
-    fun navigateAndPopAll(to: String){
-        navController.navigate(to){
-            popUpTo(navController.graph.startDestinationId){
-                inclusive = true
-            }
-        }
-    }
-
     NavHost(
         navController = navController,
-        startDestination = MainBlock.route
+        startDestination = Main
     ){
         composable<OnBoarding>{
             Boarding(
@@ -49,7 +42,7 @@ fun NavigationGraph() {
         composable<Login>{
             LoginScreen(
                 onBack = { navController.navigateUp() },
-                navigateToMain = { navigateAndPopAll(MainBlock.route) },
+                navigateToMain = { navigateAndPopAll(Main) },
                 navigateToRegistration = { navController.navigate(Registration) }
             )
         }
@@ -57,60 +50,35 @@ fun NavigationGraph() {
         composable<Registration>{
             RegistrationScreen(
                 onBack = { navController.navigateUp() },
-                navigateToMain = { navigateAndPopAll(MainBlock.route) },
+                navigateToMain = { navigateAndPopAll(Main) },
                 navigateToLogin = { navController.navigateUp() }
             )
         }
 
-        navigation(
-            startDestination = Main.route,
-            route = MainBlock.route
-        ) {
-            composable(Main.route) { backStackEntry ->
-                val parentEntry = remember(backStackEntry) {
-                    navController.getBackStackEntry(MainBlock.route)
-                }
-                val courseViewmodel = koinViewModel<CourseViewModel>(
-                    viewModelStoreOwner = parentEntry
-                )
 
-                MainScreen(
-                    navigateToSearch = { navController.navigate(Search) },
-                    courseViewModel = courseViewmodel,
-                    navigateToCourseDetail = {navController.navigate(CourseDetail)}
-                )
-            }
-
-            composable<Search> {backStackEntry ->
-                val parentEntry = remember(backStackEntry) {
-                    navController.getBackStackEntry(MainBlock.route)
-                }
-                val courseViewmodel = koinViewModel<CourseViewModel>(
-                    viewModelStoreOwner = parentEntry
-                )
-
-                SearchScreen(
-                    navigateToMain = { navController.navigateUp() },
-                    courseViewModel = courseViewmodel,
-                    navigateToCourseDetail = {navController.navigate(CourseDetail)}
-                )
-            }
-
-            composable<CourseDetail> { backStackEntry ->
-                val parentEntry = remember(backStackEntry) {
-                    navController.getBackStackEntry(MainBlock.route)
-                }
-                val courseViewmodel = koinViewModel<CourseViewModel>(
-                    viewModelStoreOwner = parentEntry
-                )
-
-                CourseDetailsCard(
-                    onStartLessonClick = {},
-                    courseViewModel = courseViewmodel,
-                    navigateToMain = {navController.navigateUp()}
-                )
-
-            }
+        composable<Main> {
+            MainScreen(
+                navigateToSearch = { navController.navigate(Search) },
+                navigateToCourseDetail = {navController.navigate(CourseDetail(it))}
+            )
         }
+
+        composable<Search> {
+            SearchScreen(
+                navigateToMain = { navController.navigateUp() },
+                navigateToCourseDetail = {navController.navigate(CourseDetail(it))}
+            )
+        }
+
+        composable<CourseDetail> {
+            val id = it.toRoute<CourseDetail>().courseId
+            CourseDetailsCard(
+                onStartLessonClick = {},
+                navigateToMain = {navController.navigateUp()},
+                courseId = id
+            )
+
+        }
+
     }
 }

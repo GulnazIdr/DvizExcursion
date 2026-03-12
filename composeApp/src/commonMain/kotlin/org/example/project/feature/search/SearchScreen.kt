@@ -10,34 +10,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.github.aakira.napier.Napier
-import org.example.project.feature.main.presentation.CourseViewModel
 import org.example.project.feature.main.presentation.components.CourseList
 import org.example.project.feature.search.components.SearchTopAppBar
-import org.example.project.presentation.components.CircleLoading
+import org.example.project.core.designsystem.components.CircleLoading
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchScreen(
     navigateToMain: () -> Unit,
-    navigateToCourseDetail: () -> Unit,
-    courseViewModel: CourseViewModel = koinViewModel<CourseViewModel>()
+    navigateToCourseDetail: (id: Int) -> Unit,
+    courseViewModel: SearchViewModel = koinViewModel<SearchViewModel>()
 ){
     val searchedCourse by courseViewModel.searchedCourseState.collectAsStateWithLifecycle()
     val isSearching by courseViewModel.isSearching
     val lastSearched by courseViewModel.searchValue.collectAsStateWithLifecycle()
-
-    BackHandler(
-        onBack = {
-            courseViewModel.clearSearchState()
-            navigateToMain()
-        }
-    )
 
     Scaffold { paddingValues ->
         Box(
@@ -48,7 +38,6 @@ fun SearchScreen(
             ) {
                 SearchTopAppBar(
                     onBack = {
-                        courseViewModel.clearSearchState()
                         navigateToMain()
                     },
                     onValueChanged = { courseViewModel.onSearch(
@@ -68,8 +57,7 @@ fun SearchScreen(
                         loadMore = {},
                         isSearchScreen = true,
                         onCourse = {
-                            courseViewModel.setCurrentCourseId(it)
-                            navigateToCourseDetail()
+                            navigateToCourseDetail(it)
                         }
                     )
                 }

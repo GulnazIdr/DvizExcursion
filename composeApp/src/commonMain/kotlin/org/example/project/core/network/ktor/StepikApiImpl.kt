@@ -27,15 +27,15 @@ class StepikApiImpl (
             }
         } catch(e: RedirectResponseException) {
             // 3xx - responses
-            Napier.wtf("Error: ${e.response.status.description}")
+            Napier.wtf("RedirectResponse error: ${e.response.status.description}")
             null
         } catch(e: ClientRequestException) {
             // 4xx - responses
-            Napier.wtf("Error: ${e.response.status.description}")
+            Napier.wtf("ClientRequest error: ${e.response.status.description}")
             null
         } catch(e: ServerResponseException) {
             // 5xx - responses
-            Napier.wtf("Error: ${e.response.status.description}")
+            Napier.wtf("ServerResponse error: ${e.response.status.description}")
             null
         } catch(e: Exception) {
             Napier.wtf("Error: ${e.message}")

@@ -14,7 +14,7 @@ val SuperDarkRed = Color(0xFF470000)
 
 val LightPink = Color(0xFFFCBEBE)
 val LighterPurple = Color(0xFFDFCCF1)
-val DescrGrey = Color(0xFF707B81)
+val DescrGrey = Color(0xFF929292)
 
 val LightGrey = Color(0xFFE7E6E6)
 

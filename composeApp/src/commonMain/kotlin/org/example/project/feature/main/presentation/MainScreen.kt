@@ -12,18 +12,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.github.aakira.napier.Napier
 import org.example.project.core.designsystem.components.ErrorDialog
 import org.example.project.feature.main.presentation.components.CourseList
 import org.example.project.feature.main.presentation.components.MainTopAppBar
 import org.example.project.feature.main.presentation.components.SearchBar
-import org.example.project.presentation.components.CircleLoading
+import org.example.project.core.designsystem.components.CircleLoading
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun MainScreen(
     navigateToSearch: () -> Unit,
-    navigateToCourseDetail: () -> Unit,
+    navigateToCourseDetail: (id: Int) -> Unit,
     courseViewModel: CourseViewModel = koinViewModel<CourseViewModel>()
 ){
     val courseFetchResult by courseViewModel.courseFetchedResult.collectAsStateWithLifecycle()
@@ -56,8 +55,7 @@ fun MainScreen(
                             loadMore = { courseViewModel.fetchCourses() },
                             isDataLoading = isDataLoading,
                             onCourse = {
-                                courseViewModel.setCurrentCourseId(it)
-                                navigateToCourseDetail()
+                                navigateToCourseDetail(it)
                             }
                         )
                     },

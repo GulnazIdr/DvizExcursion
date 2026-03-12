@@ -1,11 +1,9 @@
 package org.example.project.core.network.ktor
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.isActive
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.withContext
 import org.example.project.core.common.result.FetchResult
 import org.example.project.core.common.result.NetworkError
@@ -14,6 +12,7 @@ import org.example.project.feature.main.domain.Stepik
 import org.example.project.feature.main.domain.StepikApi
 import org.example.project.feature.main.presentation.mappers.toCourseUi
 import org.example.project.feature.main.presentation.models.CourseUi
+import org.example.project.feature.main.presentation.models.CourseUiState
 import org.example.project.feature.main.presentation.result.FetchResultUi
 
 class FetchCoursesUseCase(
@@ -27,46 +26,59 @@ class FetchCoursesUseCase(
     val courseList: StateFlow<List<CourseUi>> = _courseList
 
     suspend operator fun invoke(
-        courseFetchedResult: MutableStateFlow<FetchResultUi<List<CourseUi>>>,
-        isPageEnded: MutableState<Boolean>,
-        isDataLoading : MutableState<Boolean>,
-    ){
-        when(val fetchResult = stepikApi.getCourses(currentPage)){
+        courseFetchedState: MutableStateFlow<CourseUiState>
+    ) {
+        courseFetchedState.update { state ->
+            state.copy(
+                isDataLoading = true
+            )
+        }
+
+        when (val fetchResult = withContext(Dispatchers.IO) {
+            stepikApi.getCourses(currentPage)
+        }) {
             is FetchResult.Success<Stepik> -> {
-                withContext(Dispatchers.Main) {
-                    if (!isActive) {
-                        return@withContext
+                if (fetchResult.successData.pageInfo.hasNext) {
+                    currentPage++
+                    _courseList.value += fetchResult.successData.courses.map { it.toCourseUi() }
+
+                    if (_courseList.value.isEmpty()) {
+                        invoke(courseFetchedState)
+                        return
                     }
 
-                    if (fetchResult.successData.pageInfo.hasNext) {
-                        currentPage++
-                        _courseList.value += fetchResult.successData.courses.map { it.toCourseUi() }
-
-                        if (_courseList.value.isEmpty() && isActive) {
-                            invoke(courseFetchedResult, isPageEnded, isDataLoading)
-                            return@withContext
-                        }
-
-                        courseFetchedResult.value = FetchResultUi.Success(
-                            data = _courseList.value
+                    courseFetchedState.update { state ->
+                        state.copy(
+                            courseFetchedResult = FetchResultUi.Success(data = _courseList.value),
+                            isDataLoading = false
                         )
+                    }
 
-                        if (_courseList.value.size < 20 && isActive) {
-                            invoke(courseFetchedResult, isPageEnded, isDataLoading)
-                            return@withContext
-                        }
+                    if (_courseList.value.size < 20) {
+                        invoke(courseFetchedState)
+                        return
+                    }
 
-                        isDataLoading.value = false
-
-                    } else
-                        isPageEnded.value = true
+                } else {
+                    courseFetchedState.update { state ->
+                        state.copy(
+                            isPageEnded = true,
+                            isDataLoading = false
+                        )
+                    }
                 }
             }
+
             is FetchResult.ErrorRes<NetworkError> -> {
                 withContext(Dispatchers.Main) {
-                    courseFetchedResult.value = FetchResultUi.Error(
-                        fetchResult.error.asUiText()
-                    )
+                    courseFetchedState.update { state ->
+                        state.copy(
+                            courseFetchedResult = FetchResultUi.Error(
+                                fetchResult.error.asUiText()
+                            ),
+                            isDataLoading = false
+                        )
+                    }
                 }
             }
         }

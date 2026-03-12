@@ -25,9 +25,7 @@ fun MainScreen(
     navigateToCourseDetail: (id: Int) -> Unit,
     courseViewModel: CourseViewModel = koinViewModel<CourseViewModel>()
 ){
-    val courseFetchResult by courseViewModel.courseFetchedResult.collectAsStateWithLifecycle()
-    val isPageEnded by courseViewModel.isPageEnded
-    val isDataLoading by courseViewModel.isDataLoading
+    val courseFetchState by courseViewModel.courseFetchedState.collectAsStateWithLifecycle()
 
     Scaffold{ paddingValues ->
         Box(
@@ -40,7 +38,7 @@ fun MainScreen(
                     onMenu = {}
                 )
 
-                courseFetchResult.Display(
+                courseFetchState.courseFetchedResult.Display(
                     onSuccess = { courseList ->
                         SearchBar(
                             onValueChanged = {},
@@ -51,9 +49,9 @@ fun MainScreen(
 
                         CourseList(
                             courseList = courseList,
-                            isPageEnded = isPageEnded,
+                            isPageEnded = courseFetchState.isPageEnded,
                             loadMore = { courseViewModel.fetchCourses() },
-                            isDataLoading = isDataLoading,
+                            isDataLoading = courseFetchState.isDataLoading,
                             onCourse = {
                                 navigateToCourseDetail(it)
                             }

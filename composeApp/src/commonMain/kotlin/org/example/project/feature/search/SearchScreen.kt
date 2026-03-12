@@ -25,8 +25,7 @@ fun SearchScreen(
     navigateToCourseDetail: (id: Int) -> Unit,
     courseViewModel: SearchViewModel = koinViewModel<SearchViewModel>()
 ){
-    val searchedCourse by courseViewModel.searchedCourseState.collectAsStateWithLifecycle()
-    val isSearching by courseViewModel.isSearching
+    val searchedCourseState by courseViewModel.searchedCourseState.collectAsStateWithLifecycle()
     val lastSearched by courseViewModel.searchValue.collectAsStateWithLifecycle()
 
     Scaffold { paddingValues ->
@@ -47,13 +46,13 @@ fun SearchScreen(
                     modifier = Modifier.padding(paddingValues)
                 )
 
-                if (isSearching)
+                if (searchedCourseState.isLoading)
                     CircleLoading()
                 else {
                     Spacer(modifier = Modifier.height(20.dp))
 
                     CourseList(
-                        courseList = searchedCourse,
+                        courseList = searchedCourseState.courseList,
                         isPageEnded = false,
                         loadMore = {},
                         isSearchScreen = true,

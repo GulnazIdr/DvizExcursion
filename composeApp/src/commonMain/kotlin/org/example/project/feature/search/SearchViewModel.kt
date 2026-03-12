@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.example.project.core.network.ktor.FetchCoursesUseCase
 import org.example.project.feature.main.presentation.models.CourseUi
@@ -20,40 +21,52 @@ import org.example.project.feature.main.presentation.models.CourseUi
 class SearchViewModel (
     private val fetchCoursesUseCase: FetchCoursesUseCase
 ): ViewModel() {
-    private val _isSearching = mutableStateOf(false)
-    val isSearching = _isSearching
-    private val _searchedCourseState = MutableStateFlow<List<CourseUi>>(emptyList())
-    val searchedCourseState: StateFlow<List<CourseUi>> = _searchedCourseState
+    private val _searchedCourseState = MutableStateFlow(
+        SearchUiState(false, emptyList())
+    )
+    val searchedCourseState: StateFlow<SearchUiState> = _searchedCourseState
 
     private val _searchValues = MutableStateFlow("")
     val searchValue: StateFlow<String> = _searchValues
 
-    fun onSearch(char: String){
-        _isSearching.value = char.isNotEmpty()
+    fun onSearch(char: String) {
         _searchValues.value = char.lowercase()
-
+        _searchedCourseState.update { state ->
+            state.copy(
+                isLoading = true
+            )
+        }
         filterCourses()
     }
 
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
-    private fun filterCourses(){
-        viewModelScope.launch(Dispatchers.IO){
+    private fun filterCourses() {
+        viewModelScope.launch(Dispatchers.IO) {
             _searchValues
                 .debounce(1500)
                 .distinctUntilChanged()
-                .flatMapLatest{ value ->
+                .flatMapLatest { value ->
                     flowOf(value)
                 }
                 .collect { value ->
-                    _searchedCourseState.value = fetchCoursesUseCase.courseList.value
-                        .filter { course ->
-                            course.title.lowercase().contains(value) ||
-                                    course.description.lowercase().contains(value)
-                        }
-                    _isSearching.value = false
                     if (value.isEmpty()) {
-                        _searchedCourseState.value = emptyList()
-
+                        _searchedCourseState.update { state ->
+                            state.copy(
+                                isLoading = false,
+                                courseList = emptyList()
+                            )
+                        }
+                        return@collect
+                    }
+                    _searchedCourseState.update { state ->
+                        state.copy(
+                            isLoading = false,
+                            courseList = fetchCoursesUseCase.courseList.value
+                                .filter { course ->
+                                    course.title.lowercase().contains(value) ||
+                                            course.description.lowercase().contains(value)
+                                }
+                        )
                     }
                 }
         }

@@ -27,11 +27,13 @@ class CourseDetailViewModel (
     val currentCourseRes: StateFlow<FetchResultUi<CourseDetailUi>> = _currentCourseRes.asStateFlow()
     private var fetchSpecificCourseJob: Job? = null
 
-    fun getCourseById(id: Int){
+    fun getCourseById(id: Int) {
         fetchSpecificCourseJob?.cancel()
 
-        fetchSpecificCourseJob = viewModelScope.launch(Dispatchers.IO) {
-            when(val res = stepikApi.getCourseById(id)){
+        fetchSpecificCourseJob = viewModelScope.launch {
+            when (val res = withContext(Dispatchers.IO) {
+                stepikApi.getCourseById(id)
+            }) {
                 is FetchResult.Success<StepikDetailed> -> {
                     withContext(Dispatchers.Main) {
                         _currentCourseRes.value = FetchResultUi.Success(
@@ -39,6 +41,7 @@ class CourseDetailViewModel (
                         )
                     }
                 }
+
                 is FetchResult.ErrorRes<NetworkError> -> {
                     withContext(Dispatchers.Main) {
                         _currentCourseRes.value = FetchResultUi.Error(

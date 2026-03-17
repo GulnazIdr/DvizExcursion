@@ -1,56 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
-    <string name="app_name">Reddit</string>
-    <string name="on_boarding_title">Добро пожаловать в Stepik</string>
-    <string name="on_boarding_descr">Найди коммьюнити, внедрись в тему, и будь в тренде, который тебе что-то значит</string>
-    <string name="get_started_text">Начать</string>
-    <string name="user_name_hint">Имя</string>
-    <string name="password_hint">Пароль</string>
-    <string name="email_hint">Почта</string>
-    <string name="user_name_error">Заполните поле</string>
-    <string name="password_error">Заполните поле</string>
-    <string name="remember_me_text">Запомнить меня</string>
-    <string name="policy_text">Политика конфиденциальности</string>
-    <string name="login_text">Вход</string>
+    <string name="app_name">Stepik</string>
+    <string name="on_boarding1_title">Добро пожаловать в Stepik</string>
+    <string name="on_boarding1_descr">Найди коммьюнити, внедрись в тему, и будь в тренде, который тебе что-то значит</string>
+
+    <string name="on_boarding2_new_prof_title_about">Освоить новую профессию с нуля</string>
+    <string name="on_boarding2_new_prof_descr_about">Учитесь у практиков, решайте задачи и собирайте портфолио.</string>
+    <string name="on_boarding2_skills_title_about">Прокачать навыки для карьеры</string>
+    <string name="on_boarding2_skills_descr_about">Короткие практические курсы. Четко, быстро и по делу</string>
+    <string name="on_boarding2_study_title_about">Учиться, потому что хочется</string>
+    <string name="on_boarding2_study_descr_about">Просто от себя: от психологии до ИИ, от языков до </string>
+    <string name="on_boarding2_stepik_about">Всё новое появляется на Stepik первым</string>
+    <string name="on_boarding2_stepik_descr_about">ИИ, машинное обучение, no-code, анализ данных — всё становится популярным у нас раньше других</string>
+    <string name="on_boarding2_get_started_text">Начать</string>
+
+    <string name="auth_user_name_hint">Имя</string>
+    <string name="auth_password_hint">Пароль</string>
+    <string name="auth_email_hint">Почта</string>
+    <string name="auth_phone_hint">Телефон</string>
+    <string name="auth_user_name_error">Заполните поле имя</string>
+    <string name="auth_password_error">Заполните поле пароль</string>
+    <string name="registration_remember_me_text">Запомнить меня</string>
+    <string name="registration_policy_text">Политика конфиденциальности</string>
     <string name="registration_text">Регистрация</string>
+    <string name="login_text">Вход</string>
 
-    <string name="free_text">Бесплатно</string>JО
+    <string name="course_free_text">Бесплатно</string>
 
-    <string name="description_text">Описание</string>
-    <string name="target_audience_text">Целевая аудитория</string>
-    <string name="requirements_text">Требования</string>
-    <string name="skill_acquire_text">Навыки, которые вы получите</string>
-    <string name="what_get_text">Что вы получите</string>
-    <string name="learning_format_text">Формат обучения</string>
-    <string name="start_lesson_text">Начать</string>
+    <string name="course_detail_description_text">Описание</string>
+    <string name="course_detail_target_audience_text">Целевая аудитория</string>
+    <string name="course_detail_requirements_text">Требования</string>
+    <string name="course_detail_skill_acquire_text">Навыки, которые вы получите</string>
+    <string name="course_detail_what_get_text">Что вы получите</string>
+    <string name="course_detail_learning_format_text">Формат обучения</string>
+    <string name="course_detail_start_lesson_text">Начать</string>
+    <string name="course_detail_lessons_text">Уроки:</string>
 
-    <string name="not_enough_characters">Пароль должен содержать хотя бы 6 символов</string>
-    <string name="no_letters">Пароль должен содержать буквы</string>
-    <string name="no_digits">Пароль должен содержать цифры</string>
-    <string name="no_uppers">Пароль должен содержать заглавные буквы</string>
-    <string name="no_symbols">Пароль должен содержать символы</string>
-    <string name="empty_field">Поле не может быть пустым</string>
-    <string name="wrong_creds_field">Неверный логин или пароль</string>
-    <string name="wrong_format_field">Неверный формат</string>
-    <string name="policy_unchecked_field">Прочтите политику конфиденциальности</string>
+    <string name="registration_error_not_enough_characters">Пароль должен содержать хотя бы 6 символов</string>
+    <string name="registration_error_no_letters">Пароль должен содержать буквы</string>
+    <string name="registration_error_no_digits">Пароль должен содержать цифры</string>
+    <string name="registration_error_no_uppers">Пароль должен содержать заглавные буквы</string>
+    <string name="registration_error_no_symbols">Пароль должен содержать символы</string>
+    <string name="registration_error_empty_field">Поле не может быть пустым</string>
+    <string name="registration_error_wrong_creds_field">Неверный логин или пароль</string>
+    <string name="registration_error_wrong_format_field">Неверный формат</string>
+    <string name="registration_error_policy_unchecked_field">Прочтите политику конфиденциальности</string>
 
-    <string name="no_internet_field">Отсутствие интернета</string>
-    <string name="request_timeout_field">Превышено время ожидания</string>
-    <string name="too_many_requests_field">Превышено количество попыток. Попробуйте снова позже</string>
-    <string name="uknown_error_field">Что-то пошло не так. Попробуйте снова позже</string>
+    <string name="remote_error_no_internet_field">Отсутствие интернета</string>
+    <string name="remote_error_request_timeout_field">Превышено время ожидания</string>
+    <string name="remote_error_too_many_requests_field">Превышено количество попыток. Попробуйте снова позже</string>
+    <string name="remote_error_uknown_error_field">Что-то пошло не так. Попробуйте снова позже</string>
 
-    <string name="post_image_alt">фото поста</string>
-    <string name="share_text">Поделиться</string>
     <string name="search_hint">Искать курс</string>
 
-    <string name="lessons_text">Уроки:</string>
-
-    <string name="new_profession_title_about">Освоить новую профессию с нуля</string>
-    <string name="new_profession_descr_about">Учитесь у практиков, решайте задачи и собирайте портфолио.</string>
-    <string name="skills_title_about">Прокачать навыки для карьеры</string>
-    <string name="skills_descr_about">Короткие практические курсы. Четко, быстро и по делу</string>
-    <string name="study_title_about">Учиться, потому что хочется</string>
-    <string name="study_descr_about">Просто от себя: от психологии до ИИ, от языков до </string>
-    <string name="stepik_about">Всё новое появляется на Stepik первым</string>
-    <string name="stepik_descr_about">ИИ, машинное обучение, no-code, анализ данных — всё становится популярным у нас раньше других</string>
+    <string name="profile_logout">Выйти</string>
+    <string name="profile_save">Сохранить</string>
 </resources>

@@ -6,7 +6,13 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.androidx.room)
     id("org.jetbrains.kotlin.plugin.serialization")
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 kotlin {
@@ -20,26 +26,34 @@ kotlin {
 
     sourceSets {
         androidMain.dependencies {
+            implementation(libs.accompanist.swiperefresh)
+
+            implementation(libs.androidx.room.sqlite.wrapper)
+
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
 
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
 
-            implementation("io.ktor:ktor-client-android:3.4.1")
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
+            implementation(libs.appauth)
+
+            implementation(libs.ktor.client.android)
+            implementation(libs.kotlinx.coroutines.android)
         }
         commonMain.dependencies {
-            implementation("org.jetbrains.compose.ui:ui-backhandler:1.10.2")
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.sqlite.bundled)
 
-            val ktor_version = "3.4.1"
-            implementation("io.ktor:ktor-client-core:$ktor_version")
-            implementation("io.ktor:ktor-client-serialization:${ktor_version}")
-            implementation("io.ktor:ktor-client-logging:${ktor_version}")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
-            implementation("io.ktor:ktor-client-content-negotiation:${ktor_version}")
-            implementation("io.ktor:ktor-client-okhttp:${ktor_version}")
-            implementation("io.ktor:ktor-serialization-kotlinx-json:${ktor_version}")
+            implementation(libs.ui.backhandler)
+
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.serialization)
+            implementation(libs.ktor.client.logging)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.ktor.serialization.kotlinx.json)
 
             api(libs.datastore.preferences)
             api(libs.datastore)
@@ -68,6 +82,9 @@ kotlin {
             implementation(libs.kotlin.test)
         }
         jvmMain.dependencies {
+            implementation(libs.oauth2.oidc.sdk)
+            implementation(libs.nimbus.jose.jwt)
+
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)
             implementation(libs.androidx.ui.desktop)
@@ -86,6 +103,7 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+        manifestPlaceholders["appAuthRedirectScheme"] = "http"
     }
     packaging {
         resources {
@@ -103,17 +121,21 @@ android {
     }
 }
 
+
 dependencies {
+    add("kspAndroid", libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
+
     debugImplementation(libs.compose.uiTooling)
 }
 
 compose.desktop {
     application {
-        mainClass = "org.example.project.MainKt"
+        mainClass = "org.example.org.stepik.project.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "org.example.project"
+            packageName = "org.example.org.stepik.project"
             packageVersion = "1.0.0"
         }
     }

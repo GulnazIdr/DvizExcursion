@@ -1,10 +1,7 @@
 package org.example.project.feature.search
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.github.aakira.napier.Napier
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,19 +12,27 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.example.project.core.network.ktor.FetchCoursesUseCase
-import org.example.project.feature.main.presentation.models.CourseUi
+import org.example.project.core.designsystem.ui_logic.FetchCoursesUseCase
 
 class SearchViewModel (
     private val fetchCoursesUseCase: FetchCoursesUseCase
 ): ViewModel() {
     private val _searchedCourseState = MutableStateFlow(
-        SearchUiState(false, emptyList())
+        SearchUiState(isLoading = false, isRefreshing = false, courseList = emptyList())
     )
     val searchedCourseState: StateFlow<SearchUiState> = _searchedCourseState
 
     private val _searchValues = MutableStateFlow("")
     val searchValue: StateFlow<String> = _searchValues
+
+    fun refresh(value: String){
+        _searchedCourseState.update { state ->
+            state.copy(
+                isRefreshing = true
+            )
+        }
+        onSearch(value)
+    }
 
     fun onSearch(char: String) {
         _searchValues.value = char.lowercase()
@@ -41,7 +46,7 @@ class SearchViewModel (
 
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     private fun filterCourses() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             _searchValues
                 .debounce(1500)
                 .distinctUntilChanged()
@@ -53,7 +58,8 @@ class SearchViewModel (
                         _searchedCourseState.update { state ->
                             state.copy(
                                 isLoading = false,
-                                courseList = emptyList()
+                                courseList = emptyList(),
+                                isRefreshing = false
                             )
                         }
                         return@collect
@@ -63,9 +69,10 @@ class SearchViewModel (
                             isLoading = false,
                             courseList = fetchCoursesUseCase.courseList.value
                                 .filter { course ->
-                                    course.title.lowercase().contains(value) ||
-                                            course.description.lowercase().contains(value)
-                                }
+                                    course.courseUi.title.lowercase().contains(value) ||
+                                            course.courseUi.description.lowercase().contains(value)
+                                },
+                            isRefreshing = false
                         )
                     }
                 }

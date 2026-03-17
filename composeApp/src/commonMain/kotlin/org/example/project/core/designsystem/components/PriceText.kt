@@ -8,9 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import dvizexcursion.composeapp.generated.resources.Res
-import dvizexcursion.composeapp.generated.resources.free_text
+import stepik.composeapp.generated.resources.Res
 import org.jetbrains.compose.resources.stringResource
+import stepik.composeapp.generated.resources.course_free_text
 
 @Composable
 fun PriceText(
@@ -20,7 +20,7 @@ fun PriceText(
     Text(
         text =
             if (price == 0.0)
-                stringResource(Res.string.free_text)
+                stringResource(Res.string.course_free_text)
             else "$price ₽",
         style = MaterialTheme.typography.bodyMedium.copy(
             color =

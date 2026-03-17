@@ -11,10 +11,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.stylusHoverIcon
 import androidx.compose.ui.unit.dp
-import dvizexcursion.composeapp.generated.resources.Res
-import dvizexcursion.composeapp.generated.resources.arrow
+import stepik.composeapp.generated.resources.Res
+import stepik.composeapp.generated.resources.arrow
 import org.jetbrains.compose.resources.painterResource
 
 @Composable

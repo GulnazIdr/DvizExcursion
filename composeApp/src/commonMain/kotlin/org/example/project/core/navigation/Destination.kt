@@ -8,6 +8,9 @@ interface Destination
 object OnBoarding: Destination
 
 @Serializable
+object Splash: Destination
+
+@Serializable
 object Login: Destination
 
 @Serializable

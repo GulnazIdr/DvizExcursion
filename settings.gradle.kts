@@ -1,4 +1,4 @@
-rootProject.name = "DvizExcursion"
+rootProject.name = "Stepik"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

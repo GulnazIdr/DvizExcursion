@@ -16,8 +16,8 @@ import org.jetbrains.compose.resources.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import dvizexcursion.composeapp.generated.resources.Res
-import dvizexcursion.composeapp.generated.resources.arrow
+import stepik.composeapp.generated.resources.Res
+import stepik.composeapp.generated.resources.arrow
 import org.jetbrains.compose.resources.DrawableResource
 
 @Composable

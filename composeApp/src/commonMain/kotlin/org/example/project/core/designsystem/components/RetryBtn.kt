@@ -9,11 +9,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import dvizexcursion.composeapp.generated.resources.Res
-import dvizexcursion.composeapp.generated.resources.reddit
-import dvizexcursion.composeapp.generated.resources.refresh
+import stepik.composeapp.generated.resources.Res
+import stepik.composeapp.generated.resources.refresh
 import org.jetbrains.compose.resources.painterResource
 
 @Composable

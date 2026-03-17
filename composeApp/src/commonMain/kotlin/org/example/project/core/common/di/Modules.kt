@@ -1,5 +1,8 @@
 package org.example.project.core.common.di
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.okhttp.OkHttp
@@ -7,9 +10,10 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.io.files.Path
 import kotlinx.serialization.json.Json
-import org.example.project.core.network.ktor.FetchCoursesUseCase
-import org.example.project.core.network.ktor.StepikApiImpl
+import okio.Path.Companion.toPath
+import org.example.project.core.designsystem.ui_logic.FetchCoursesUseCase
 import org.example.project.feature.auth.data.LoginRepositoryImpl
 import org.example.project.feature.auth.data.RegisterRepositoryImpl
 import org.example.project.feature.auth.domain.login.LoginRepository
@@ -17,19 +21,21 @@ import org.example.project.feature.auth.domain.login.LoginUseCase
 import org.example.project.feature.auth.domain.registration.RegisterRepository
 import org.example.project.feature.auth.presentation.login.LoginViewModel
 import org.example.project.feature.auth.presentation.register.RegistrationViewmodel
+import org.example.project.feature.course_catalog.CourseViewModel
 import org.example.project.feature.course_detail.CourseDetailViewModel
-import org.example.project.feature.main.domain.StepikApi
-import org.example.project.feature.main.presentation.CourseViewModel
 import org.example.project.feature.search.SearchViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val courseModule = module {
-    singleOf(::StepikApiImpl).bind<StepikApi>()
     viewModelOf(::CourseViewModel)
+}
+
+val courseUseCaseModule = module {
     singleOf(::FetchCoursesUseCase)
 }
 
@@ -38,7 +44,13 @@ val searchModule = module {
 }
 
 val courseDetailModule = module {
-    viewModelOf(::CourseDetailViewModel)
+    viewModel { (courseId: Int) ->
+        CourseDetailViewModel(
+            courseId = courseId,
+            remoteCourseRepository = get(),
+            localCourseRepository = get()
+        )
+    }
 }
 
 val loginModule = module{
@@ -59,6 +71,8 @@ val httpClientModule = module {
 
     single<HttpClient>{
         HttpClient(get<HttpClientEngine>()){
+            expectSuccess = false
+
             install(Logging){
                 level = LogLevel.ALL
             }
@@ -66,7 +80,7 @@ val httpClientModule = module {
             install(ContentNegotiation){
                 json(
                     json = Json{
-                        explicitNulls = false
+                     //   explicitNulls = false
                         ignoreUnknownKeys = true
                         coerceInputValues = true
                         ignoreUnknownKeys = true
@@ -77,5 +91,4 @@ val httpClientModule = module {
     }
 }
 
-expect val dataStoreModule: Module
-internal val DATA_STORE_FILE_NAME = "prefs.preferences_"
+expect val authModule: Module

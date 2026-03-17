@@ -23,24 +23,25 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dvizexcursion.composeapp.generated.resources.Res
-import dvizexcursion.composeapp.generated.resources.user_name_hint
-import dvizexcursion.composeapp.generated.resources.visibiliy_off
-import dvizexcursion.composeapp.generated.resources.visibiliy_on
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
+import stepik.composeapp.generated.resources.Res
+import stepik.composeapp.generated.resources.visibiliy_off
+import stepik.composeapp.generated.resources.visibiliy_on
 
 @Composable
 fun InputField(
     value: String,
     onValueChange: (String) -> Unit,
-    hint: String,
+    hint: String = "",
     errorText: String = "",
-    isPasswordField: Boolean = false
+    isEnabled: Boolean = true,
+    isPasswordField: Boolean = false,
+    textColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
 ) {
     var isPasswordVisible by rememberSaveable { mutableStateOf(false) }
 
@@ -63,10 +64,12 @@ fun InputField(
             ) {
                 CustomTextField(
                     value = value,
-                    onValueChange = { onValueChange(it) },
+                    onValueChange = { if (isEnabled) onValueChange(it) },
                     visualTransformation =
                         if (isPasswordField && !isPasswordVisible) PasswordVisualTransformation()
-                        else VisualTransformation.None
+                        else VisualTransformation.None,
+                    isEnabled = isEnabled,
+                    textColor = textColor
                 )
 
                 if (isPasswordField) {
@@ -116,7 +119,7 @@ private fun InputFieldPrev() {
     InputField(
         value = "",
         onValueChange = {},
-        hint = stringResource(Res.string.user_name_hint),
+        hint = "hint",
         errorText = ""
     )
 }

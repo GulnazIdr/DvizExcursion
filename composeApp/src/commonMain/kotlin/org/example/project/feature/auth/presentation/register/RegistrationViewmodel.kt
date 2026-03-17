@@ -10,23 +10,24 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.example.project.core.designsystem.ui_logic.ValidationUtil
 import org.example.project.feature.auth.domain.AuthResult
-import org.example.project.feature.auth.domain.User
 import org.example.project.feature.auth.domain.registration.RegisterRepository
-import org.example.project.feature.auth.domain.registration.ValidationUtil
 import org.example.project.feature.auth.presentation.mappers.asUiText
 import org.example.project.feature.auth.presentation.models.AuthUiEvent
 import org.example.project.feature.auth.presentation.models.RegistrationUiState
+import org.example.project.core.model.User
+import org.example.project.feature.onboarding.domain.DataStoreRepository
 
 class RegistrationViewmodel(
-    private val registerRepository: RegisterRepository
-): ViewModel() {
-
+    private val registerRepository: RegisterRepository,
+    private val dataStoreRepository: DataStoreRepository
+) : ViewModel() {
     private val _registerUiState = MutableStateFlow(
         RegistrationUiState(
-            userName = "", password = "", email = "",
-            isLoginButtonActive = false, nameError = null, pswdError = null,
-            emailError = null, registerError = null
+            userName = "", password = "", email = "", isLoginButtonActive = false,
+            isPolicyChecked = false, nameError = null, pswdError = null, emailError = null,
+            registerError = null, policyError = null
         )
     )
     val registerUiState: StateFlow<RegistrationUiState> = _registerUiState.asStateFlow()
@@ -34,13 +35,13 @@ class RegistrationViewmodel(
     private val _authUiEvent = MutableSharedFlow<AuthUiEvent>()
     val authUiEvent: SharedFlow<AuthUiEvent> = _authUiEvent.asSharedFlow()
 
-    fun onUserNameChanged(userName: String){
+    fun onUserNameChanged(userName: String) {
         _registerUiState.update { state ->
             val nameError = ValidationUtil.validateName(userName)?.asUiText()
             _registerUiState.value.copy(
                 userName = userName,
-                isLoginButtonActive = nameError == null && state.password.isNotEmpty()
-                        && state.email.isNotEmpty(),
+                isLoginButtonActive = nameError == null && state.password.isNotEmpty() &&
+                        state.isPolicyChecked && state.email.isNotEmpty(),
                 nameError = nameError,
                 pswdError = state.pswdError,
                 emailError = state.emailError
@@ -48,12 +49,12 @@ class RegistrationViewmodel(
         }
     }
 
-    fun onPasswordChanged(password: String){
+    fun onPasswordChanged(password: String) {
         _registerUiState.update { state ->
             val pswdError = ValidationUtil.validatePassword(password)?.asUiText()
             _registerUiState.value.copy(
                 password = password,
-                isLoginButtonActive = state.userName.isNotEmpty() &&
+                isLoginButtonActive = state.userName.isNotEmpty() && state.isPolicyChecked &&
                         pswdError == null && state.email.isNotEmpty(),
                 nameError = state.nameError,
                 pswdError = pswdError,
@@ -62,12 +63,12 @@ class RegistrationViewmodel(
         }
     }
 
-    fun onEmailChanged(email: String){
+    fun onEmailChanged(email: String) {
         _registerUiState.update { state ->
             val emailError = ValidationUtil.validateEmail(email)?.asUiText()
             _registerUiState.value.copy(
                 email = email,
-                isLoginButtonActive = state.userName.isNotEmpty() &&
+                isLoginButtonActive = state.userName.isNotEmpty() && state.isPolicyChecked &&
                         state.password.isNotEmpty() && emailError == null,
                 nameError = state.nameError,
                 pswdError = state.pswdError,
@@ -76,13 +77,33 @@ class RegistrationViewmodel(
         }
     }
 
+    fun onPolicyChecked(isChecked: Boolean) {
+        _registerUiState.update { state ->
+            val policyError = ValidationUtil.validatePolicy(isChecked)?.asUiText()
+            _registerUiState.value.copy(
+                isPolicyChecked = isChecked,
+                isLoginButtonActive = isChecked && state.userName.isNotEmpty() &&
+                        state.password.isNotEmpty() && state.emailError == null,
+                nameError = state.nameError,
+                pswdError = state.pswdError,
+                emailError = state.emailError,
+                policyError = policyError
+            )
+        }
+    }
+
     fun register() {
         val registerState = _registerUiState.value
         viewModelScope.launch {
-            when (val res = registerRepository.signup(User(
-                registerState.userName, registerState.email, registerState.password
-            ))) {
+            when (val res = registerRepository.signup(
+                User(
+                    name = registerState.userName,
+                    email = registerState.email,
+                    password = registerState.password
+                )
+            )) {
                 is AuthResult.Success -> {
+                    dataStoreRepository.setLoggedIn()
                     _authUiEvent.emit(AuthUiEvent.AuthSuccessEvent)
                 }
 

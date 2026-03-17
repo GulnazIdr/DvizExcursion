@@ -15,12 +15,14 @@ import org.example.project.feature.auth.domain.login.LoginRepository
 import org.example.project.feature.auth.domain.login.LoginUseCase
 import org.example.project.feature.auth.presentation.models.AuthUiEvent
 import org.example.project.feature.auth.presentation.models.LoginUiState
-import org.example.project.core.designsystem.UiText
+import org.example.project.core.designsystem.ui_logic.UiText
+import org.example.project.feature.auth.domain.RemoteError
 import org.example.project.feature.auth.presentation.mappers.asUiText
+import org.example.project.feature.onboarding.domain.DataStoreRepository
 
 class LoginViewModel(
     private val loginRepository: LoginRepository,
-    private val loginUseCase: LoginUseCase,
+    private val loginUseCase: LoginUseCase
 ): ViewModel() {
     private val _loginUiState = MutableStateFlow(
         LoginUiState(
@@ -63,11 +65,12 @@ class LoginViewModel(
         viewModelScope.launch {
             if (loginState.password.isNotEmpty() && loginState.userName.isNotEmpty()) {
                 when (val res = loginRepository.login(loginState.userName, loginState.password)) {
-                    is AuthResult.Success -> {
+
+                    is AuthResult.Success<Result<Boolean>, RemoteError> -> {
                         _authUiEvent.emit(AuthUiEvent.AuthSuccessEvent)
                     }
 
-                    is AuthResult.Error -> {
+                    is AuthResult.Error<Result<Boolean>, RemoteError> -> {
                         _loginUiState.update {
                             _loginUiState.value.copy(
                                 error = res.error.asUiText()

@@ -1,56 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
-    <string name="app_name">Reddit</string>
-    <string name="on_boarding_title">Welcome to Stepik</string>
-    <string name="on_boarding_descr">Discover communities, dive into topic, and stay on top of the trends, that matter to you</string>
-    <string name="get_started_text">Start</string>
-    <string name="user_name_hint">Name</string>
-    <string name="password_hint">Password</string>
-    <string name="email_hint">Email</string>
-    <string name="user_name_error">Fill the name field</string>
-    <string name="password_error">Fill the password field</string>
-    <string name="remember_me_text">Remeber me</string>
-    <string name="policy_text">Accept privacy policy</string>
+    <string name="app_name">Stepik</string>
+    <string name="on_boarding1_title">Welcome to Stepik</string>
+    <string name="on_boarding1_descr">Discover communities, dive into topic, and stay on top of the trends, that matter to you</string>
+
+    <string name="on_boarding2_new_prof_title_about">Learn a new profession from scratch</string>
+    <string name="on_boarding2_new_prof_descr_about">Learn from practitioners, solve problems, and build a portfolio.</string>
+    <string name="on_boarding2_skills_title_about">Improve your skills for a career</string>
+    <string name="on_boarding2_skills_descr_about">Short practical courses. Clear, fast, and to the point</string>
+    <string name="on_boarding2_study_title_about">Learn because you want to</string>
+    <string name="on_boarding2_study_descr_about">Just from yourself: from psychology to AI, from languages to </string>
+    <string name="on_boarding2_stepik_about">Everything new appears on Stepik first</string>
+    <string name="on_boarding2_stepik_descr_about">AI, machine learning, no-code, data analysis — everything becomes popular with us before others</string>
+    <string name="on_boarding2_get_started_text">Start</string>
+
+    <string name="auth_user_name_hint">Name</string>
+    <string name="auth_password_hint">Password</string>
+    <string name="auth_phone_hint">Phone</string>
+    <string name="auth_email_hint">Email</string>
+    <string name="auth_user_name_error">Fill the name field</string>
+    <string name="auth_password_error">Fill the password field</string>
+    <string name="registration_remember_me_text">Remeber me</string>
+    <string name="registration_policy_text">Accept privacy policy</string>
     <string name="login_text">Login</string>
     <string name="registration_text">Registration</string>
-    <string name="post_image_alt">post card image</string>
 
-    <string name="free_text">Free</string>
+    <string name="course_free_text">Free</string>
 
-    <string name="description_text">Description</string>
-    <string name="target_audience_text">Target Audience</string>
-    <string name="requirements_text">Requirements</string>
-    <string name="skill_acquire_text">Skills You Will Acquire</string>
-    <string name="what_get_text">What You Will Get</string>
-    <string name="learning_format_text">Learning Format</string>
-    <string name="start_lesson_text">Start</string>
+    <string name="course_detail_description_text">Description</string>
+    <string name="course_detail_target_audience_text">Target Audience</string>
+    <string name="course_detail_requirements_text">Requirements</string>
+    <string name="course_detail_skill_acquire_text">Skills You Will Acquire</string>
+    <string name="course_detail_what_get_text">What You Will Get</string>
+    <string name="course_detail_learning_format_text">Learning Format</string>
+    <string name="course_detail_start_lesson_text">Start</string>
+    <string name="course_detail_lessons_text">Lessons:</string>
 
-    <string name="not_enough_characters">Password has to contain at least 6 characters</string>
-    <string name="no_letters">Password has to contain a letter</string>
-    <string name="no_digits">Password has to contain a digit</string>
-    <string name="no_uppers">Password has to contain an uppercase letter</string>
-    <string name="no_symbols">Password has to contain symbols</string>
-    <string name="empty_field">This field cannot be empty</string>
-    <string name="wrong_creds_field">Wrong login or password</string>
-    <string name="wrong_format_field">Wrong format</string>
-    <string name="policy_unchecked_field">Read privacy policy</string>
+    <string name="registration_error_not_enough_characters">Password has to contain at least 6 characters</string>
+    <string name="registration_error_no_letters">Password has to contain a letter</string>
+    <string name="registration_error_no_digits">Password has to contain a digit</string>
+    <string name="registration_error_no_uppers">Password has to contain an uppercase letter</string>
+    <string name="registration_error_no_symbols">Password has to contain symbols</string>
+    <string name="registration_error_empty_field">This field cannot be empty</string>
+    <string name="registration_error_wrong_creds_field">Wrong login or password</string>
+    <string name="registration_error_wrong_format_field">Wrong format</string>
+    <string name="registration_error_policy_unchecked_field">Read privacy policy</string>
 
-    <string name="no_internet_field">No internet connection</string>
-    <string name="request_timeout_field">Request time out</string>
-    <string name="too_many_requests_field">Too many requests. Please, try again later</string>
-    <string name="uknown_error_field">Something went wrong. Please try again later</string>
+    <string name="remote_error_no_internet_field">No internet connection</string>
+    <string name="remote_error_request_timeout_field">Request time out</string>
+    <string name="remote_error_too_many_requests_field">Too many requests. Please, try again later</string>
+    <string name="remote_error_uknown_error_field">Something went wrong. Please try again later</string>
 
-    <string name="share_text">Send</string>
     <string name="search_hint">Search any course</string>
 
-    <string name="lessons_text">Lessons:</string>
-
-    <string name="new_profession_title_about">Learn a new profession from scratch</string>
-    <string name="new_profession_descr_about">Learn from practitioners, solve problems, and build a portfolio.</string>
-    <string name="skills_title_about">Improve your skills for a career</string>
-    <string name="skills_descr_about">Short practical courses. Clear, fast, and to the point</string>
-    <string name="study_title_about">Learn because you want to</string>
-    <string name="study_descr_about">Just from yourself: from psychology to AI, from languages to </string>
-    <string name="stepik_about">Everything new appears on Stepik first</string>
-    <string name="stepik_descr_about">AI, machine learning, no-code, data analysis — everything becomes popular with us before others</string>
+    <string name="profile_logout">Logout</string>
+    <string name="profile_save">Save</string>
 </resources>

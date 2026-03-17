@@ -19,65 +19,35 @@ import dvizexcursion.composeapp.generated.resources.add
 import dvizexcursion.composeapp.generated.resources.menu
 import dvizexcursion.composeapp.generated.resources.reddit_logo_text
 import dvizexcursion.composeapp.generated.resources.reddit_profile
+import dvizexcursion.composeapp.generated.resources.stepik_logo_text
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun MainTopAppBar(
     onMenu: () -> Unit,
-    onAddPost: () -> Unit,
-    onProfile: () -> Unit,
     modifier: Modifier = Modifier
 ){
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                painter = painterResource(Res.drawable.menu),
-                tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                contentDescription = "menu icon",
-                modifier = Modifier
-                    .size(24.dp)
-                    .clickable(onClick = onMenu)
-            )
+        Icon(
+            painter = painterResource(Res.drawable.menu),
+            tint = MaterialTheme.colorScheme.onSecondaryContainer,
+            contentDescription = "menu icon",
+            modifier = Modifier
+                .size(24.dp)
+                .clickable(onClick = onMenu)
+        )
 
-            Spacer(modifier = Modifier.width(15.dp))
+        Spacer(modifier = Modifier.width(15.dp))
 
-            Icon(
-                painter = painterResource(Res.drawable.reddit_logo_text),
-                tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                contentDescription = "reddit logo icon",
-                modifier = Modifier.size(60.dp)
-            )
-        }
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Icon(
-                painter = painterResource(Res.drawable.add),
-                tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                contentDescription = "add post icon",
-                modifier = Modifier
-                    .size(20.dp)
-                    .clickable(onClick = onAddPost)
-            )
-
-            Spacer(modifier = Modifier.width(15.dp))
-
-            Icon(
-                painter = painterResource(Res.drawable.reddit_profile),
-                tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                contentDescription = "profile default icon",
-                modifier = Modifier
-                    .size(30.dp)
-                    .clickable(onClick = onProfile)
-            )
-        }
+        Icon(
+            painter = painterResource(Res.drawable.stepik_logo_text),
+            tint = MaterialTheme.colorScheme.primary,
+            contentDescription = "stepik logo icon",
+            modifier = Modifier.size(95.dp)
+        )
     }
 }
 
@@ -85,8 +55,6 @@ fun MainTopAppBar(
 @Composable
 fun MainTopAppBarPrev(){
     MainTopAppBar(
-        onMenu = {},
-        onProfile = {},
-        onAddPost = {}
+        onMenu = {}
     )
 }

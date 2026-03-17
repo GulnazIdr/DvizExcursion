@@ -24,7 +24,7 @@ import dvizexcursion.composeapp.generated.resources.remember_me_text
 import dvizexcursion.composeapp.generated.resources.user_name_hint
 import org.example.project.core.designsystem.components.InputField
 import org.example.project.core.designsystem.components.NavigationButton
-import org.example.project.core.designsystem.components.RedditLogo
+import org.example.project.core.designsystem.components.StepikLogo
 import org.example.project.core.designsystem.components.TextCheckBox
 import org.example.project.feature.auth.presentation.components.AnimatedBorderCard
 import org.example.project.feature.auth.presentation.components.AuthTopAppBar
@@ -36,9 +36,9 @@ import org.koin.compose.viewmodel.koinViewModel
 fun LoginScreen(
     navigateToMain: () -> Unit,
     navigateToRegistration: () -> Unit,
+    loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
     onBack: () -> Unit
 ) {
-    val loginViewModel = koinViewModel<LoginViewModel>()
     val loginUiState by loginViewModel.loginUiState.collectAsStateWithLifecycle()
     val loginUiEvent = loginViewModel.authUiEvent
 
@@ -66,7 +66,7 @@ fun LoginScreen(
                 )
                 Spacer(modifier = Modifier.weight(1f))
 
-                RedditLogo(
+                StepikLogo(
                     size = 60.dp
                 )
 

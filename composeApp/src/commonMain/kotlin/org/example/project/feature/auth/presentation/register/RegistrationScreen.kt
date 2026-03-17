@@ -22,13 +22,13 @@ import dvizexcursion.composeapp.generated.resources.password_hint
 import dvizexcursion.composeapp.generated.resources.policy_text
 import dvizexcursion.composeapp.generated.resources.registration_text
 import dvizexcursion.composeapp.generated.resources.user_name_hint
+import org.example.project.core.designsystem.components.InputField
+import org.example.project.core.designsystem.components.NavigationButton
+import org.example.project.core.designsystem.components.StepikLogo
+import org.example.project.core.designsystem.components.TextCheckBox
 import org.example.project.feature.auth.presentation.components.AnimatedBorderCard
 import org.example.project.feature.auth.presentation.components.AuthTopAppBar
 import org.example.project.feature.auth.presentation.models.AuthUiEvent
-import org.example.project.core.designsystem.components.InputField
-import org.example.project.core.designsystem.components.NavigationButton
-import org.example.project.core.designsystem.components.RedditLogo
-import org.example.project.core.designsystem.components.TextCheckBox
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -36,9 +36,9 @@ import org.koin.compose.viewmodel.koinViewModel
 fun RegistrationScreen(
     navigateToMain: () -> Unit,
     navigateToLogin: () -> Unit,
+    registrViewModel: RegistrationViewmodel = koinViewModel<RegistrationViewmodel>(),
     onBack: () -> Unit
 ){
-    val registrViewModel = koinViewModel<RegistrationViewmodel>()
     val registrUiState = registrViewModel.registerUiState.collectAsStateWithLifecycle().value
     val loginUiEvent = registrViewModel.authUiEvent
 
@@ -66,7 +66,7 @@ fun RegistrationScreen(
                 )
                 Spacer(modifier = Modifier.weight(1f))
 
-                RedditLogo(
+                StepikLogo(
                     size = 60.dp
                 )
 

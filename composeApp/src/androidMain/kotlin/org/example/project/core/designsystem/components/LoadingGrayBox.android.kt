@@ -2,6 +2,8 @@ package org.example.project.core.designsystem.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,18 +18,12 @@ actual fun LoadingGrayBox(
     modifier: Modifier,
     content: @Composable (() -> Unit)
 ) {
-    val height = LocalWindowInfo.current.containerDpSize.height.value
-    //val context = LocalContext.current.getString()
-
     Box(
         modifier = modifier
             .background(
                 color = MaterialTheme.colorScheme.outlineVariant,
                 shape = RoundedCornerShape(10.dp)
             )
-            .fillMaxWidth()
-            .height((height*0.5).dp)
-    ){
-        content()
-    }
+            .fillMaxSize()
+    )
 }

@@ -31,6 +31,6 @@ fun CustomTextField(
                 MaterialTheme.colorScheme.surface,
                 MaterialTheme.colorScheme.tertiary
             )
-        ),
+        )
     )
 }

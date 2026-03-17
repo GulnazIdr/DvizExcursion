@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,15 +12,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.example.project.core.designsystem.components.ErrorDialog
+import org.example.project.feature.main.presentation.components.CourseList
 import org.example.project.feature.main.presentation.components.MainTopAppBar
 import org.example.project.feature.main.presentation.components.SearchBar
-import org.example.project.feature.main.presentation.post.PostCardItem
+import org.example.project.core.designsystem.components.CircleLoading
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun MainScreen(){
-    val postViewModel = koinViewModel<PostViewModel>()
-    val posts by postViewModel.postState.collectAsStateWithLifecycle()
+fun MainScreen(
+    navigateToSearch: () -> Unit,
+    navigateToCourseDetail: (id: Int) -> Unit,
+    courseViewModel: CourseViewModel = koinViewModel<CourseViewModel>()
+){
+    val courseFetchState by courseViewModel.courseFetchedState.collectAsStateWithLifecycle()
 
     Scaffold{ paddingValues ->
         Box(
@@ -32,30 +35,38 @@ fun MainScreen(){
                 modifier = Modifier.padding(horizontal = 20.dp)
             ) {
                 MainTopAppBar(
-                    onMenu = {},
-                    onAddPost = {},
-                    onProfile = {}
+                    onMenu = {}
                 )
 
-                SearchBar(
-                    onValueChanged = { postViewModel.filterPosts(it) }
-                )
+                courseFetchState.courseFetchedResult.Display(
+                    onSuccess = { courseList ->
+                        SearchBar(
+                            onValueChanged = {},
+                            onClick = navigateToSearch
+                        )
 
-                Spacer(modifier = Modifier.height(20.dp))
+                        Spacer(modifier = Modifier.height(20.dp))
 
-                LazyColumn {
-                    items(
-                        items = posts,
-                        key = { post ->
-                            post.id
-                        }
-                    ) { post ->
-                        PostCardItem(
-                            postUi = post,
-                            isFirst = post.id == 1
+                        CourseList(
+                            courseList = courseList,
+                            isPageEnded = courseFetchState.isPageEnded,
+                            loadMore = { courseViewModel.fetchCourses() },
+                            isDataLoading = courseFetchState.isDataLoading,
+                            onCourse = {
+                                navigateToCourseDetail(it)
+                            }
+                        )
+                    },
+                    onLoading = {
+                        CircleLoading()
+                    },
+                    onError = { error ->
+                        ErrorDialog(
+                            errorMessage = error,
+                            onRetry = { courseViewModel.fetchCourses() }
                         )
                     }
-                }
+                )
             }
         }
     }
@@ -64,5 +75,8 @@ fun MainScreen(){
 @Preview
 @Composable
 fun MainScreenPrev(){
-    MainScreen()
+    MainScreen(
+        navigateToSearch = {},
+        navigateToCourseDetail = {}
+    )
 }

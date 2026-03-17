@@ -14,6 +14,7 @@ import dvizexcursion.composeapp.generated.resources.Res
 import dvizexcursion.composeapp.generated.resources.arrow
 import dvizexcursion.composeapp.generated.resources.login_text
 import dvizexcursion.composeapp.generated.resources.registration_text
+import org.example.project.core.designsystem.components.BasicTopAppBar
 import org.example.project.core.designsystem.components.CustomIconButton
 import org.jetbrains.compose.resources.stringResource
 
@@ -24,18 +25,10 @@ fun AuthTopAppBar(
     onAuth: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier = modifier.fillMaxWidth(),
-    ) {
-        CustomIconButton(
-            idDrawable = Res.drawable.arrow,
-            modifier = Modifier
-                .clickable(onClick = onBack)
-                .align(Alignment.TopStart),
-            size = 44.dp,
-            iconSize = 22.dp
-        )
-
+    BasicTopAppBar(
+        onBack = onBack,
+        modifier = modifier
+    ){
         Text(
             text = stringResource(
                 if (isRegistationScreen) Res.string.login_text
@@ -45,7 +38,6 @@ fun AuthTopAppBar(
                 color = MaterialTheme.colorScheme.onSecondary
             ),
             modifier = Modifier
-                .align(Alignment.CenterEnd)
                 .clickable(onClick = onAuth)
         )
     }

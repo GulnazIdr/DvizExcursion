@@ -1,13 +1,21 @@
 package org.example.project.core.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
+import androidx.navigation.toRoute
 import org.example.project.feature.auth.presentation.login.LoginScreen
 import org.example.project.feature.auth.presentation.register.RegistrationScreen
+import org.example.project.feature.course_detail.CourseDetailsCard
+import org.example.project.feature.main.presentation.CourseViewModel
 import org.example.project.feature.main.presentation.MainScreen
 import org.example.project.feature.onboarding.Boarding
+import org.example.project.feature.onboarding.OnBoarding
+import org.example.project.feature.search.SearchScreen
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun NavigationGraph() {
@@ -23,7 +31,7 @@ fun NavigationGraph() {
 
     NavHost(
         navController = navController,
-        startDestination = OnBoarding
+        startDestination = Main
     ){
         composable<OnBoarding>{
             Boarding(
@@ -47,8 +55,30 @@ fun NavigationGraph() {
             )
         }
 
+
         composable<Main> {
-            MainScreen()
+            MainScreen(
+                navigateToSearch = { navController.navigate(Search) },
+                navigateToCourseDetail = {navController.navigate(CourseDetail(it))}
+            )
         }
+
+        composable<Search> {
+            SearchScreen(
+                navigateToMain = { navController.navigateUp() },
+                navigateToCourseDetail = {navController.navigate(CourseDetail(it))}
+            )
+        }
+
+        composable<CourseDetail> {
+            val id = it.toRoute<CourseDetail>().courseId
+            CourseDetailsCard(
+                onStartLessonClick = {},
+                navigateToMain = {navController.navigateUp()},
+                courseId = id
+            )
+
+        }
+
     }
 }

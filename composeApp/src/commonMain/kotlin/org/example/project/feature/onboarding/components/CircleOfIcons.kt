@@ -18,7 +18,7 @@ import dvizexcursion.composeapp.generated.resources.game_console
 import dvizexcursion.composeapp.generated.resources.hearts
 import dvizexcursion.composeapp.generated.resources.science
 import dvizexcursion.composeapp.generated.resources.scientific
-import org.example.project.core.designsystem.components.RedditLogo
+import org.example.project.core.designsystem.components.StepikLogo
 import org.example.project.core.designsystem.components.getWindowHeight
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -61,8 +61,8 @@ fun CircleOfIcons(){
             isDumbbell = true
         )
 
-        RedditLogo(
-            size = 90.dp,
+        StepikLogo(
+            size = 80.dp,
             modifier = Modifier.align(Alignment.Center)
         )
     }

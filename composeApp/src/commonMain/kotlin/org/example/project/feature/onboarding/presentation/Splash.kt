@@ -3,6 +3,7 @@ package org.example.project.feature.onboarding.presentation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -10,6 +11,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import stepik.composeapp.generated.resources.Res
@@ -34,7 +36,8 @@ fun Splash(
         Icon(
             painter = painterResource(Res.drawable.stepik_logo),
             contentDescription = "stepik image",
-            tint = Color.Unspecified
+            tint = Color.Unspecified,
+            modifier = Modifier.size(40.dp)
         )
     }
 }

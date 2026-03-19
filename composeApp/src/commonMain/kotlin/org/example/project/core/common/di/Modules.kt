@@ -1,8 +1,5 @@
 package org.example.project.core.common.di
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.PreferenceDataStoreFactory
-import androidx.datastore.preferences.core.Preferences
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.okhttp.OkHttp
@@ -10,10 +7,8 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.io.files.Path
 import kotlinx.serialization.json.Json
-import okio.Path.Companion.toPath
-import org.example.project.core.designsystem.ui_logic.FetchCoursesUseCase
+import org.example.project.core.domain.FetchCoursesUseCase
 import org.example.project.feature.auth.data.LoginRepositoryImpl
 import org.example.project.feature.auth.data.RegisterRepositoryImpl
 import org.example.project.feature.auth.domain.login.LoginRepository

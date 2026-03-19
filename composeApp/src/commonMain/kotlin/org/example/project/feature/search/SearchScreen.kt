@@ -28,13 +28,14 @@ fun SearchScreen(
     val searchedCourseState by courseViewModel.searchedCourseState.collectAsStateWithLifecycle()
     val lastSearched by courseViewModel.searchValue.collectAsStateWithLifecycle()
 
-    Column(
-        modifier = modifier.fillMaxSize()
+    PullToRefreshBox(
+        isRefreshing = searchedCourseState.isRefreshing,
+        onRefresh = { courseViewModel.refresh(lastSearched) }
     ) {
-        PullToRefreshBox(
-            isRefreshing = searchedCourseState.isRefreshing,
-            onRefresh = { courseViewModel.refresh(lastSearched) }
+        Column(
+            modifier = modifier.fillMaxSize()
         ) {
+
             SearchTopAppBar(
                 onBack = {
                     navigateToMain()

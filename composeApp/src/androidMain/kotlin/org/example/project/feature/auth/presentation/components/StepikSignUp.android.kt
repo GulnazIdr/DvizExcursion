@@ -2,8 +2,6 @@ package org.example.project.feature.auth.presentation.components
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
@@ -13,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationResponse
+import org.example.project.core.designsystem.components.NavigationButton
 import org.example.project.feature.auth.presentation.AuthViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -53,7 +52,8 @@ actual fun StepikSignUp(
         onDispose { }
     }
 
-    Button(onClick = {viewModel.openLoginPage()}){
-        Text(text = "login stepik")
-    }
+    NavigationButton(
+        onBtnClick = {viewModel.openLoginPage()},
+        text = "login stepik"
+    )
 }

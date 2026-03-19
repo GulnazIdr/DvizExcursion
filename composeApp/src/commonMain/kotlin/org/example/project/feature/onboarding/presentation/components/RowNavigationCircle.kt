@@ -6,46 +6,45 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.example.project.feature.onboarding.navigation.BoardingDestination
+import org.example.project.feature.onboarding.navigation.BottomNavState
 
 @Composable
 fun RowNavigationCircle(
-    activeIndex: Int,
-    navigateToBoarding1: () -> Unit,
-    navigateToBoarding2: () -> Unit,
+    startDestination: BoardingDestination,
+    navController: BottomNavState,
+    setBoardingViewed: () -> Unit,
     modifier: Modifier = Modifier
-){
+) {
+    var selectedDestination by rememberSaveable { mutableIntStateOf(startDestination.ordinal) }
+
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
+        BoardingDestination.entries.forEachIndexed { index, destination ->
+            NavigationCircle(
+                isActive = selectedDestination == index,
+                onClick = {
+                    if (destination == BoardingDestination.BOARDING2) {
+                        setBoardingViewed()
+                    }
+                    navController.navigateTo(destination.route)
+                    selectedDestination = index
+                }
+            )
 
-        NavigationCircle(
-            isActive = activeIndex == 1,
-            onClick = navigateToBoarding1
-        )
-
-        Spacer(modifier = Modifier.width(20.dp))
-
-        NavigationCircle(
-            isActive = activeIndex == 2,
-            onClick = navigateToBoarding2
-        )
-
-        Spacer(modifier = Modifier.width(20.dp))
+            if (index == 0){
+                Spacer(modifier = Modifier.width(20.dp))
+            }
+        }
     }
-}
-
-@Preview
-@Composable
-fun RowNavigationCirclePrev(){
-    RowNavigationCircle(
-        activeIndex = 1,
-        navigateToBoarding1 = {},
-        navigateToBoarding2 = {}
-    )
 }

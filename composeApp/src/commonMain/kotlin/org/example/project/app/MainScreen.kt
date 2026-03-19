@@ -30,7 +30,6 @@ fun MainScreen(
             navigateToSearch = navigateToSearch,
             navigateToCourseDetail = navigateToCourseDetail,
             logout = logout,
-            paddingValues = innerPadding,
             navController = navController,
             startDestination = startDestination
         )

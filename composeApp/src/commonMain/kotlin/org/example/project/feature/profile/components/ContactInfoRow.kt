@@ -31,7 +31,8 @@ fun ContactInfoRow(
         Icon(
             painter = painterResource(iconRes),
             contentDescription = hint,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(24.dp),
+            tint = MaterialTheme.colorScheme.onSecondaryContainer
         )
 
         Spacer(modifier = Modifier.width(16.dp))

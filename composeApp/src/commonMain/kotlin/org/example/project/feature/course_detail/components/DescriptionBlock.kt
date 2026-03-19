@@ -4,6 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -12,6 +13,7 @@ import org.jetbrains.compose.resources.stringResource
 fun DescriptionBlock(
     modifier: Modifier = Modifier,
     title: StringResource,
+    textColor: Color,
     descr: @Composable () -> Unit
 ){
     Text(
@@ -19,7 +21,7 @@ fun DescriptionBlock(
         style = MaterialTheme.typography.bodyLarge
             .copy(
                 fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.background
+                color = textColor
             ),
         modifier = modifier
     )

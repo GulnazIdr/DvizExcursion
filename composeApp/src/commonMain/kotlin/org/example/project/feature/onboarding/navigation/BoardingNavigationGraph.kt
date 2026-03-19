@@ -1,6 +1,5 @@
 package org.example.project.feature.onboarding.navigation
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -13,21 +12,29 @@ import org.example.project.feature.onboarding.presentation.OnBoarding2
 fun BoardingNavigationGraph(
     navigateToLogin: () -> Unit,
     navController: NavHostController,
+    startDestination: BoardingDestination,
     modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
-        startDestination = OnBoarding1,
+        startDestination = startDestination.route,
         modifier = modifier
-    ){
-        composable<OnBoarding1>{
-            OnBoarding()
-        }
+    ) {
+        BoardingDestination.entries.forEach { destination ->
+            composable(destination.route) {
+                when (destination) {
+                    BoardingDestination.BOARDING1 -> {
+                        OnBoarding()
+                    }
 
-        composable<OnBoarding2>{
-            OnBoarding2(
-                navigateToLogin = navigateToLogin
-            )
+                    BoardingDestination.BOARDING2 -> {
+                        OnBoarding2(
+                            navigateToLogin = navigateToLogin
+                        )
+                    }
+                }
+
+            }
         }
     }
 }

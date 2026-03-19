@@ -6,6 +6,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -44,11 +45,9 @@ fun NavigationGraph(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = startDestination,
-            modifier = Modifier
-                .padding(innerPadding)
+            startDestination = Splash,
+            modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = innerPadding.calculateTopPadding())
         ) {
-
             composable<Splash> {
                 Splash (
                     onDelayFinished = {  navigateToAndPopAll(startDestination) }
@@ -64,10 +63,7 @@ fun NavigationGraph(
 
             composable<Login> {
                 LoginScreen(
-                    onBack = {
-                        navController.navigateUp()
-
-                             },
+                    onBack = { navController.navigateUp() },
                     navigateToMain = { navigateToAndPopAll(Main) },
                     navigateToRegistration = { navController.navigate(Registration) }
                 )

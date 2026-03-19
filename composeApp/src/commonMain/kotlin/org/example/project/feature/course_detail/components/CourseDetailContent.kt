@@ -25,19 +25,10 @@ import org.example.project.core.designsystem.components.PriceText
 import org.example.project.feature.course_catalog.presentation.models.CourseDetailUi
 import org.jetbrains.compose.resources.stringResource
 import stepik.composeapp.generated.resources.Res
-import stepik.composeapp.generated.resources.checkmark
 import stepik.composeapp.generated.resources.clock
-import stepik.composeapp.generated.resources.course_detail_description_text
-import stepik.composeapp.generated.resources.course_detail_learning_format_text
 import stepik.composeapp.generated.resources.course_detail_lessons_text
-import stepik.composeapp.generated.resources.course_detail_requirements_text
-import stepik.composeapp.generated.resources.course_detail_skill_acquire_text
 import stepik.composeapp.generated.resources.course_detail_start_lesson_text
-import stepik.composeapp.generated.resources.course_detail_target_audience_text
-import stepik.composeapp.generated.resources.course_detail_what_get_text
 import stepik.composeapp.generated.resources.level
-import stepik.composeapp.generated.resources.requirement
-import stepik.composeapp.generated.resources.skill
 
 @Composable
 fun CourseDetailContent(
@@ -46,7 +37,9 @@ fun CourseDetailContent(
     onStartLessonClick: () -> Unit,
     isRefreshing: Boolean,
     onRefresh: () -> Unit,
-){
+) {
+    val textColor = MaterialTheme.colorScheme.onSecondaryContainer
+
     PullToRefreshBox(
         isRefreshing = isRefreshing,
         onRefresh = onRefresh
@@ -65,13 +58,13 @@ fun CourseDetailContent(
                 Text(
                     text = courseDetailUi.courseUi.title,
                     style = MaterialTheme.typography.bodyLarge.copy(
-                        color = MaterialTheme.colorScheme.background
+                        color = textColor
                     ),
                     modifier = Modifier.weight(1f)
                 )
                 PriceText(
                     courseDetailUi.courseUi.price,
-                    priceColor = MaterialTheme.colorScheme.background
+                    priceColor = textColor
                 )
             }
 
@@ -83,130 +76,53 @@ fun CourseDetailContent(
                 if (courseDetailUi.workloadTime.isNotEmpty()) {
                     DescriptionItem(
                         resource = Res.drawable.clock,
-                        text = courseDetailUi.workloadTime
+                        text = courseDetailUi.workloadTime,
+                        textColor = textColor
                     )
 
                     Spacer(modifier = Modifier.width(24.dp))
                 }
 
-                if (courseDetailUi.difficultyLevel.isNotEmpty())
-                    DescriptionItem(
-                        resource = Res.drawable.level,
-                        text = courseDetailUi.difficultyLevel.capitalize(
-                            Locale.current
-                        )
-                    )
-            }
-
-            if (courseDetailUi.courseUi.description.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(16.dp))
-
-
-                DescriptionBlock(
-                    title = Res.string.course_detail_description_text
-                ) {
-                    Spacer(modifier = Modifier.height(6.dp))
-                    Text(
-                        text = courseDetailUi.courseUi.description,
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            color = MaterialTheme.colorScheme.background
-                        ),
-                    )
+                if (courseDetailUi.difficultyLevel.isNotEmpty()) {
                 }
+                DescriptionItem(
+                    resource = Res.drawable.level,
+                    text = courseDetailUi.difficultyLevel.capitalize(
+                        Locale.current
+                    ),
+                    textColor = textColor
+                )
             }
 
-            if (courseDetailUi.targetAudience.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(16.dp))
+            DescriptionComponent(
+                description = courseDetailUi.courseUi.description,
+                textColor = textColor
+            )
 
-                DescriptionBlock(
-                    title = Res.string.course_detail_target_audience_text
-                ) {
-                    Spacer(modifier = Modifier.height(6.dp))
-                    Text(
-                        text = courseDetailUi.targetAudience.replace(
-                            "\\n", "\n"
-                        ),
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            color = MaterialTheme.colorScheme.background
-                        ),
-                    )
-                }
-            }
+            AudienceComponent(
+                textColor = textColor,
+                targetAudience = courseDetailUi.targetAudience
+            )
 
-            if (courseDetailUi.requirements.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(16.dp))
+            RequirementComponent(
+                requirements = courseDetailUi.requirements,
+                textColor = textColor
+            )
 
-                DescriptionBlock(
-                    title = Res.string.course_detail_requirements_text
-                ) {
-                    Spacer(modifier = Modifier.height(6.dp))
-                    DescriptionItem(
-                        resource = Res.drawable.requirement,
-                        text = courseDetailUi.requirements
-                            .replace(Regex("<.*?>"), "")
-                            .replace(Regex("-"), "")
-                    )
-                }
-            }
+            AquiredSkillsComponent(
+                textColor = textColor,
+                acquiredSkills = courseDetailUi.acquiredSkills
+            )
 
-            if (courseDetailUi.acquiredSkills.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(16.dp))
+            AquiredAssetsComponent(
+                acquiredAssets = courseDetailUi.acquiredAssets,
+                textColor = textColor
+            )
 
-                DescriptionBlock(
-                    title = Res.string.course_detail_skill_acquire_text
-                ) {
-                    Spacer(modifier = Modifier.height(6.dp))
-                    courseDetailUi.acquiredSkills.forEach { skill ->
-                        Row(verticalAlignment = Alignment.Top) {
-                            DescriptionItem(
-                                resource = Res.drawable.skill,
-                                text = skill.replace(
-                                    Regex("—"), ""
-                                )
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(4.dp))
-                    }
-                }
-            }
-
-            if (courseDetailUi.acquiredAssets.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(16.dp))
-
-                DescriptionBlock(
-                    title = Res.string.course_detail_what_get_text
-                ) {
-                    Spacer(modifier = Modifier.height(6.dp))
-                    courseDetailUi.acquiredAssets.forEach { asset ->
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            DescriptionItem(
-                                resource = Res.drawable.checkmark,
-                                text = asset
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(4.dp))
-                    }
-                }
-            }
-
-            if (courseDetailUi.learningFormat.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(16.dp))
-
-                DescriptionBlock(
-                    title = Res.string.course_detail_learning_format_text
-                ) {
-                    Spacer(modifier = Modifier.height(6.dp))
-                    Text(
-                        text = courseDetailUi.learningFormat.replace(
-                            Regex("<.*?>"),
-                            ""
-                        ),
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            color = MaterialTheme.colorScheme.background
-                        ),
-                    )
-                }
-            }
+            LearningFormatComponent(
+                learningFormat = courseDetailUi.learningFormat,
+                textColor = textColor,
+            )
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -221,7 +137,7 @@ fun CourseDetailContent(
                     text = stringResource(Res.string.course_detail_lessons_text) +
                             "${courseDetailUi.lessonsCount}",
                     style = MaterialTheme.typography.bodyLarge.copy(
-                        color = MaterialTheme.colorScheme.background
+                        color = textColor
                     ),
                 )
 

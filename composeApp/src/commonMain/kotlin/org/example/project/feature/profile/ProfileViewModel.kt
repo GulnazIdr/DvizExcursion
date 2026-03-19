@@ -56,7 +56,6 @@ class ProfileViewModel(
     }
 
     fun onEmailChanged(email: String) {
-        Napier.e("email $email")
         _profileUiState.update { state ->
             val emailError = ValidationUtil.validateEmail(email)?.asUiText()
             _profileUiState.value.copy(

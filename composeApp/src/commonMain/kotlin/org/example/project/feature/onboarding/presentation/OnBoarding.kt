@@ -60,7 +60,7 @@ fun OnBoarding(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }

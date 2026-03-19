@@ -12,7 +12,13 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.example.project.core.designsystem.ui_logic.FetchCoursesUseCase
+import org.example.project.core.common.result.FetchResult
+import org.example.project.core.common.result.NetworkError
+import org.example.project.core.domain.FetchCourseResult
+import org.example.project.core.domain.FetchCoursesUseCase
+import org.example.project.core.model.CourseDetail
+import org.example.project.feature.course_catalog.presentation.mappers.toCourseDetailUi
+import org.example.project.feature.course_catalog.presentation.models.CourseDetailUi
 
 class SearchViewModel (
     private val fetchCoursesUseCase: FetchCoursesUseCase
@@ -64,18 +70,41 @@ class SearchViewModel (
                         }
                         return@collect
                     }
-                    _searchedCourseState.update { state ->
-                        state.copy(
-                            isLoading = false,
-                            courseList = fetchCoursesUseCase.courseList.value
-                                .filter { course ->
-                                    course.courseUi.title.lowercase().contains(value) ||
-                                            course.courseUi.description.lowercase().contains(value)
-                                },
-                            isRefreshing = false
-                        )
-                    }
+
+                    getFilteredCourseList(value)
                 }
         }
     }
+
+    private suspend fun getFilteredCourseList(value: String){
+        _searchedCourseState.update { state ->
+            state.copy(
+                isLoading = false,
+                courseList = transformFetchCourseResult(value),
+                isRefreshing = false
+            )
+        }
+    }
+
+    private suspend fun transformFetchCourseResult(value: String): List<CourseDetailUi>{
+        return when(fetchCoursesUseCase.courseFetchResult){
+            is FetchResult.Success<FetchCourseResult> -> {
+                fetchCoursesUseCase.courseFetchResult.successData.courseList
+                    .map { it.toCourseDetailUi() }
+                    .filter { course ->
+                        course.courseUi.title.lowercase().contains(value) ||
+                                course.courseUi.description.lowercase().contains(value)
+                    }
+            }
+
+            is FetchResult.Cache<List<CourseDetail>, NetworkError> -> {
+                fetchCoursesUseCase.courseFetchResult.cacheData.map { it.toCourseDetailUi() }
+            }
+
+            null -> {
+                emptyList()
+            }
+        }
+    }
 }
+

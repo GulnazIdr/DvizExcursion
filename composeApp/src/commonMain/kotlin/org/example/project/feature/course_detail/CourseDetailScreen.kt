@@ -16,7 +16,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.example.project.core.designsystem.components.BasicTopAppBar
@@ -37,10 +36,6 @@ fun CourseDetailsCard(
     val courseDetailFetchRes by courseViewModel.currentCourseState.collectAsStateWithLifecycle()
     val scrollState = rememberScrollState()
 
-    BackHandler(
-        onBack = navigateToMain
-    )
-
     Column{
         BasicTopAppBar(
             onBack = navigateToMain
@@ -51,7 +46,7 @@ fun CourseDetailsCard(
         Card(
             modifier = Modifier.fillMaxSize(),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.onSecondaryContainer
+                containerColor = MaterialTheme.colorScheme.outlineVariant
             ),
             shape = RoundedCornerShape(10.dp)
         ) {

@@ -24,7 +24,7 @@ fun NavigationCircle(
                     else MaterialTheme.colorScheme.primary,
                 shape = CircleShape
             )
-            .size(20.dp)
+            .size(16.dp)
             .clickable(onClick = onClick )
     )
 }

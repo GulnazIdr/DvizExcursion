@@ -54,79 +54,76 @@ fun LoginScreen(
         }
     }
 
-    AnimatedBorderCard(
-        modifier = modifier.fillMaxSize()
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Column(
-            modifier = Modifier.padding(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            AuthTopAppBar(
-                onBack = onBack,
-                isRegistationScreen = false,
-                onAuth = navigateToRegistration
+        AuthTopAppBar(
+            onBack = onBack,
+            isRegistationScreen = false,
+            onAuth = navigateToRegistration
+        )
+        Spacer(modifier = Modifier.weight(1f))
+
+        StepikLogo(
+            size = 60.dp
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text(
+            text = stringResource(Res.string.login_text),
+            style = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onSecondaryContainer
             )
-            Spacer(modifier = Modifier.weight(1f))
+        )
 
-            StepikLogo(
-                size = 60.dp
-            )
+        Spacer(modifier = Modifier.height(40.dp))
 
-            Spacer(modifier = Modifier.height(20.dp))
+        InputField(
+            value = loginUiState.userName,
+            onValueChange = { loginViewModel.onUserNameChanged(it) },
+            hint = stringResource(Res.string.auth_user_name_hint)
+        )
 
-            Text(
-                text = stringResource(Res.string.login_text),
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    color = MaterialTheme.colorScheme.onSecondaryContainer
-                )
-            )
+        Spacer(modifier = Modifier.height(20.dp))
 
-            Spacer(modifier = Modifier.height(40.dp))
+        InputField(
+            value = loginUiState.password,
+            onValueChange = { loginViewModel.onPasswordChanged(it) },
+            hint = stringResource(Res.string.auth_password_hint),
+            isPasswordField = true
+        )
 
-            InputField(
-                value = loginUiState.userName,
-                onValueChange = { loginViewModel.onUserNameChanged(it) },
-                hint = stringResource(Res.string.auth_user_name_hint)
-            )
+        Spacer(modifier = Modifier.height(10.dp))
 
-            Spacer(modifier = Modifier.height(20.dp))
+        TextCheckBox(
+            text = stringResource(Res.string.registration_remember_me_text),
+        )
 
-            InputField(
-                value = loginUiState.password,
-                onValueChange = { loginViewModel.onPasswordChanged(it) },
-                hint = stringResource(Res.string.auth_password_hint),
-                isPasswordField = true
-            )
+        Spacer(modifier = Modifier.height(10.dp))
 
-            Spacer(modifier = Modifier.height(10.dp))
+        Text(
+            text = loginUiState.error.asString(),
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.error
+            ),
+            modifier = Modifier
+        )
 
-            TextCheckBox(
-                text = stringResource(Res.string.registration_remember_me_text),
-            )
+        Spacer(modifier = Modifier.height(30.dp))
 
-            Spacer(modifier = Modifier.height(10.dp))
+        NavigationButton(
+            onBtnClick = { loginViewModel.login() },
+            text = stringResource(Res.string.login_text),
+            isEnabled = loginUiState.isLoginButtonActive
+        )
 
-            Text(
-                text = loginUiState.error.asString(),
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    color = MaterialTheme.colorScheme.error
-                ),
-                modifier = Modifier
-            )
+        Spacer(modifier = Modifier.height(10.dp))
 
-            Spacer(modifier = Modifier.height(30.dp))
+        StepikSignUp()
 
-            NavigationButton(
-                onBtnClick = { loginViewModel.login() },
-                text = stringResource(Res.string.login_text),
-                isEnabled = loginUiState.isLoginButtonActive
-            )
-
-            StepikSignUp()
-
-            Spacer(modifier = Modifier.weight(1f))
-        }
+        Spacer(modifier = Modifier.weight(1f))
     }
 }
 

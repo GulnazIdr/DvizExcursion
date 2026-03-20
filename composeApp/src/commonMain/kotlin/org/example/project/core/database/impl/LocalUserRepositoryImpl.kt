@@ -1,19 +1,23 @@
-package org.example.project.core.database
+package org.example.project.core.database.impl
 
 import io.github.aakira.napier.Napier
 import org.example.project.core.database.dao.UserDao
-import org.example.project.core.database.mappers.toUser
-import org.example.project.core.database.mappers.toUserEntity
+import org.example.project.core.database.model.CourseEntity
+import org.example.project.core.database.model.UserEntity
+import org.example.project.core.database.source.LocalUserRepository
+import org.example.project.core.model.Course
+import org.example.project.core.model.CourseDetail
+import org.example.project.core.model.PageInfo
+import org.example.project.core.model.Stepik
+import org.example.project.core.model.StepikDetailed
 import org.example.project.core.model.User
 import org.example.project.feature.onboarding.domain.DataStoreRepository
-import kotlin.compareTo
-import kotlin.text.compareTo
 
-class LocalUserRepository(
+class LocalUserRepositoryImpl(
     private val userDao: UserDao,
     private val dataStoreRepository: DataStoreRepository
-) {
-    suspend fun saveUser(user: User): Boolean{
+): LocalUserRepository {
+    override suspend fun saveUser(user: User): Boolean{
         return try {
             userDao.setUser(user.toUserEntity())
             dataStoreRepository.setCurrentUserId(userDao.getUser().id)
@@ -24,7 +28,7 @@ class LocalUserRepository(
         }
     }
 
-    suspend fun updateUser(user: User): Boolean{
+    override suspend fun updateUser(user: User): Boolean{
         return try {
             val rowsUpdated = userDao.updateUser(user.toUserEntity())
             rowsUpdated > 0
@@ -34,7 +38,7 @@ class LocalUserRepository(
         }
     }
 
-    suspend fun getUser(): User?{
+    override suspend fun getUser(): User?{
         return try {
             userDao.getUser().toUser()
         }catch (e: Exception){
@@ -43,7 +47,7 @@ class LocalUserRepository(
         }
     }
 
-    suspend fun deleteUser(): Boolean{
+    override suspend fun deleteUser(): Boolean{
         return try {
             userDao.deleteUser()
             true
@@ -52,4 +56,23 @@ class LocalUserRepository(
             false
         }
     }
+}
+
+private fun User.toUserEntity(): UserEntity{
+    return UserEntity(
+        id = id,
+        name = name,
+        email = email,
+        phone = phone
+    )
+}
+
+private fun UserEntity.toUser(): User{
+    return User(
+        id = id,
+        name = name,
+        email = email,
+        phone = phone,
+        password = ""
+    )
 }

@@ -11,17 +11,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.example.project.feature.auth.domain.AuthResult
-import org.example.project.feature.auth.domain.login.LoginRepository
-import org.example.project.feature.auth.domain.login.LoginUseCase
+import org.example.project.feature.auth.domain.login.LoginErrorUseCase
 import org.example.project.feature.auth.presentation.models.AuthUiEvent
 import org.example.project.feature.auth.presentation.models.LoginUiState
 import org.example.project.core.designsystem.ui_logic.UiText
 import org.example.project.feature.auth.domain.RemoteError
-import org.example.project.feature.auth.presentation.mappers.asUiText
-import org.example.project.feature.onboarding.domain.DataStoreRepository
+import org.example.project.core.designsystem.ui_logic.mapper.asUiText
+import org.example.project.feature.auth.domain.login.LoginUseCase
 
 class LoginViewModel(
-    private val loginRepository: LoginRepository,
+    private val loginErrorUseCase: LoginErrorUseCase,
     private val loginUseCase: LoginUseCase
 ): ViewModel() {
     private val _loginUiState = MutableStateFlow(
@@ -42,7 +41,7 @@ class LoginViewModel(
                 userName = userName,
                 isLoginButtonActive = userName.isNotEmpty() && state.password.isNotEmpty(),
                 error =
-                    loginUseCase(userName, state.password)?.asUiText() ?:
+                    loginErrorUseCase(userName, state.password)?.asUiText() ?:
                     UiText.DynamicString("")
             )
         }
@@ -54,7 +53,7 @@ class LoginViewModel(
                 password = password,
                 isLoginButtonActive = password.isNotEmpty() && state.userName.isNotEmpty(),
                 error =
-                    loginUseCase(state.userName, password)?.asUiText() ?:
+                    loginErrorUseCase(state.userName, password)?.asUiText() ?:
                     UiText.DynamicString("")
             )
         }
@@ -64,7 +63,7 @@ class LoginViewModel(
         val loginState = _loginUiState.value
         viewModelScope.launch {
             if (loginState.password.isNotEmpty() && loginState.userName.isNotEmpty()) {
-                when (val res = loginRepository.login(loginState.userName, loginState.password)) {
+                when (val res = loginUseCase(loginState.userName, loginState.password)) {
 
                     is AuthResult.Success<Result<Boolean>, RemoteError> -> {
                         _authUiEvent.emit(AuthUiEvent.AuthSuccessEvent)

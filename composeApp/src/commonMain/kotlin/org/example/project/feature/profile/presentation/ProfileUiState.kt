@@ -1,4 +1,4 @@
-package org.example.project.feature.profile
+package org.example.project.feature.profile.presentation
 
 import org.example.project.core.designsystem.ui_logic.UiText
 

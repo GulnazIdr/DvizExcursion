@@ -11,17 +11,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.example.project.core.designsystem.ui_logic.ValidationUtil
+import org.example.project.core.designsystem.ui_logic.mapper.UserUiToUserMapper
+import org.example.project.core.designsystem.ui_logic.mapper.asUiText
 import org.example.project.feature.auth.domain.AuthResult
-import org.example.project.feature.auth.domain.registration.RegisterRepository
-import org.example.project.feature.auth.presentation.mappers.asUiText
+import org.example.project.feature.auth.domain.registration.RegisterUseCase
 import org.example.project.feature.auth.presentation.models.AuthUiEvent
 import org.example.project.feature.auth.presentation.models.RegistrationUiState
-import org.example.project.core.model.User
-import org.example.project.feature.onboarding.domain.DataStoreRepository
+import org.example.project.feature.auth.presentation.models.UserUi
 
 class RegistrationViewmodel(
-    private val registerRepository: RegisterRepository,
-    private val dataStoreRepository: DataStoreRepository
+    private val registerUseCase: RegisterUseCase,
+    private val userMapper: UserUiToUserMapper
 ) : ViewModel() {
     private val _registerUiState = MutableStateFlow(
         RegistrationUiState(
@@ -95,15 +95,13 @@ class RegistrationViewmodel(
     fun register() {
         val registerState = _registerUiState.value
         viewModelScope.launch {
-            when (val res = registerRepository.signup(
-                User(
-                    name = registerState.userName,
-                    email = registerState.email,
-                    password = registerState.password
-                )
-            )) {
+            val userUi = UserUi(
+                name = registerState.userName,
+                password = registerState.password,
+                email = registerState.email
+            )
+            when (val res = registerUseCase(userMapper.map(userUi))) {
                 is AuthResult.Success -> {
-                    dataStoreRepository.setLoggedIn()
                     _authUiEvent.emit(AuthUiEvent.AuthSuccessEvent)
                 }
 

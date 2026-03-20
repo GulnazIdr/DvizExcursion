@@ -1,25 +1,26 @@
-package org.example.project.feature.profile
+package org.example.project.feature.profile.presentation
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.example.project.core.database.LocalCourseRepository
-import org.example.project.core.database.LocalUserRepository
 import org.example.project.core.designsystem.ui_logic.ValidationUtil
-import org.example.project.feature.auth.presentation.mappers.asUiText
+import org.example.project.core.designsystem.ui_logic.mapper.UserUiToUserMapper
+import org.example.project.core.designsystem.ui_logic.mapper.asUiText
 import org.example.project.feature.auth.presentation.models.UserUi
-import org.example.project.feature.onboarding.domain.DataStoreRepository
+import org.example.project.feature.profile.domain.GetUserUseCase
+import org.example.project.feature.profile.domain.LogoutUseCase
+import org.example.project.feature.profile.domain.UpdateUserUseCase
 
 class ProfileViewModel(
-    private val localUserRepository: LocalUserRepository,
-    private val localCourseRepository: LocalCourseRepository,
-    private val dataStoreRepository: DataStoreRepository
+    private val updateUserUseCase: UpdateUserUseCase,
+    private val getUserUseCase: GetUserUseCase,
+    private val logoutUseCase: LogoutUseCase,
+    private val userMapper: UserUiToUserMapper
 ) : ViewModel(){
     private val _errorMessage = mutableStateOf("")
     val errorMessage = _errorMessage
@@ -44,14 +45,9 @@ class ProfileViewModel(
             phone = _profileUiState.value.phone
         )
         viewModelScope.launch {
-            val userId = dataStoreRepository.getCurrentUserId()
-            if (userId != null) {
-                localUserRepository.updateUser(
-                    userUi.toUser().copy(
-                        id = userId
-                    )
-                )
-            }
+            updateUserUseCase(
+                userMapper.map(userUi)
+            )
         }
     }
 
@@ -96,7 +92,7 @@ class ProfileViewModel(
 
     private fun getUser(){
         viewModelScope.launch {
-            val user = localUserRepository.getUser()
+            val user = getUserUseCase()
             if (user != null){
                 _profileUiState.update { state ->
                     state.copy(
@@ -111,9 +107,7 @@ class ProfileViewModel(
 
     fun logout(){
         viewModelScope.launch {
-            localUserRepository.deleteUser()
-            localCourseRepository.deleteCourse()
-            dataStoreRepository.deleteData()
+            logoutUseCase()
         }
     }
 }

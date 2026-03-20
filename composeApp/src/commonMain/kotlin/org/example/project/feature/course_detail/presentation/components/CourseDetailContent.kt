@@ -1,4 +1,4 @@
-package org.example.project.feature.course_detail.components
+package org.example.project.feature.course_detail.presentation.components
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement

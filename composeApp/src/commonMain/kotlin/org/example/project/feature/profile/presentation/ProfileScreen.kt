@@ -1,4 +1,4 @@
-package org.example.project.feature.profile
+package org.example.project.feature.profile.presentation
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -19,9 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.example.project.core.designsystem.components.InputField
-import org.example.project.feature.profile.components.ContactInfoRow
-import org.example.project.feature.profile.components.ProfileImage
-import org.example.project.feature.profile.components.ProfileInfoCard
+import org.example.project.feature.profile.presentation.components.ContactInfoRow
+import org.example.project.feature.profile.presentation.components.ProfileImage
+import org.example.project.feature.profile.presentation.components.ProfileInfoCard
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import stepik.composeapp.generated.resources.Res

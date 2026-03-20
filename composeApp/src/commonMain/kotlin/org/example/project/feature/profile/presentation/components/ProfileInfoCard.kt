@@ -1,4 +1,4 @@
-package org.example.project.feature.profile.components
+package org.example.project.feature.profile.presentation.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

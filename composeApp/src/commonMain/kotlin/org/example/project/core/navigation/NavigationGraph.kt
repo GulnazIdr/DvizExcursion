@@ -14,10 +14,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import org.example.project.feature.auth.presentation.login.LoginScreen
 import org.example.project.feature.auth.presentation.register.RegistrationScreen
-import org.example.project.feature.course_detail.CourseDetailViewModel
-import org.example.project.feature.course_detail.CourseDetailsCard
+import org.example.project.feature.course_detail.presentation.CourseDetailViewModel
+import org.example.project.feature.course_detail.presentation.CourseDetailsCard
 import org.example.project.app.MainScreen
 import org.example.project.feature.onboarding.presentation.Boarding
+import org.example.project.feature.onboarding.presentation.OnBoarding
 import org.example.project.feature.onboarding.presentation.Splash
 import org.example.project.feature.search.SearchScreen
 import org.koin.compose.viewmodel.koinViewModel

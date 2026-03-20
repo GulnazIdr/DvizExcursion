@@ -1,4 +1,4 @@
-package org.example.project.feature.course_detail
+package org.example.project.feature.course_detail.presentation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,7 +21,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.example.project.core.designsystem.components.BasicTopAppBar
 import org.example.project.core.designsystem.components.CircleLoading
 import org.example.project.core.designsystem.components.ErrorDialog
-import org.example.project.feature.course_detail.components.CourseDetailContent
+import org.example.project.feature.course_detail.presentation.components.CourseDetailContent
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)

@@ -13,7 +13,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.example.project.core.designsystem.components.CircleLoading
-import org.example.project.feature.course_catalog.course.CourseCardItem
 import org.example.project.feature.course_catalog.presentation.models.CourseDetailUi
 
 @Composable

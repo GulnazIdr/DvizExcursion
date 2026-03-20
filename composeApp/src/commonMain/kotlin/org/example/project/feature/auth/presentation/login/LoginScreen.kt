@@ -3,11 +3,8 @@ package org.example.project.feature.auth.presentation.login
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,20 +14,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import stepik.composeapp.generated.resources.Res
-import stepik.composeapp.generated.resources.login_text
 import org.example.project.core.designsystem.components.InputField
 import org.example.project.core.designsystem.components.NavigationButton
 import org.example.project.core.designsystem.components.StepikLogo
 import org.example.project.core.designsystem.components.TextCheckBox
-import org.example.project.feature.auth.presentation.components.AnimatedBorderCard
 import org.example.project.feature.auth.presentation.components.AuthTopAppBar
 import org.example.project.feature.auth.presentation.components.StepikSignUp
 import org.example.project.feature.auth.presentation.models.AuthUiEvent
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import stepik.composeapp.generated.resources.Res
 import stepik.composeapp.generated.resources.auth_password_hint
 import stepik.composeapp.generated.resources.auth_user_name_hint
+import stepik.composeapp.generated.resources.login_text
 import stepik.composeapp.generated.resources.registration_remember_me_text
 
 @Composable

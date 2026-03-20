@@ -24,6 +24,7 @@
     <string name="registration_policy_text">Accept privacy policy</string>
     <string name="login_text">Login</string>
     <string name="registration_text">Registration</string>
+    <string name="login_stepik_login_text">Sign up with Stepik</string>
 
     <string name="course_free_text">Free</string>
 

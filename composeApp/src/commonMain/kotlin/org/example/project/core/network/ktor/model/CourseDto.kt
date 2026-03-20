@@ -1,7 +1,6 @@
-package org.example.project.core.model
+package org.example.project.core.network.ktor.model
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonElement
 
 @Serializable
 data class CourseDto(

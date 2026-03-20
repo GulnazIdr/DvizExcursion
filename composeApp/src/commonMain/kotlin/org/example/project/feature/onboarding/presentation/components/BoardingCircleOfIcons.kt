@@ -11,6 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import org.example.project.core.designsystem.components.StepikLogo
+import org.example.project.core.designsystem.components.getWindowHeight
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 import stepik.composeapp.generated.resources.Res
 import stepik.composeapp.generated.resources.dog_bowl
 import stepik.composeapp.generated.resources.dumbbells
@@ -18,16 +22,12 @@ import stepik.composeapp.generated.resources.game_console
 import stepik.composeapp.generated.resources.hearts
 import stepik.composeapp.generated.resources.science
 import stepik.composeapp.generated.resources.scientific
-import org.example.project.core.designsystem.components.StepikLogo
-import org.example.project.core.designsystem.components.getWindowHeight
-import org.jetbrains.compose.resources.DrawableResource
-import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun CircleOfIcons(){
+fun CircleOfIcons() {
     Box(
-        modifier = Modifier.size(((getWindowHeight() *(0.35)).dp))
-    ){
+        modifier = Modifier.size(((getWindowHeight() * (0.35)).dp))
+    ) {
         BoardingCustomCircleIcon(
             resource = Res.drawable.game_console,
             offsetX = (-65).dp,

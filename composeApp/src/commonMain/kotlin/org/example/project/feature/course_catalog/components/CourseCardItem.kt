@@ -1,4 +1,4 @@
-package org.example.project.feature.course_catalog.course
+package org.example.project.feature.course_catalog.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

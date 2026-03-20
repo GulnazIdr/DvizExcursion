@@ -24,8 +24,7 @@ import org.example.project.feature.onboarding.presentation.components.CircleOfIc
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun OnBoarding(
-) {
+fun OnBoarding() {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -60,7 +59,7 @@ fun OnBoarding(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.weight(1f))
         }
     }
 }
@@ -68,6 +67,5 @@ fun OnBoarding(
 @Preview
 @Composable
 private fun OnBoardingPrev() {
-    OnBoarding(
-    )
+    OnBoarding()
 }

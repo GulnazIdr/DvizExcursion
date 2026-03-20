@@ -1,4 +1,4 @@
-package org.example.project.feature.course_detail.components
+package org.example.project.feature.course_detail.presentation.components
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text

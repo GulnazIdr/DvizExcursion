@@ -29,7 +29,7 @@ fun ErrorDialog(
     isVisible: Boolean,
     onClose: () -> Unit
 ){
-    if (isVisible)
+
     Dialog(onDismissRequest = { onClose() }) {
         Box(
             modifier = Modifier.fillMaxWidth().height((getWindowHeight()*0.25).dp)
@@ -53,7 +53,7 @@ fun ErrorDialog(
                         Icon(
                             painter = painterResource(Res.drawable.close),
                             contentDescription = "close icon",
-                            Modifier.size(20.dp)
+                            Modifier.size(25.dp)
                         )
                     }
                 }

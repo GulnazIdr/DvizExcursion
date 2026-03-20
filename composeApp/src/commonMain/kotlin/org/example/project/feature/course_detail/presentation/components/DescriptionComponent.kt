@@ -1,4 +1,4 @@
-package org.example.project.feature.course_detail.components
+package org.example.project.feature.course_detail.presentation.components
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -9,25 +9,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import stepik.composeapp.generated.resources.Res
-import stepik.composeapp.generated.resources.course_detail_learning_format_text
+import stepik.composeapp.generated.resources.course_detail_description_text
 
 @Composable
-fun LearningFormatComponent(
-    learningFormat: String,
+fun DescriptionComponent(
+    description: String,
     textColor: Color
 ){
-    if (learningFormat.isNotEmpty()) {
+    if (description.isNotEmpty()) {
         Spacer(modifier = Modifier.height(16.dp))
         DescriptionBlock(
-            title = Res.string.course_detail_learning_format_text,
+            title = Res.string.course_detail_description_text,
             textColor = textColor
         ) {
             Spacer(modifier = Modifier.height(6.dp))
             Text(
-                text = learningFormat.replace(
-                    Regex("<.*?>"),
-                    ""
-                ),
+                text = description,
                 style = MaterialTheme.typography.bodyMedium.copy(
                     color = textColor
                 ),

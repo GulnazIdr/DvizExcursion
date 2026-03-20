@@ -19,7 +19,6 @@ class NavigationViewModel(
     }
 
     val navigationState = loggedInState.combine(onBoardingViewed){ isLoggedIn, isViewed ->
-        Napier.e("infor $isLoggedIn $isViewed")
         when{
             isViewed && isLoggedIn -> Main
             isViewed && !isLoggedIn -> Login

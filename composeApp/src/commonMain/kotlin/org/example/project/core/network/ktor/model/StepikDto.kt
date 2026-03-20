@@ -1,4 +1,4 @@
-package org.example.project.core.model
+package org.example.project.core.network.ktor.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

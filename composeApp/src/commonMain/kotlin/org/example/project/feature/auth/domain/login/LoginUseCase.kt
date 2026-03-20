@@ -1,13 +1,8 @@
 package org.example.project.feature.auth.domain.login
 
-import org.example.project.feature.auth.domain.LocalError
-
-class LoginUseCase {
-    operator fun invoke(
-        name: String?,
-        password: String?
-    ): LocalError.FieldError?{
-        return if(name.isNullOrBlank() || password.isNullOrBlank()) LocalError.FieldError.EMPTY_FIELD
-            else null
-    }
+class LoginUseCase(
+    private val loginRepository: LoginRepository
+) {
+    suspend operator fun invoke(userName: String, password: String)
+    = loginRepository.login(userName, password)
 }

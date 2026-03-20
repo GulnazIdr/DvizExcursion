@@ -1,13 +1,11 @@
 package org.example.project.core.network.ktor.source
 
-import org.example.project.core.common.result.FetchResult
-import org.example.project.core.common.result.NetworkError
-import org.example.project.core.model.CourseDetail
 import org.example.project.core.model.Stepik
 import org.example.project.core.model.StepikDetailed
+import org.example.project.core.network.ktor.model.KtorDataWrapping
 
 interface RemoteCourseRepository {
-    suspend fun getCourses(page: Int): FetchResult<Stepik, NetworkError, List<CourseDetail>>
+    suspend fun getCourses(page: Int): Result<KtorDataWrapping<Stepik>>
 
-    suspend fun getCourseById(id: Int): FetchResult<StepikDetailed, NetworkError, CourseDetail?>
+    suspend fun getCourseById(id: Int): Result<KtorDataWrapping<StepikDetailed>>
 }

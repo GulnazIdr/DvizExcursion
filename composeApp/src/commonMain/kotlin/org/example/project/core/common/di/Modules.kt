@@ -8,16 +8,20 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.example.project.core.designsystem.ui_logic.mapper.CourseDetailToCourseDetailUiMapper
+import org.example.project.core.designsystem.ui_logic.mapper.CourseToCourseDetailUiMapper
+import org.example.project.core.designsystem.ui_logic.mapper.CourseUiMapper
 import org.example.project.core.domain.FetchCoursesUseCase
 import org.example.project.feature.auth.data.LoginRepositoryImpl
 import org.example.project.feature.auth.data.RegisterRepositoryImpl
+import org.example.project.feature.auth.domain.login.LoginErrorUseCase
 import org.example.project.feature.auth.domain.login.LoginRepository
 import org.example.project.feature.auth.domain.login.LoginUseCase
 import org.example.project.feature.auth.domain.registration.RegisterRepository
 import org.example.project.feature.auth.presentation.login.LoginViewModel
 import org.example.project.feature.auth.presentation.register.RegistrationViewmodel
 import org.example.project.feature.course_catalog.CourseViewModel
-import org.example.project.feature.course_detail.CourseDetailViewModel
+import org.example.project.feature.course_detail.presentation.CourseDetailViewModel
 import org.example.project.feature.search.SearchViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
@@ -26,8 +30,15 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
+
 val courseModule = module {
-    viewModelOf(::CourseViewModel)
+    viewModel {
+        CourseViewModel(
+            fetchCoursesUseCase = get(),
+            courseToCourseDetailUiMapper = get<CourseToCourseDetailUiMapper>(),
+            courseDetailUi = get<CourseDetailToCourseDetailUiMapper>()
+        )
+    }
 }
 
 val courseUseCaseModule = module {
@@ -41,16 +52,21 @@ val searchModule = module {
 val courseDetailModule = module {
     viewModel { (courseId: Int) ->
         CourseDetailViewModel(
-            courseId = courseId,
-            remoteCourseRepository = get(),
-            localCourseRepository = get()
+            courseId = courseId
         )
     }
+}
+
+val courseMapperModule = module {
+    factory { CourseUiMapper() }
+    factory { CourseToCourseDetailUiMapper() }
+    factory { CourseDetailToCourseDetailUiMapper(get()) }
 }
 
 val loginModule = module{
     viewModelOf(::LoginViewModel)
     singleOf(::LoginRepositoryImpl).bind<LoginRepository>()
+    singleOf(::LoginErrorUseCase)
     singleOf(::LoginUseCase)
 }
 
@@ -72,10 +88,10 @@ val httpClientModule = module {
                 level = LogLevel.ALL
             }
 
+            followRedirects = true
             install(ContentNegotiation){
                 json(
                     json = Json{
-                     //   explicitNulls = false
                         ignoreUnknownKeys = true
                         coerceInputValues = true
                         ignoreUnknownKeys = true

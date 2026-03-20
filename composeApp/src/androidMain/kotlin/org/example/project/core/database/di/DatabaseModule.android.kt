@@ -15,6 +15,7 @@ actual val databaseModule: Module
                 context = androidContext(),
                 name = androidContext().getDatabasePath("stepik.db").absolutePath
             )
+                .addMigrations()
                 .setDriver(BundledSQLiteDriver())
                 .setQueryCoroutineContext(Dispatchers.IO)
                 .build()

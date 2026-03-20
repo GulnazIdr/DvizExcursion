@@ -14,7 +14,8 @@ import org.example.project.core.database.model.UserEntity
         CourseEntity::class,
         UserEntity::class
     ],
-    version = 1
+    version = 1,
+    exportSchema = true,
 )
 
 @TypeConverters(Converters::class)

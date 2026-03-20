@@ -10,14 +10,23 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.example.project.core.designsystem.ui_logic.FetchCoursesUseCase
+import org.example.project.core.designsystem.ui_logic.UiText
+import org.example.project.core.designsystem.ui_logic.mapper.CourseDetailToCourseDetailUiMapper
+import org.example.project.core.designsystem.ui_logic.mapper.CourseToCourseDetailUiMapper
+import org.example.project.core.designsystem.ui_logic.mapper.asUiText
 import org.example.project.core.designsystem.ui_logic.model.CourseUiState
-import org.example.project.feature.course_catalog.presentation.result.FetchResultUi
+import org.example.project.core.designsystem.ui_logic.result.FetchResultUi
+import org.example.project.core.designsystem.ui_logic.result.FetchResultUi.Error
+import org.example.project.core.designsystem.ui_logic.result.FetchResultUi.Success
+import org.example.project.core.domain.FetchCourseResult
+import org.example.project.core.domain.FetchCoursesUseCase
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class CourseViewModel(
-    private val fetchCoursesUseCase: FetchCoursesUseCase
-): ViewModel() {
+    private val fetchCoursesUseCase: FetchCoursesUseCase,
+    private val courseToCourseDetailUiMapper: CourseToCourseDetailUiMapper,
+    private val courseDetailUi: CourseDetailToCourseDetailUiMapper
+) : ViewModel() {
     private var fetchJob: Job? = null
 
     private val _courseFetchedState = MutableStateFlow(
@@ -35,7 +44,7 @@ class CourseViewModel(
         fetchCourses()
     }
 
-    fun refresh(){
+    fun refresh() {
         _courseFetchedState.update { state ->
             state.copy(
                 isRefreshing = true
@@ -49,7 +58,61 @@ class CourseViewModel(
 
     fun fetchCourses() {
         fetchJob = viewModelScope.launch {
-            fetchCoursesUseCase(_courseFetchedState)
+            _courseFetchedState.update { state ->
+                state.copy(
+                    isDataLoading = true
+                )
+            }
+            when (val result = fetchCoursesUseCase()) {
+                is FetchCourseResult.Success -> {
+                    if (!result.stepikData.hasNext) {
+                        _courseFetchedState.update { state ->
+                            state.copy(
+                                isPageEnded = true,
+                                isDataLoading = false
+                            )
+                        }
+                    }
+
+                    _courseFetchedState.update { state ->
+                        state.copy(
+                            isDataLoading = false,
+                            courseFetchedResult = Success(
+                                result.stepikData.successData.map(
+                                    courseToCourseDetailUiMapper::map
+                                )
+                            )
+                        )
+                    }
+                }
+
+                is FetchCourseResult.Error -> {
+                    _courseFetchedState.update { state ->
+                        state.copy(
+                            courseFetchedResult = Error(
+                                message = result.error.asUiText()
+                            ),
+                            isDataLoading = false
+                        )
+                    }
+                }
+
+                is FetchCourseResult.Cache -> {
+                    _courseFetchedState.update { state ->
+                        state.copy(
+                            courseFetchedResult = Error(
+                                message = result.error?.asUiText() ?: UiText.DynamicString(""),
+                                cacheData = courseToCourseDetailUiMapper.map(result.cacheData.successData)
+                            ),
+                            isDataLoading = false
+                        )
+                    }
+                }
+            }
+
+            //UknoknwHostException - connecting in topbar
+            //408 Request Timeout: истекло время ожидания - reload icon
+            //429 Too Many Requests: слишком много запросов - errordialog
         }
     }
 

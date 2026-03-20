@@ -1,4 +1,4 @@
-package org.example.project.feature.auth.presentation.mappers
+package org.example.project.core.designsystem.ui_logic.mapper
 
 import org.example.project.core.designsystem.ui_logic.UiText
 import org.example.project.core.designsystem.ui_logic.UiText.ResourceString

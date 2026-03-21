@@ -7,7 +7,7 @@ import org.example.project.feature.auth.domain.DesktopViewmodel
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-actual fun StepikSignUp(signup: () -> Unit) {
+actual fun StepikSignUp(signup: () -> Unit, navigateToMain: () -> Unit) {
     val desktopViewmodel: DesktopViewmodel = koinViewModel()
     Button(onClick = {
         desktopViewmodel.auth()

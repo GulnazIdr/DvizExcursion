@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Stepik</string>
-    <string name="login_paste_url_text">Paste the link after authorization and click "Sign up with Stepik"</string>
+    <string name="login_token_error">Что-то пошло не так.</string>
+    <string name="login_paste_url_text">После нажатия на кнопку Окей, вас перенаправит на страницу с авторизацией, вам необходимо авторизоваться, скопировать ссылку страницы с кодом и вставить в поле ниже</string>
 </resources>

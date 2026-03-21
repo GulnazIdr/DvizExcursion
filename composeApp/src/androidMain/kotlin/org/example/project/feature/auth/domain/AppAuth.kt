@@ -1,7 +1,6 @@
 package org.example.project.feature.auth.domain
 
 import androidx.core.net.toUri
-import io.github.aakira.napier.Napier
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration
@@ -10,6 +9,7 @@ import net.openid.appauth.ClientSecretPost
 import net.openid.appauth.GrantTypeValues
 import net.openid.appauth.TokenRequest
 import org.example.project.domain.AuthConfigAndroid
+import org.example.project.feature.auth.domain.token.TokensModel
 import kotlin.coroutines.suspendCoroutine
 
 object AppAuth {
@@ -29,15 +29,8 @@ object AppAuth {
             AuthConfigAndroid.RESPONSE_TYPE,
             redirectUri
         )
-            .setScope(AuthConfig.SCOPE)
             .build()
     }
-
-//    fun getEndSessionRequest(): EndSessionRequest {
-//        return EndSessionRequest.Builder(serviceConfiguration)
-//            .setPostLogoutRedirectUri(AuthConfig.LOGOUT_CALLBACK_URL.toUri())
-//            .build()
-//    }
 
     fun getRefreshTokenRequest(refreshToken: String): TokenRequest {
         return TokenRequest.Builder(
@@ -45,7 +38,7 @@ object AppAuth {
             AuthConfig.CLIENT_ID
         )
             .setGrantType(GrantTypeValues.REFRESH_TOKEN)
-            .setScopes(AuthConfig.SCOPE)
+          //  .setScopes(AuthConfig.SCOPE)
             .setRefreshToken(refreshToken)
             .build()
     }

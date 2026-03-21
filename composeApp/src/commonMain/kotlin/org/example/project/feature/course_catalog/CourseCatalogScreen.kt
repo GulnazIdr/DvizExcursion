@@ -63,7 +63,6 @@ fun CourseCatalogScreen(
                     ErrorDialog(
                         errorMessage = error,
                         onRetry = { courseViewModel.fetchCourses() },
-                        isVisible = !isDismissed,
                         onClose = { isDismissed = true }
                     )
                 },

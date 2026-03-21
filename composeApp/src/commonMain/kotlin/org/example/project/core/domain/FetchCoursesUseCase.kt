@@ -40,7 +40,6 @@ class FetchCoursesUseCase(
                 stepik.data.pageInfo.hasNext
             )
 
-            Napier.wtf("cache43 ${stepik.isFromCache} ${stepik.data.courses.size}")
             if (stepik.isFromCache){
                 //отображение кеша с ошибкой
                 _courseFetchResult = FetchCourseResult.Cache(

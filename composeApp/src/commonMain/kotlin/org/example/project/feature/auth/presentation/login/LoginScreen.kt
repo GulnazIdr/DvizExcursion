@@ -26,6 +26,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import stepik.composeapp.generated.resources.Res
 import stepik.composeapp.generated.resources.auth_password_hint
 import stepik.composeapp.generated.resources.auth_user_name_hint
+import stepik.composeapp.generated.resources.login_stepik_login_text
 import stepik.composeapp.generated.resources.login_text
 import stepik.composeapp.generated.resources.registration_remember_me_text
 
@@ -115,9 +116,20 @@ fun LoginScreen(
             isEnabled = loginUiState.isLoginButtonActive
         )
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(25.dp))
 
-        StepikSignUp()
+        Text(
+            text = stringResource(Res.string.login_stepik_login_text),
+            style = MaterialTheme.typography.bodySmall.copy(
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
+        )
+
+        Spacer(modifier = Modifier.height(25.dp))
+
+        StepikSignUp(
+            navigateToMain = navigateToMain
+        )
 
         Spacer(modifier = Modifier.weight(1f))
     }

@@ -1,4 +1,4 @@
-package org.example.project.feature.auth.domain
+package org.example.project.feature.auth.domain.token
 
 data class TokensModel(
     val accessToken: String,

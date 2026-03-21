@@ -2,27 +2,33 @@ package org.example.project.core.navigation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.example.project.feature.auth.domain.token.TokenDataRepository
 import org.example.project.feature.onboarding.domain.DataStoreRepository
 
 class NavigationViewModel(
-    private val dataStoreRepository: DataStoreRepository
+    private val dataStoreRepository: DataStoreRepository,
+    private val tokenDataRepository: TokenDataRepository
 ) : ViewModel() {
     private val onBoardingViewed = dataStoreRepository.getOnBoardingViewed()
-    private val loggedInState = dataStoreRepository.getLoggedInState()
+    private val isLoggedWithToken = tokenDataRepository.getToken() != null
+    private val stepikLoggedInState = dataStoreRepository.getCurrentUserId().map {
+        it != null
+    }
+
     fun setOnBoardingViewed(){
         viewModelScope.launch {
             dataStoreRepository.setOnBoardingViewed()
         }
     }
 
-    val navigationState = loggedInState.combine(onBoardingViewed){ isLoggedIn, isViewed ->
+    val navigationState = stepikLoggedInState.combine(onBoardingViewed){ isLoggedIn, isViewed ->
         when{
-            isViewed && isLoggedIn -> Main
-            isViewed && !isLoggedIn -> Login
-            !isViewed && !isLoggedIn -> OnBoarding
+            !isViewed && (!isLoggedIn && !isLoggedWithToken)  -> OnBoarding
+            isViewed && (!isLoggedIn && !isLoggedWithToken) -> Login
+            isViewed -> Main
             else -> Main
         }
     }

@@ -40,6 +40,8 @@ kotlin {
 
             implementation(libs.ktor.client.android)
             implementation(libs.kotlinx.coroutines.android)
+
+            implementation("com.liftric:kvault:1.12.0")
         }
         commonMain.dependencies {
             implementation(libs.androidx.room.runtime)

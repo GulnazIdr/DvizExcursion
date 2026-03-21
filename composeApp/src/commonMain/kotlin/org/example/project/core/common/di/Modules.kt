@@ -63,18 +63,6 @@ val courseMapperModule = module {
     factory { CourseDetailToCourseDetailUiMapper(get()) }
 }
 
-val loginModule = module{
-    viewModelOf(::LoginViewModel)
-    singleOf(::LoginRepositoryImpl).bind<LoginRepository>()
-    singleOf(::LoginErrorUseCase)
-    singleOf(::LoginUseCase)
-}
-
-val registerModule = module{
-    viewModelOf(::RegistrationViewmodel)
-    singleOf(::RegisterRepositoryImpl).bind<RegisterRepository>()
-}
-
 val httpClientModule = module {
     single<HttpClientEngine>{
         OkHttp.create()

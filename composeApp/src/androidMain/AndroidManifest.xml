@@ -18,27 +18,18 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
         </activity>
 
-<!--        <activity android:name=".MainActivity"-->
-<!--            android:launchMode="singleTask"-->
-<!--            android:exported="true">-->
-
-<!--            &lt;!&ndash; Deep link for OAuth callback &ndash;&gt;-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
-
-<!--                &lt;!&ndash; Replace with your unique scheme &ndash;&gt;-->
-<!--                <data android:scheme="stepikauth" android:host="callback" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+        <activity android:name="net.openid.appauth.RedirectUriReceiverActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="${appAuthRedirectScheme}"/>
+                <data android:host="stepik.org" />
+                <data android:path="/oauth2/default/code" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>

@@ -69,7 +69,8 @@ class CourseViewModel(
                         _courseFetchedState.update { state ->
                             state.copy(
                                 isPageEnded = true,
-                                isDataLoading = false
+                                isDataLoading = false,
+                                isRefreshing = false
                             )
                         }
                     }
@@ -81,7 +82,8 @@ class CourseViewModel(
                                 result.stepikData.successData.map(
                                     courseToCourseDetailUiMapper::map
                                 )
-                            )
+                            ),
+                            isRefreshing = false
                         )
                     }
                 }
@@ -92,7 +94,8 @@ class CourseViewModel(
                             courseFetchedResult = Error(
                                 message = result.error.asUiText()
                             ),
-                            isDataLoading = false
+                            isDataLoading = false,
+                            isRefreshing = false
                         )
                     }
                 }
@@ -104,7 +107,8 @@ class CourseViewModel(
                                 message = result.error?.asUiText() ?: UiText.DynamicString(""),
                                 cacheData = courseToCourseDetailUiMapper.map(result.cacheData.successData)
                             ),
-                            isDataLoading = false
+                            isDataLoading = false,
+                            isRefreshing = false
                         )
                     }
                 }

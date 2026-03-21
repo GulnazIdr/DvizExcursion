@@ -64,7 +64,6 @@ fun CourseDetailsCard(
                     ErrorDialog(
                         errorMessage = error,
                         onRetry = { courseViewModel.refresh(courseId) },
-                        isVisible = !isDismissed,
                         onClose = { isDismissed = true }
                     )
                 },

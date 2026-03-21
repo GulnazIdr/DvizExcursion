@@ -7,9 +7,6 @@ interface DataStoreRepository {
     fun getOnBoardingViewed(): Flow<Boolean>
     suspend fun deleteData()
 
-    suspend fun setLoggedIn()
-    fun getLoggedInState(): Flow<Boolean>
-
     suspend fun setCurrentUserId(id: Int)
-    suspend fun getCurrentUserId(): Int?
+    fun getCurrentUserId(): Flow<Int?>
 }

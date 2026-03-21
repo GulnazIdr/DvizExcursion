@@ -10,8 +10,8 @@ class LogoutUseCase(
     private val dataStoreRepository: DataStoreRepository
 ) {
     suspend operator fun invoke(){
-        localUserRepository.deleteUser()
-        localCourseRepository.deleteCourse()
-        dataStoreRepository.deleteData()
+//        localUserRepository.deleteUser()
+//        localCourseRepository.deleteCourse()
+//        dataStoreRepository.deleteData()
     }
 }

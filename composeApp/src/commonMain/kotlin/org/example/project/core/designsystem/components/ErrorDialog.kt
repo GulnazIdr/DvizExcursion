@@ -26,10 +26,8 @@ import org.jetbrains.compose.resources.painterResource
 fun ErrorDialog(
     errorMessage: String,
     onRetry: () -> Unit,
-    isVisible: Boolean,
     onClose: () -> Unit
 ){
-
     Dialog(onDismissRequest = { onClose() }) {
         Box(
             modifier = Modifier.fillMaxWidth().height((getWindowHeight()*0.25).dp)

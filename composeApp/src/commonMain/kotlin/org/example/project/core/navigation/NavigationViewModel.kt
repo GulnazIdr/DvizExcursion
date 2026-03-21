@@ -13,7 +13,7 @@ class NavigationViewModel(
     private val tokenDataRepository: TokenDataRepository
 ) : ViewModel() {
     private val onBoardingViewed = dataStoreRepository.getOnBoardingViewed()
-    private val isLoggedWithToken = tokenDataRepository.getToken() != null
+    private val isLoggedWithToken = tokenDataRepository.getAccessToken() != null
     private val stepikLoggedInState = dataStoreRepository.getCurrentUserId().map {
         it != null
     }

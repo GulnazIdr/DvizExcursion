@@ -1,5 +1,6 @@
 package org.example.project.feature.course_detail.presentation.components
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -17,20 +18,25 @@ import org.jetbrains.compose.resources.painterResource
 fun DescriptionItem(
     resource: DrawableResource,
     text: String,
-    textColor: Color
+    textColor: Color,
+    modifier: Modifier = Modifier
 ){
-    Icon(
-        painter = painterResource(resource),
-        tint = MaterialTheme.colorScheme.background,
-        contentDescription = "",
-        modifier = Modifier.size(25.dp)
-    )
-
-    Spacer(modifier = Modifier.width(8.dp))
-    Text(
-        text = text,
-        style = MaterialTheme.typography.bodyMedium.copy(
-            color = textColor
+    Row(
+        modifier = modifier
+    ) {
+        Icon(
+            painter = painterResource(resource),
+            tint = MaterialTheme.colorScheme.background,
+            contentDescription = "",
+            modifier = Modifier.size(25.dp)
         )
-    )
+
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = textColor
+            )
+        )
+    }
 }

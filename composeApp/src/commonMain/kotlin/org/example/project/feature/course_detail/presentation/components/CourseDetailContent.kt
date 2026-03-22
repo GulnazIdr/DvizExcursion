@@ -71,27 +71,28 @@ fun CourseDetailContent(
             Spacer(modifier = Modifier.height(12.dp))
 
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 if (courseDetailUi.workloadTime.isNotEmpty()) {
                     DescriptionItem(
                         resource = Res.drawable.clock,
                         text = courseDetailUi.workloadTime,
-                        textColor = textColor
+                        textColor = textColor,
+                        modifier = Modifier.weight(2f)
                     )
-
-                    Spacer(modifier = Modifier.width(24.dp))
                 }
 
                 if (courseDetailUi.difficultyLevel.isNotEmpty()) {
+                    DescriptionItem(
+                        resource = Res.drawable.level,
+                        text = courseDetailUi.difficultyLevel.capitalize(
+                            Locale.current
+                        ),
+                        textColor = textColor,
+                        modifier = Modifier.weight(1f)
+                    )
                 }
-                DescriptionItem(
-                    resource = Res.drawable.level,
-                    text = courseDetailUi.difficultyLevel.capitalize(
-                        Locale.current
-                    ),
-                    textColor = textColor
-                )
             }
 
             DescriptionComponent(

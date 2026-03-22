@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.example.project.core.common.result.FetchCourseResult
 import org.example.project.core.designsystem.ui_logic.UiText
 import org.example.project.core.designsystem.ui_logic.mapper.CourseDetailToCourseDetailUiMapper
 import org.example.project.core.designsystem.ui_logic.mapper.CourseToCourseDetailUiMapper
@@ -18,7 +19,7 @@ import org.example.project.core.designsystem.ui_logic.model.CourseUiState
 import org.example.project.core.designsystem.ui_logic.result.FetchResultUi
 import org.example.project.core.designsystem.ui_logic.result.FetchResultUi.Error
 import org.example.project.core.designsystem.ui_logic.result.FetchResultUi.Success
-import org.example.project.core.domain.FetchCourseResult
+import org.example.project.core.domain.CourseSuccessResult
 import org.example.project.core.domain.FetchCoursesUseCase
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
@@ -64,7 +65,7 @@ class CourseViewModel(
                 )
             }
             when (val result = fetchCoursesUseCase()) {
-                is FetchCourseResult.Success -> {
+                is FetchCourseResult.Success<CourseSuccessResult> -> {
                     if (!result.stepikData.hasNext) {
                         _courseFetchedState.update { state ->
                             state.copy(
@@ -92,7 +93,7 @@ class CourseViewModel(
                     _courseFetchedState.update { state ->
                         state.copy(
                             courseFetchedResult = Error(
-                                message = result.error.asUiText()
+                                message = result.error?.asUiText() ?: UiText.DynamicString("")
                             ),
                             isDataLoading = false,
                             isRefreshing = false

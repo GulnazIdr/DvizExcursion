@@ -35,11 +35,10 @@ class LocalCourseRepositoryImpl (
         }
     }
 
-    override suspend fun getCourseById(id: Int): Result<StepikDetailed>{
+    override suspend fun getCourseById(id: Int): Result<StepikDetailed> {
         return runCatching {
             val course = courseDao.getCourseById(id)
-            if (course != null) course.toStepikDetailed()
-            else throw NullPointerException()
+            course?.toStepikDetailed() ?: throw CustomRoomException("cache courses is empty")
         }
     }
 

@@ -39,7 +39,7 @@ class CourseToCourseDetailUiMapper() : Mapper<Course, CourseDetailUi> {
 }
 
 class CourseDetailToCourseDetailUiMapper(
-    val courseUiMapper: CourseUiMapper
+    private val courseUiMapper: CourseUiMapper
 ) : Mapper<CourseDetail, CourseDetailUi> {
     override fun map(item: CourseDetail): CourseDetailUi {
         return CourseDetailUi(

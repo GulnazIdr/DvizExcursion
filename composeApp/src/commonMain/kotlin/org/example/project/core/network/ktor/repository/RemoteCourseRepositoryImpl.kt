@@ -14,6 +14,7 @@ import org.example.project.core.model.Stepik
 import org.example.project.core.model.StepikDetailed
 import org.example.project.core.network.ktor.CustomServerException
 import org.example.project.core.network.ktor.HttpRoutes
+import org.example.project.core.network.ktor.NothingFoundException
 import org.example.project.core.network.ktor.model.CourseDetailDto
 import org.example.project.core.network.ktor.model.CourseDto
 import org.example.project.core.network.ktor.model.KtorDataWrapping
@@ -30,10 +31,10 @@ class RemoteCourseRepositoryImpl(
 
         // TODO: add cancellationexception 
         return runCatching {
-           //testing throw UnknownHostException("")
+            //testing throw UnknownHostException("")
             client.get(urlString = HttpRoutes.COURSES) { parameter("page", page) }
         }.map { response ->
-            when(response.status.value){
+            when (response.status.value) {
                 in 500..511 -> throw CustomServerException("server error $response")
             }
             KtorDataWrapping(
@@ -62,7 +63,7 @@ class RemoteCourseRepositoryImpl(
                     onFailure = { throwable ->
                         Napier.e("fetching course cache error $throwable")
                         Napier.e("fetching course remote error $error")
-                        Result.failure<KtorDataWrapping<Stepik>>(error)
+                        Result.failure(error)
                     }
                 )
             }
@@ -79,6 +80,9 @@ class RemoteCourseRepositoryImpl(
                 isFromCache = false
             )
         }.onSuccess { ktorWrapping ->
+
+            if (ktorWrapping.data.courses.isEmpty()) throw NothingFoundException("course with id $id doesnt exist")
+
             localCourseRepository.updateCourseDetailed(ktorWrapping.data.courses.first())
 
             Result.success(ktorWrapping)

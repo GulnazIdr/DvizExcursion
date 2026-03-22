@@ -8,16 +8,21 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.example.project.core.common.result.FetchResult
+import org.example.project.core.common.result.FetchCourseResult
 import org.example.project.core.common.result.NetworkError
+import org.example.project.core.designsystem.ui_logic.UiText
+import org.example.project.core.designsystem.ui_logic.mapper.CourseDetailToCourseDetailUiMapper
 import org.example.project.core.designsystem.ui_logic.mapper.asUiText
 import org.example.project.core.designsystem.ui_logic.result.FetchResultUi
+import org.example.project.core.designsystem.ui_logic.result.FetchResultUi.Error
 import org.example.project.core.designsystem.ui_logic.result.FetchResultUi.Success
 import org.example.project.core.model.CourseDetail
-import org.example.project.core.model.StepikDetailed
+import org.example.project.feature.course_detail.domain.FetchCourseDetailUseCase
 
 class CourseDetailViewModel(
     private val courseId: Int,
+    private val fetchCourseDetailUseCase: FetchCourseDetailUseCase,
+    private val courseDetailToCourseDetailUiMapper: CourseDetailToCourseDetailUiMapper
 ) : ViewModel() {
     private val _currentCourseState = MutableStateFlow(
         CourseDetailUiState(false, FetchResultUi.Loading())
@@ -42,37 +47,41 @@ class CourseDetailViewModel(
         fetchSpecificCourseJob?.cancel()
 
         fetchSpecificCourseJob = viewModelScope.launch {
-//            when (val res = remoteCourseRepository.getCourseById(id)) {
-//                is FetchResult.Success<StepikDetailed> -> {
-//                    val courses = res.successData.courses
-//                    val data = if (courses.isNotEmpty()) courses.first() else null
-//
-//                    _currentCourseState.update { state ->
-//                        state.copy(
-//                            courseState =
-//                                if (data != null) Success(data.toCourseDetailUi())
-//                                else FetchResultUi.Error(NetworkError.UNKNOWN.asUiText()),
-//                            isRefreshing = false
-//                        )
-//                    }
-//
-//                    if (data != null) {
-//                        localCourseRepository.updateCourseDetailed(data)
-//                    }
-//                }
-//
-//                is FetchResult.Cache<CourseDetail?, NetworkError> -> {
-//                    _currentCourseState.update { state ->
-//                        state.copy(
-//                            courseState = FetchResultUi.Cached(
-//                                cacheData = res.cacheData?.toCourseDetailUi(),
-//                                reason = res.cacheError.asUiText()
-//                            ),
-//                            isRefreshing = false
-//                        )
-//                    }
-//                }
-//            }
+            when (val res = fetchCourseDetailUseCase(id)) {
+                is FetchCourseResult.Success<CourseDetail> -> {
+                    val data = res.stepikData
+
+                    _currentCourseState.update { state ->
+                        state.copy(
+                            courseState = Success(courseDetailToCourseDetailUiMapper.map(data)),
+                            isRefreshing = false
+                        )
+                    }
+                }
+
+                is FetchCourseResult.Cache<CourseDetail, NetworkError?> -> {
+                    _currentCourseState.update { state ->
+                        state.copy(
+                            courseState = Error(
+                                cacheData = courseDetailToCourseDetailUiMapper.map(res.cacheData),
+                                message = res.error?.asUiText() ?: UiText.DynamicString("")
+                            ),
+                            isRefreshing = false
+                        )
+                    }
+                }
+
+                is FetchCourseResult.Error<NetworkError?> -> {
+                    _currentCourseState.update { state ->
+                        state.copy(
+                            courseState = Error(
+                                message = res.error?.asUiText() ?: UiText.DynamicString("")
+                            ),
+                            isRefreshing = false
+                        )
+                    }
+                }
+            }
         }
     }
 

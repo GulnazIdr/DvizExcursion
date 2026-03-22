@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.example.project.core.common.result.FetchCourseResult
 import org.example.project.core.designsystem.ui_logic.mapper.CourseToCourseDetailUiMapper
-import org.example.project.core.domain.FetchCourseResult
 import org.example.project.core.domain.FetchCoursesUseCase
 import org.example.project.feature.course_catalog.presentation.models.CourseDetailUi
 

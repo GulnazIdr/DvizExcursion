@@ -5,9 +5,11 @@ import org.example.project.feature.auth.domain.token.TokenDataRepository
 import org.example.project.feature.auth.data.TokenDataRepositoryImpl
 import org.example.project.feature.auth.domain.TokenRepositoryImpl
 import org.example.project.feature.auth.domain.token.TokenRepository
+import org.example.project.feature.auth.presentation.AuthViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
@@ -25,4 +27,9 @@ actual val tokenStorageModule: Module
 actual val tokenRepositoryModule: Module
     get() = module {
         singleOf(::TokenRepositoryImpl).bind<TokenRepository>()
+    }
+
+actual val authModule: Module
+    get() = module {
+        viewModelOf(::AuthViewModel)
     }

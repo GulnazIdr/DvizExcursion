@@ -6,7 +6,6 @@ import net.openid.appauth.TokenRequest
 import org.example.project.feature.auth.domain.token.TokenStorage
 
 class AuthRepository {
-
     fun corruptAccessToken() {
         TokenStorage.accessToken = "fake token"
     }

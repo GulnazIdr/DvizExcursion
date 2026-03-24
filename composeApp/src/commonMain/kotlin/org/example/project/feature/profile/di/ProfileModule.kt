@@ -21,7 +21,7 @@ val profileModule = module {
     factoryOf(::UpdateUserUseCase)
     factoryOf(::GetUserUseCase)
     factoryOf(::LogoutUseCase)
-    singleOf(::LocalUserRepositoryImpl).bind<LocalUserRepository>()
+    factory<LocalUserRepository> { LocalUserRepositoryImpl(get(), get()) }
 }
 
 val userMapperModule = module {

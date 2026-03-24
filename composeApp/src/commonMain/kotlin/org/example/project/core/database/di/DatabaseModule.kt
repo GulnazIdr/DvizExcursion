@@ -6,6 +6,7 @@ import org.example.project.core.database.StepikDatabase
 import org.example.project.core.database.dao.CourseDao
 import org.example.project.core.database.dao.UserDao
 import org.example.project.core.database.source.LocalCourseRepository
+import org.example.project.core.database.source.LocalUserRepository
 import org.example.project.core.network.ktor.source.RemoteCourseRepository
 import org.example.project.core.network.ktor.repository.RemoteCourseRepositoryImpl
 import org.koin.core.module.Module
@@ -27,11 +28,11 @@ val daoModule = module {
     }.bind<UserDao>()
 }
 
-val courseRepositoryModule = module{
-    singleOf(::RemoteCourseRepositoryImpl).bind<RemoteCourseRepository>()
-    singleOf(::LocalCourseRepositoryImpl).bind<LocalCourseRepository>()
+val courseRepositoryModule = module {
+    factory<RemoteCourseRepository> { RemoteCourseRepositoryImpl(get(), get()) }
+    factory<LocalCourseRepository> { LocalCourseRepositoryImpl(get()) }
 }
 
 val userRepositoryModule = module {
-    singleOf(::LocalUserRepositoryImpl)
+    factory<LocalUserRepository>{ LocalUserRepositoryImpl(get(), get()) }
 }

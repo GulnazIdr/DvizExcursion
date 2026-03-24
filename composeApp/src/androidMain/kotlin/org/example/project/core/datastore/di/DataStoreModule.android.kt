@@ -1,4 +1,4 @@
-package org.example.project.core.datastore
+package org.example.project.core.datastore.di
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory

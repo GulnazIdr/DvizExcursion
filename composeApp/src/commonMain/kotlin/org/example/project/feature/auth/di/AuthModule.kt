@@ -9,21 +9,22 @@ import org.example.project.feature.auth.domain.registration.RegisterRepository
 import org.example.project.feature.auth.presentation.login.LoginViewModel
 import org.example.project.feature.auth.presentation.register.RegistrationViewmodel
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val loginModule = module{
+val loginModule = module {
     viewModelOf(::LoginViewModel)
-    singleOf(::LoginRepositoryImpl).bind<LoginRepository>()
-    singleOf(::LoginErrorUseCase)
-    singleOf(::LoginUseCase)
+    factory<LoginRepository> { LoginRepositoryImpl() }
+    factoryOf(::LoginErrorUseCase)
+    factoryOf(::LoginUseCase)
 }
 
-val registerModule = module{
+val registerModule = module {
     viewModelOf(::RegistrationViewmodel)
-    singleOf(::RegisterRepositoryImpl).bind<RegisterRepository>()
+    factory<RegisterRepository> { RegisterRepositoryImpl(get()) }
 }
 
 expect val secureTokenStorageModule: Module
@@ -33,3 +34,5 @@ expect val tokenDataRepositoryModule: Module
 expect val tokenStorageModule: Module
 
 expect val tokenRepositoryModule: Module
+
+expect val authModule: Module

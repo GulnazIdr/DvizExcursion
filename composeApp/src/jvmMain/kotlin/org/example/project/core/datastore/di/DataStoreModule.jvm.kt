@@ -1,11 +1,9 @@
-package org.example.project.core.datastore
+package org.example.project.core.datastore.di
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
-import kotlinx.io.files.Path
 import okio.Path.Companion.toPath
-import org.example.project.core.common.di.DATA_STORE_FILE_NAME
 import org.koin.core.module.Module
 import org.koin.dsl.module
 

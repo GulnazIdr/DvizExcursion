@@ -9,13 +9,15 @@ val Background = Color.White
 val White = Color.White
 val Surface = Color(0xFFFF0000)
 val Error = Color(0xFFFF6161)
-val OnSurface = Color(0xFFD3B8DC)
+val LightRed = Color(0xFFFF6F6F)
+val OnSurface = Color(0xFFFF2B47)
 
 val SuperDarkRed = Color(0xFF470000)
 
 val LightPink = Color(0xFFFCBEBE)
 val LighterPurple = Color(0xFFDFCCF1)
 val DescrGrey = Color(0xFF929292)
+val DarkerGrey = Color(0xFF6F6F6F)
 
 val LightGrey = Color(0xFFE7E6E6)
 

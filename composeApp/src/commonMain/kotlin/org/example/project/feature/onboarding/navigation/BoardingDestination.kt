@@ -1,11 +1,10 @@
 package org.example.project.feature.onboarding.navigation
 
-import kotlinx.serialization.Serializable
+import org.jetbrains.compose.resources.DrawableResource
 
-interface BoardingDestination
-
-@Serializable
-object OnBoarding1: BoardingDestination
-
-@Serializable
-object OnBoarding2: BoardingDestination
+enum class BoardingDestination(
+    val route: String
+) {
+    BOARDING1("Boarding1"),
+    BOARDING2("Boarding2"),
+}

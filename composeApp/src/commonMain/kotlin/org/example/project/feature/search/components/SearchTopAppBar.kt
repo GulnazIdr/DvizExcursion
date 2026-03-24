@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.example.project.core.designsystem.components.BasicTopAppBar
-import org.example.project.feature.main.presentation.components.SearchBar
+import org.example.project.feature.course_catalog.components.SearchBar
 
 @Composable
 fun SearchTopAppBar(

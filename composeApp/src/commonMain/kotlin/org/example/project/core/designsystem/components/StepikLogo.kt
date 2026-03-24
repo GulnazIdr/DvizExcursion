@@ -5,11 +5,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
-import dvizexcursion.composeapp.generated.resources.Res
-import dvizexcursion.composeapp.generated.resources.stepik_logo
-import dvizexcursion.composeapp.generated.resources.stepik_logo_text
+import stepik.composeapp.generated.resources.Res
+import stepik.composeapp.generated.resources.stepik_logo
 import org.jetbrains.compose.resources.painterResource
 
 @Composable

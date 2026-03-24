@@ -1,6 +1,6 @@
 package org.example.project.feature.auth.presentation.models
 
-import org.example.project.core.designsystem.UiText
+import org.example.project.core.designsystem.ui_logic.UiText
 
 data class LoginUiState(
     val userName: String,

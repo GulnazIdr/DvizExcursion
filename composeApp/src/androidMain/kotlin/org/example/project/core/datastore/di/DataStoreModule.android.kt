@@ -1,9 +1,17 @@
 package org.example.project.core.datastore.di
 
 import androidx.datastore.core.DataStore
+import androidx.datastore.core.DataStoreFactory
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
+import androidx.datastore.dataStoreFile
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import okio.Path.Companion.toPath
+import org.example.project.core.datastore.user.UserPreferencesSerializer
+import org.example.project.core.datastore.user.DataStoreUserSerial
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -18,3 +26,16 @@ actual val dataStoreModule: Module = module {
         )
     }
 }
+actual val userDataStoreModule: Module
+    get() = module {
+        single<DataStore<DataStoreUserSerial>>{
+            DataStoreFactory.create(
+                serializer = UserPreferencesSerializer,
+                corruptionHandler = ReplaceFileCorruptionHandler(
+                    produceNewData = { DataStoreUserSerial()}
+                ),
+                scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
+                produceFile = {androidContext().dataStoreFile(USER_DATA_STORE_FILE_NAME)}
+            )
+        }
+    }

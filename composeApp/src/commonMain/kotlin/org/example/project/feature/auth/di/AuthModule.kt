@@ -17,7 +17,7 @@ import org.koin.dsl.module
 
 val loginModule = module {
     viewModelOf(::LoginViewModel)
-    factory<LoginRepository> { LoginRepositoryImpl() }
+    factory<LoginRepository> { LoginRepositoryImpl(get()) }
     factoryOf(::LoginErrorUseCase)
     factoryOf(::LoginUseCase)
 }

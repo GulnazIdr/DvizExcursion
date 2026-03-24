@@ -23,8 +23,3 @@ val profileModule = module {
     factory<LocalUserRepository> { LocalUserRepositoryImpl(get()) }
     factory<RemoteUserRepository> { RemoteUserRepositoryImpl(get(), get(), get()) }
 }
-
-val userMapperModule = module {
-    factory { UserUiToUserMapper() }
-    factory { UserToUserUiMapper() }
-}

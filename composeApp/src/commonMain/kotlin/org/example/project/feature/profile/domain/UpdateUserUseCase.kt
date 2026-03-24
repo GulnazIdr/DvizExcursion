@@ -3,7 +3,7 @@ package org.example.project.feature.profile.domain
 import kotlinx.coroutines.flow.first
 import org.example.project.core.database.source.LocalUserRepository
 import org.example.project.core.model.User
-import org.example.project.feature.onboarding.domain.DataStoreRepository
+import org.example.project.core.datastore.source.DataStoreRepository
 
 class UpdateUserUseCase(
     private val dataStoreRepository: DataStoreRepository,

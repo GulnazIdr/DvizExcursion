@@ -42,8 +42,7 @@ fun ContactInfoRow(
             onValueChange = { onValueChange(it) },
             errorText = error,
             isEnabled = isEnabled,
-            hint = hint,
-            textColor = MaterialTheme.colorScheme.onBackground
+            hint = hint
         )
     }
 }

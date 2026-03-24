@@ -14,7 +14,6 @@ import org.example.project.feature.auth.di.registerModule
 import org.example.project.feature.auth.di.secureTokenStorageModule
 import org.example.project.feature.auth.di.tokenDataRepositoryModule
 import org.example.project.feature.auth.di.tokenRepositoryModule
-import org.example.project.feature.auth.di.tokenStorageModule
 import org.example.project.feature.course_catalog.di.courseModule
 import org.example.project.feature.course_detail.di.courseDetailModule
 import org.example.project.feature.profile.di.profileModule
@@ -24,12 +23,12 @@ import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
 
-fun initKoin(platform: Module, config: KoinAppDeclaration? = null, ){
+fun initKoin(platform: Module, config: KoinAppDeclaration? = null){
     startKoin {
         config?.invoke(this)
         modules(
              loginModule, registerModule, secureTokenStorageModule, tokenDataRepositoryModule,
-            tokenStorageModule, httpClientModule, searchModule, courseDetailModule, authModule,
+            httpClientModule, searchModule, courseDetailModule, authModule,
             databaseModule, daoModule, courseRepositoryModule, courseUseCaseModule, profileModule,
             userRepositoryModule, dataStoreModule, dataStoreRepositoryModule, navigationModule,
             courseMapperModule, userMapperModule, platform, courseModule, tokenRepositoryModule

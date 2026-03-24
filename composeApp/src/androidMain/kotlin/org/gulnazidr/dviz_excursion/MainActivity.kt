@@ -9,7 +9,7 @@ import org.example.project.core.common.di.initKoin
 import org.example.project.core.common.di.platformModule
 import org.example.project.core.designsystem.theme.StepikTheme
 import org.example.project.core.navigation.NavigationGraph
-import org.example.project.feature.auth.domain.AppAuthHandler
+import org.example.project.feature.auth.presentation.AppAuthHandler
 import org.koin.android.ext.koin.androidContext
 
 class MainActivity : ComponentActivity() {

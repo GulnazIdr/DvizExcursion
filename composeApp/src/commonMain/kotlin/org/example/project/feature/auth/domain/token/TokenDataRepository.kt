@@ -5,4 +5,5 @@ interface TokenDataRepository {
     fun getAccessToken(): String?
     fun saveRefreshToken(token: String?): Boolean
     fun getRefreshToken(): String?
+    fun deleteAll(): Boolean
 }

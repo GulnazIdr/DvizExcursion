@@ -1,10 +1,10 @@
 package org.example.project.core.domain
 
-import org.example.project.core.common.result.FetchCourseResult
+import org.example.project.core.common.result.FetchDataResult
 import org.example.project.core.common.result.NetworkError
 import org.example.project.core.common.result.parseExceptionToNetworkError
 import org.example.project.core.model.Course
-import org.example.project.core.network.ktor.source.RemoteCourseRepository
+import org.example.project.core.network.ktor.course.source.RemoteCourseRepository
 
 class FetchCoursesUseCase(
     private val remoteCourseRepository: RemoteCourseRepository
@@ -12,11 +12,11 @@ class FetchCoursesUseCase(
     private var currentPage = 1
 
     private val _courseList: MutableList<Course> = mutableListOf()
-    private var _courseFetchResult: FetchCourseResult<CourseSuccessResult, NetworkError?>? = null
+    private var _courseFetchResult: FetchDataResult<CourseSuccessResult, NetworkError?>? = null
 
-    fun getCourseFetchResult(): FetchCourseResult<CourseSuccessResult, NetworkError?>? = _courseFetchResult
+    fun getCourseFetchResult(): FetchDataResult<CourseSuccessResult, NetworkError?>? = _courseFetchResult
 
-    suspend operator fun invoke(isRefreshing: Boolean): FetchCourseResult<CourseSuccessResult, NetworkError?> {
+    suspend operator fun invoke(isRefreshing: Boolean): FetchDataResult<CourseSuccessResult, NetworkError?> {
 
         if(_courseFetchResult != null && !isRefreshing){
             return _courseFetchResult!!
@@ -43,14 +43,14 @@ class FetchCoursesUseCase(
                 stepik.data.pageInfo.hasNext
             )
 
-            if (stepik.isFromCache) {
+            _courseFetchResult = if (stepik.isFromCache) {
                 //отображение кеша с ошибкой
-                _courseFetchResult = FetchCourseResult.Cache(
+                FetchDataResult.Cache(
                     cacheData = courseSuccessData,
                     error = parseExceptionToNetworkError(stepik.error)
                 )
             } else {
-                _courseFetchResult = FetchCourseResult.Success(
+                FetchDataResult.Success(
                     CourseSuccessResult(
                         _courseList,
                         stepik.data.pageInfo.hasNext
@@ -59,7 +59,7 @@ class FetchCoursesUseCase(
             }
         }.onFailure { exception ->
             //нет кэша
-            _courseFetchResult = FetchCourseResult.Error(
+            _courseFetchResult = FetchDataResult.Error(
                 error = parseExceptionToNetworkError(exception)!!
             )
         }

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.example.project.feature.auth.domain.AppAuthHandler
+import org.example.project.feature.auth.presentation.AppAuthHandler
 import org.example.project.feature.auth.domain.token.TokenDataRepository
 
 class AuthViewModel(

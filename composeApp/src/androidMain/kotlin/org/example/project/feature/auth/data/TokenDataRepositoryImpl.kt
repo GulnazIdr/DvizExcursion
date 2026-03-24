@@ -25,4 +25,8 @@ class TokenDataRepositoryImpl(
     override fun getRefreshToken(): String? {
         return store.string(forKey = REFRESH_TOKEN)
     }
+
+    override fun deleteAll(): Boolean {
+        return store.clear()
+    }
 }

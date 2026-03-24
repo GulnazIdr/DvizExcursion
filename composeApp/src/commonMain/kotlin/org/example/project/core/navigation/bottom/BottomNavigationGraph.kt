@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import org.example.project.core.designsystem.components.BottomDestinationItems
-import org.example.project.feature.course_catalog.CourseCatalogScreen
+import org.example.project.feature.course_catalog.presentation.CourseCatalogScreen
 import org.example.project.feature.notification.NotificationScreen
 import org.example.project.core.navigation.CustomNavState
 import org.example.project.feature.profile.presentation.ProfileScreen

@@ -31,8 +31,6 @@ expect val secureTokenStorageModule: Module
 
 expect val tokenDataRepositoryModule: Module
 
-expect val tokenStorageModule: Module
-
 expect val tokenRepositoryModule: Module
 
 expect val authModule: Module

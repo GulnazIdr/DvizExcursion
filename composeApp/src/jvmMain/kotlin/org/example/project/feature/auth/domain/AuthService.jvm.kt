@@ -1,8 +1,5 @@
 package org.example.project.feature.auth.domain
 
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nimbusds.oauth2.sdk.AuthorizationCode
@@ -16,7 +13,6 @@ import com.nimbusds.oauth2.sdk.auth.Secret
 import com.nimbusds.oauth2.sdk.id.ClientID
 import com.sun.net.httpserver.HttpServer
 import kotlinx.coroutines.launch
-import org.koin.compose.viewmodel.koinViewModel
 import java.awt.Desktop
 
 actual class PlatformAuthService : AuthService {

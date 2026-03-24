@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.example.project.feature.auth.domain.token.TokenDataRepository
-import org.example.project.feature.onboarding.domain.DataStoreRepository
+import org.example.project.core.datastore.source.DataStoreRepository
 
 class NavigationViewModel(
     private val dataStoreRepository: DataStoreRepository,

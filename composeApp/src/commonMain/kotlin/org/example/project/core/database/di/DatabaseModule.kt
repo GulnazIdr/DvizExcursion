@@ -4,13 +4,11 @@ import org.example.project.core.database.impl.LocalCourseRepositoryImpl
 import org.example.project.core.database.impl.LocalUserRepositoryImpl
 import org.example.project.core.database.StepikDatabase
 import org.example.project.core.database.dao.CourseDao
-import org.example.project.core.database.dao.UserDao
 import org.example.project.core.database.source.LocalCourseRepository
 import org.example.project.core.database.source.LocalUserRepository
-import org.example.project.core.network.ktor.source.RemoteCourseRepository
-import org.example.project.core.network.ktor.repository.RemoteCourseRepositoryImpl
+import org.example.project.core.network.ktor.course.source.RemoteCourseRepository
+import org.example.project.core.network.ktor.course.repository.RemoteCourseRepositoryImpl
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
@@ -21,11 +19,6 @@ val daoModule = module {
         val stepikDb: StepikDatabase = get()
         stepikDb.getCourseDao()
     }.bind<CourseDao>()
-
-    single{
-        val stepikDb: StepikDatabase = get()
-        stepikDb.getUserDao()
-    }.bind<UserDao>()
 }
 
 val courseRepositoryModule = module {
@@ -34,5 +27,5 @@ val courseRepositoryModule = module {
 }
 
 val userRepositoryModule = module {
-    factory<LocalUserRepository>{ LocalUserRepositoryImpl(get(), get()) }
+    factory<LocalUserRepository>{ LocalUserRepositoryImpl(get()) }
 }

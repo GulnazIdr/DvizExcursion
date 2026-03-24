@@ -18,6 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.example.project.core.designsystem.components.CircleLoading
+import org.example.project.core.designsystem.components.ErrorDialog
 import org.example.project.core.designsystem.components.InputField
 import org.example.project.feature.profile.presentation.components.ContactInfoRow
 import org.example.project.feature.profile.presentation.components.ProfileImage
@@ -40,6 +42,8 @@ fun ProfileScreen(
     profileViewModel: ProfileViewModel = koinViewModel<ProfileViewModel>(),
     modifier: Modifier = Modifier
 ) {
+    var isDismissed by rememberSaveable { mutableStateOf(false) }
+    val profileFetchState by profileViewModel.profileFetchedState.collectAsStateWithLifecycle()
     var isEditEnabled by rememberSaveable { mutableStateOf(false) }
     val profileUiState = profileViewModel.profileUiState.collectAsStateWithLifecycle().value
 
@@ -59,56 +63,71 @@ fun ProfileScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        ProfileImage(
-            imageUrl = "",
-            onEdit = {
-                isEditEnabled = !isEditEnabled
-                if (!isEditEnabled) {
-                    profileViewModel.updateUser()
+        profileFetchState.Display(
+            onSuccess = { user ->
+                ProfileImage(
+                    imageUrl = user.profileImg,
+                    onEdit = {
+                        isEditEnabled = !isEditEnabled
+                        if (!isEditEnabled) {
+                            profileViewModel.updateUser()
+                        }
+                    },
+                    isEditEnabled = isEditEnabled,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                ProfileInfoCard(
+                    title = stringResource(Res.string.profile_name)
+                ) {
+                    InputField(
+                        value = profileUiState.userName,
+                        onValueChange = { profileViewModel.onNameChanged(it) },
+                        hint = stringResource(Res.string.auth_user_name_hint),
+                        errorText = profileUiState.nameError?.asString() ?: "",
+                        isEnabled = isEditEnabled
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(32.dp))
+
+                ProfileInfoCard(
+                    title = stringResource(Res.string.profile_info)
+                ) {
+                    ContactInfoRow(
+                        iconRes = Res.drawable.phone,
+                        hint = stringResource(Res.string.auth_phone_hint),
+                        value = profileUiState.phone,
+                        onValueChange = { profileViewModel.onPhoneChanged(it) },
+                        error = profileUiState.phoneError?.asString() ?: "",
+                        isEnabled = isEditEnabled
+                    )
+
+                    Divider(modifier = Modifier.padding(vertical = 12.dp))
+
+                    ContactInfoRow(
+                        iconRes = Res.drawable.email,
+                        hint = stringResource(Res.string.auth_email_hint),
+                        value = profileUiState.email,
+                        onValueChange = { profileViewModel.onEmailChanged(it) },
+                        error = profileUiState.emailError?.asString() ?: "",
+                        isEnabled = isEditEnabled
+                    )
                 }
             },
-            isEditEnabled = isEditEnabled,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            onError = { error ->
+                ErrorDialog(
+                    errorMessage = error,
+                    onRetry = { profileViewModel.retry() },
+                    onClose = { isDismissed = true }
+                )
+            },
+            onLoading = {
+                CircleLoading()
+            },
+            isDismissed = isDismissed
         )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        ProfileInfoCard(
-            title = stringResource(Res.string.profile_name)
-        ) {
-            InputField(
-                value = profileUiState.userName,
-                onValueChange = { profileViewModel.onNameChanged(it) },
-                hint = stringResource(Res.string.auth_user_name_hint),
-                errorText = profileUiState.nameError?.asString() ?: "",
-                isEnabled = isEditEnabled
-            )
-        }
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        ProfileInfoCard(
-            title = stringResource(Res.string.profile_info)
-        ) {
-            ContactInfoRow(
-                iconRes = Res.drawable.phone,
-                hint = stringResource(Res.string.auth_phone_hint),
-                value = profileUiState.phone,
-                onValueChange = { profileViewModel.onPhoneChanged(it) },
-                error = profileUiState.phoneError?.asString() ?: "",
-                isEnabled = isEditEnabled
-            )
-
-            Divider(modifier = Modifier.padding(vertical = 12.dp))
-
-            ContactInfoRow(
-                iconRes = Res.drawable.email,
-                hint = stringResource(Res.string.auth_email_hint),
-                value = profileUiState.email,
-                onValueChange = { profileViewModel.onEmailChanged(it) },
-                error = profileUiState.emailError?.asString() ?: "",
-                isEnabled = isEditEnabled
-            )
-        }
     }
 }

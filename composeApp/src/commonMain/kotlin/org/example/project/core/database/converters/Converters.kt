@@ -6,7 +6,7 @@ import kotlinx.serialization.json.Json
 class Converters {
     @TypeConverter
     fun arrayListToString(list: List<String>?): String {
-        return Json.Default.encodeToString(list)
+        return Json.encodeToString(list)
     }
 
     @TypeConverter

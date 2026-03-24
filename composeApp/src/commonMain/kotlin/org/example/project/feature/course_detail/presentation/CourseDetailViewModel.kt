@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.example.project.core.common.result.FetchCourseResult
+import org.example.project.core.common.result.FetchDataResult
 import org.example.project.core.common.result.NetworkError
 import org.example.project.core.designsystem.ui_logic.UiText
 import org.example.project.core.designsystem.ui_logic.mapper.CourseDetailToCourseDetailUiMapper
@@ -48,8 +48,8 @@ class CourseDetailViewModel(
 
         fetchSpecificCourseJob = viewModelScope.launch {
             when (val res = fetchCourseDetailUseCase(id)) {
-                is FetchCourseResult.Success<CourseDetail> -> {
-                    val data = res.stepikData
+                is FetchDataResult.Success<CourseDetail> -> {
+                    val data = res.data
 
                     _currentCourseState.update { state ->
                         state.copy(
@@ -59,7 +59,7 @@ class CourseDetailViewModel(
                     }
                 }
 
-                is FetchCourseResult.Cache<CourseDetail, NetworkError?> -> {
+                is FetchDataResult.Cache<CourseDetail, NetworkError?> -> {
                     _currentCourseState.update { state ->
                         state.copy(
                             courseState = Error(
@@ -71,7 +71,7 @@ class CourseDetailViewModel(
                     }
                 }
 
-                is FetchCourseResult.Error<NetworkError?> -> {
+                is FetchDataResult.Error<NetworkError?> -> {
                     _currentCourseState.update { state ->
                         state.copy(
                             courseState = Error(

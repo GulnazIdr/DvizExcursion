@@ -6,6 +6,8 @@ data class ProfileUiState(
     val userName: String,
     val email: String,
     val phone: String,
+    val bio: String,
+    val details: String,
     val isSaveButtonActive: Boolean,
     val nameError: UiText?,
     val emailError: UiText?,

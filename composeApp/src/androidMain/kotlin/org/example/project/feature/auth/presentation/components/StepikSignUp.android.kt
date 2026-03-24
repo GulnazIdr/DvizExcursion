@@ -33,7 +33,9 @@ actual fun StepikSignUp(
 
     if (isStepikLoginInfoOpen) {
         DialogStepikLoginInfo(
-            navigateToMain = navigateToMain
+            navigateToMain = navigateToMain,
+            isCanceled = true,
+            onCancelled = { isStepikLoginInfoOpen = it }
         )
     }
 }

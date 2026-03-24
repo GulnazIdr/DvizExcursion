@@ -14,6 +14,7 @@
     <string name="on_boarding2_stepik_descr_about">AI, machine learning, no-code, data analysis — everything becomes popular with us before others</string>
     <string name="on_boarding2_get_started_text">Start</string>
 
+    <string name="login_dialog_cancel">Cancel</string>
     <string name="auth_user_name_hint">Name</string>
     <string name="auth_password_hint">Password</string>
     <string name="auth_phone_hint">Phone</string>

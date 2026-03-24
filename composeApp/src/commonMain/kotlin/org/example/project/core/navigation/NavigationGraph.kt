@@ -13,16 +13,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import io.github.aakira.napier.Napier
-import kotlinx.coroutines.flow.map
 import org.example.project.feature.auth.presentation.login.LoginScreen
 import org.example.project.feature.auth.presentation.register.RegistrationScreen
 import org.example.project.feature.course_detail.presentation.CourseDetailViewModel
 import org.example.project.feature.course_detail.presentation.CourseDetailsCard
 import org.example.project.app.MainScreen
 import org.example.project.feature.onboarding.presentation.Boarding
-import org.example.project.feature.onboarding.presentation.OnBoarding
 import org.example.project.feature.onboarding.presentation.Splash
-import org.example.project.feature.search.SearchScreen
+import org.example.project.feature.search.presentation.SearchScreen
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 

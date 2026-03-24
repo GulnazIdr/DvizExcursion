@@ -8,8 +8,8 @@ import org.example.project.core.database.source.LocalCourseRepository
 import org.example.project.core.model.Course
 import org.example.project.core.model.CourseDetail
 import org.example.project.core.model.PageInfo
-import org.example.project.core.model.Stepik
-import org.example.project.core.model.StepikDetailed
+import org.example.project.core.model.StepikCourse
+import org.example.project.core.model.StepikCourseDetailed
 
 class LocalCourseRepositoryImpl (
     private val courseDao: CourseDao
@@ -24,7 +24,7 @@ class LocalCourseRepositoryImpl (
         }
     }
 
-    override suspend fun getCourses(): Result<Stepik>{
+    override suspend fun getCourses(): Result<StepikCourse>{
         return runCatching {
             val courses = courseDao.getCourseList()
             if (courses.isEmpty()){
@@ -35,7 +35,7 @@ class LocalCourseRepositoryImpl (
         }
     }
 
-    override suspend fun getCourseById(id: Int): Result<StepikDetailed> {
+    override suspend fun getCourseById(id: Int): Result<StepikCourseDetailed> {
         return runCatching {
             val course = courseDao.getCourseById(id)
             course?.toStepikDetailed() ?: throw CustomRoomException("cache courses is empty")
@@ -84,15 +84,15 @@ private fun CourseDetail.toCourseEntity(): CourseEntity{
     )
 }
 
-private fun List<CourseEntity>.toStepik(): Stepik {
-    return Stepik(
+private fun List<CourseEntity>.toStepik(): StepikCourse {
+    return StepikCourse(
         pageInfo = PageInfo(page = 1, hasNext = false, hasPrevious = false),
         courses = this.map { it.toCourse() }
     )
 }
 
-private fun CourseEntity.toStepikDetailed(): StepikDetailed {
-    return StepikDetailed(
+private fun CourseEntity.toStepikDetailed(): StepikCourseDetailed {
+    return StepikCourseDetailed(
         pageInfo = PageInfo(page = 1, hasNext = false, hasPrevious = false),
         courses = listOf(this.toCourseDetail())
     )

@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import org.example.project.core.designsystem.components.BottomDestinationItems
 import org.example.project.feature.course_catalog.CourseCatalogScreen
 import org.example.project.feature.notification.NotificationScreen
-import org.example.project.feature.onboarding.navigation.BottomNavState
+import org.example.project.core.navigation.CustomNavState
 import org.example.project.feature.profile.presentation.ProfileScreen
 
 @Composable
@@ -14,34 +14,28 @@ fun BottomNavigationGraph(
     navigateToSearch: () -> Unit,
     navigateToCourseDetail: (id: Int) -> Unit,
     logout: () -> Unit,
-    navController: BottomNavState,
+    navController: CustomNavState,
     startDestination: BottomDestinationItems
 ) {
     NavHost(
         navController = navController.navHostController,
         startDestination = startDestination.route
     ) {
-        BottomDestinationItems.entries.forEach { destinationItems ->
-            composable(destinationItems.route) {
-                when (destinationItems) {
-                    BottomDestinationItems.HOME -> {
-                        CourseCatalogScreen(
-                            navigateToSearch = navigateToSearch,
-                            navigateToCourseDetail = navigateToCourseDetail
-                        )
-                    }
+        composable(BottomDestinationItems.HOME.route) {
+            CourseCatalogScreen(
+                navigateToSearch = navigateToSearch,
+                navigateToCourseDetail = navigateToCourseDetail
+            )
+        }
 
-                    BottomDestinationItems.PROFILE -> {
-                        ProfileScreen(
-                            onLogout = logout
-                        )
-                    }
+        composable(BottomDestinationItems.PROFILE.route) {
+            ProfileScreen(
+                onLogout = logout
+            )
+        }
 
-                    BottomDestinationItems.NOTIFICATION -> {
-                        NotificationScreen()
-                    }
-                }
-            }
+        composable(BottomDestinationItems.NOTIFICATION.route) {
+            NotificationScreen()
         }
     }
 }

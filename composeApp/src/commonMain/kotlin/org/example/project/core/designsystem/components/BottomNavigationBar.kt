@@ -25,14 +25,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import io.github.aakira.napier.Napier
-import org.example.project.feature.onboarding.navigation.BottomNavState
+import org.example.project.core.navigation.CustomNavState
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun BottomNavigationBar(
     startDestination: BottomDestinationItems,
-    navController: BottomNavState
+    navController: CustomNavState
 ) {
     var selectedDestination by rememberSaveable { mutableIntStateOf(startDestination.ordinal) }
 
@@ -45,12 +44,11 @@ fun BottomNavigationBar(
                 .background(MaterialTheme.colorScheme.surfaceVariant),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Napier.wtf("some ${navController.navHostController.currentBackStackEntry}")
             BottomDestinationItems.entries.forEachIndexed { index, item ->
                 BottomNavItem(
                     isSelected = selectedDestination == index,
                     onClick = {
-                        navController.navigateTo(item.route)
+                        navController.navigateToPopUpTo(BottomDestinationItems.HOME.route, item.route)
                         selectedDestination = index
                     },
                     destination = item

@@ -36,7 +36,7 @@ fun Splash(
         Icon(
             painter = painterResource(Res.drawable.stepik_logo),
             contentDescription = "stepik image",
-            tint = Color.Unspecified,
+            tint = Color.White,
             modifier = Modifier.size(40.dp)
         )
     }

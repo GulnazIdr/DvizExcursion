@@ -12,6 +12,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import io.github.aakira.napier.Napier
+import kotlinx.coroutines.flow.map
 import org.example.project.feature.auth.presentation.login.LoginScreen
 import org.example.project.feature.auth.presentation.register.RegistrationScreen
 import org.example.project.feature.course_detail.presentation.CourseDetailViewModel
@@ -83,8 +85,9 @@ fun NavigationGraph(
                     navigateToSearch = { navController.navigate(Search) },
                     navigateToCourseDetail = { navController.navigate(CourseDetail(it)) },
                     logout = {
+                        Napier.wtf("${navController.currentBackStack}")
+                       // navController.popBackStack()
                         navigateToAndPopAll(Login)
-                        navController.popBackStack()
                     }
                 )
             }

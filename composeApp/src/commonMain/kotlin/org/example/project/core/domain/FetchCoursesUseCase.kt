@@ -16,7 +16,12 @@ class FetchCoursesUseCase(
 
     fun getCourseFetchResult(): FetchCourseResult<CourseSuccessResult, NetworkError?>? = _courseFetchResult
 
-    suspend operator fun invoke(): FetchCourseResult<CourseSuccessResult, NetworkError?> {
+    suspend operator fun invoke(isRefreshing: Boolean): FetchCourseResult<CourseSuccessResult, NetworkError?> {
+
+        if(_courseFetchResult != null && !isRefreshing){
+            return _courseFetchResult!!
+        }
+
         val result = remoteCourseRepository.getCourses(currentPage)
 
         result.onSuccess { stepik ->
@@ -27,11 +32,11 @@ class FetchCoursesUseCase(
             _courseList += stepik.data.courses
 
             if (_courseList.isEmpty()) {
-                invoke()
+                invoke(isRefreshing)
             }
 
             if (_courseList.size < 20) {
-                invoke()
+                invoke(isRefreshing)
             }
             val courseSuccessData = CourseSuccessResult(
                 _courseList,

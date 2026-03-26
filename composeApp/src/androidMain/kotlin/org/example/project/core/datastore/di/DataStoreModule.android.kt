@@ -14,10 +14,11 @@ import org.example.project.core.datastore.user.UserPreferencesSerializer
 import org.example.project.core.datastore.user.DataStoreUserSerial
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 actual val dataStoreModule: Module = module {
-    single<DataStore<Preferences>> {
+    single<DataStore<Preferences>>(named("data_pref")) {
         PreferenceDataStoreFactory.createWithPath(
             produceFile = {
                 androidContext().filesDir
@@ -28,7 +29,7 @@ actual val dataStoreModule: Module = module {
 }
 actual val userDataStoreModule: Module
     get() = module {
-        single<DataStore<DataStoreUserSerial>>{
+        single<DataStore<DataStoreUserSerial>>(named("data_user")){
             DataStoreFactory.create(
                 serializer = UserPreferencesSerializer,
                 corruptionHandler = ReplaceFileCorruptionHandler(

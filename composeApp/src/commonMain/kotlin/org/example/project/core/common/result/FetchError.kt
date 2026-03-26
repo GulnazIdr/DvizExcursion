@@ -1,7 +1,8 @@
 package org.example.project.core.common.result
 
 import org.example.project.core.database.CustomRoomException
-import org.example.project.core.network.ktor.CustomServerException
+import org.example.project.core.network.CustomServerException
+import org.example.project.core.network.TokenRefreshException
 import java.net.UnknownHostException
 
 enum class NetworkError: Error {
@@ -13,6 +14,7 @@ enum class NetworkError: Error {
     PAYLOAD_TOO_LARGE,
     SERVER_ERROR,
     SERIALIZATION,
+    TOKEN_REFRESH,
     UNKNOWN
 }
 
@@ -28,6 +30,10 @@ fun parseExceptionToNetworkError(exception: Throwable?): NetworkError?{
 
         is UnknownHostException -> {
             NetworkError.NO_INTERNET
+        }
+
+        is TokenRefreshException -> {
+            NetworkError.TOKEN_REFRESH
         }
 
         null ->{

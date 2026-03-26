@@ -8,5 +8,6 @@ data class Course(
     val commentAmount: Int,
     val favoriteAmount: Int,
     val price: Double,
-    val learnersCount: Int
+    val learnersCount: Int,
+    val authorList: List<User> = emptyList()
 )

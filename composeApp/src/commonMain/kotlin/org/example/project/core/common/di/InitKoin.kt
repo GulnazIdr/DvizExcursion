@@ -6,8 +6,10 @@ import org.example.project.core.database.di.databaseModule
 import org.example.project.core.database.di.userRepositoryModule
 import org.example.project.core.datastore.di.dataStoreModule
 import org.example.project.core.datastore.di.userDataStoreModule
+import org.example.project.core.datastore.user.di.userDataStoreRepoModule
 import org.example.project.core.navigation.di.navigationModule
-import org.example.project.core.network.ktor.di.httpClientModule
+import org.example.project.core.network.di.httpClientModule
+import org.example.project.core.network.di.metaModule
 import org.example.project.feature.auth.di.authModule
 import org.example.project.feature.auth.di.loginModule
 import org.example.project.feature.auth.di.registerModule
@@ -23,7 +25,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
 
-fun initKoin(platform: Module, config: KoinAppDeclaration? = null){
+fun initKoin(config: KoinAppDeclaration? = null){
     startKoin {
         config?.invoke(this)
         modules(
@@ -31,8 +33,8 @@ fun initKoin(platform: Module, config: KoinAppDeclaration? = null){
             httpClientModule, searchModule, courseDetailModule, authModule,
             databaseModule, daoModule, courseRepositoryModule, courseUseCaseModule, profileModule,
             userRepositoryModule, dataStoreModule, boardingDataStoreModule, navigationModule,
-            courseMapperModule, userMapperModule, platform, courseModule, tokenRepositoryModule,
-            userDataStoreModule, userDataStoreModule
+            courseMapperModule, userMapperModule, courseModule, tokenRepositoryModule,
+            userDataStoreModule, userDataStoreRepoModule, metaModule
         )
     }
 }

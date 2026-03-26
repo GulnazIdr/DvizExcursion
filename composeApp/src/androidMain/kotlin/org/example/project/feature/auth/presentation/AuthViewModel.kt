@@ -2,82 +2,51 @@ package org.example.project.feature.auth.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import io.ktor.client.request.basicAuth
+import io.ktor.client.request.forms.FormDataContent
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.ContentType
+import io.ktor.http.Parameters
+import io.ktor.http.contentType
 import kotlinx.coroutines.launch
-import org.example.project.feature.auth.presentation.AppAuthHandler
+import kotlinx.serialization.json.Json
+import org.example.project.feature.auth.domain.AuthConfig
+import org.example.project.feature.auth.domain.model.TokenResponse
 import org.example.project.feature.auth.domain.token.TokenDataRepository
 
 class AuthViewModel(
-    private val appAuthHandler: AppAuthHandler,
     private val tokenDataRepository: TokenDataRepository,
     private val httpClient: HttpClient
 ) : ViewModel() {
-    private val _tokenUiState = MutableStateFlow(
-        TokenUiState(
-            input = "",
-            errorMessage = "",
-            isSaved = false,
-            isLoading = false
-        )
-    )
-    val tokenUiState: StateFlow<TokenUiState> = _tokenUiState.asStateFlow()
-
-    fun onUrlChanged(url: String) {
-        _tokenUiState.update { state ->
-            state.copy(
-                input = url,
-                errorMessage = if (url.isEmpty()) "paste the url" else ""
-            )
-        }
-        if (url.isNotEmpty()) {
-            handle()
-        }
-    }
-
-    fun openLoginPage() {
+    fun exchangeCodeForToken(code: String) {
         viewModelScope.launch {
-            runCatching {
-                appAuthHandler.open()
-            }
-        }
-    }
-    private fun handle() {
-        _tokenUiState.update { state ->
-            state.copy(
-                isLoading = true
-            )
-        }
-        viewModelScope.launch {
-            val res = appAuthHandler.handlePastedUrl(_tokenUiState.value.input, httpClient)
-            res.onSuccess { tokenPair ->
-                _tokenUiState.update { state ->
-                    state.copy(
-                        isSaved = tokenDataRepository.saveAccessToken(tokenPair.second) &&
-                                tokenDataRepository.saveRefreshToken(
-                                    tokenPair.first
-                                ),
-                        errorMessage = "",
-                        input = state.input
+            try {
+                val response = httpClient.post(AuthConfig.TOKEN_URI) {
+                    contentType(ContentType.Application.FormUrlEncoded)
+                    setBody(
+                        FormDataContent(
+                            Parameters.build {
+                                append("grant_type", "authorization_code")
+                                append("code", code)
+                                append("redirect_uri", AuthConfig.CALLBACK_URL)
+                            }
+                        )
                     )
+                    basicAuth(username = AuthConfig.CLIENT_ID, password = AuthConfig.CLIENT_SECRET)
                 }
-            }.onFailure { error ->
-                _tokenUiState.update { state ->
-                    state.copy(
-                        isSaved = false,
-                        errorMessage = error.message.orEmpty(),
-                        input = ""
-                    )
-                }
-            }
 
-            _tokenUiState.update { state ->
-                state.copy(
-                    isLoading = false
-                )
+                val rawBody = response.bodyAsText()
+
+                val json = Json { ignoreUnknownKeys = true }
+                val tokenResponse = json.decodeFromString<TokenResponse>(rawBody)
+                tokenDataRepository.saveAccessToken(tokenResponse.access_token)
+                tokenDataRepository.saveRefreshToken(tokenResponse.refresh_token)
+            } catch (e: Exception) {
+                Napier.e("exchange error: ${e.message}")
             }
         }
     }

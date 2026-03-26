@@ -8,4 +8,7 @@ interface RemoteCourseRepository {
     suspend fun getCourses(page: Int): Result<KtorDataWrapping<StepikCourse>>
 
     suspend fun getCourseById(id: Int): Result<KtorDataWrapping<StepikCourseDetailed>>
+
+    suspend fun getCoursesByIds(idList: List<Int>)
+            : Result<KtorDataWrapping<StepikCourseDetailed>>
 }

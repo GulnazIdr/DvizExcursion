@@ -17,9 +17,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.example.project.core.designsystem.components.PriceText
-import org.example.project.feature.course_catalog.presentation.models.CourseDetailUi
+import org.example.project.core.designsystem.ui_logic.model.CourseDetailUi
+import org.example.project.core.designsystem.ui_logic.model.CourseUi
 
 @Composable
 fun CourseCardItem(
@@ -108,4 +110,26 @@ fun CourseCardItem(
             Spacer(modifier = Modifier.height(10.dp))
         }
     }
+}
+
+@Preview
+@Composable
+private fun CourseCardItemPrev(){
+    CourseCardItem(
+        courseDetailUi = CourseDetailUi(
+            courseUi = CourseUi(
+                id = 1,
+                title = "title",
+                description = "description",
+                image = "",
+                price = 12.0,
+                commentAmount = 1,
+                favoriteAmount = 3,
+                learnersCount = 2,
+                authorList = emptyList()
+            ),
+        ),
+        isLast = false,
+        onCourse = {}
+    )
 }

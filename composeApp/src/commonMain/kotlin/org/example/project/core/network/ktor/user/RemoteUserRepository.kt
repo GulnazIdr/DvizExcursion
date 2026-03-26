@@ -6,6 +6,5 @@ import org.example.project.core.network.ktor.models.KtorDataWrapping
 
 interface RemoteUserRepository {
     suspend fun getCurrentUser(): Result<KtorDataWrapping<User>>
-
-    suspend fun getUserById(id: Int): Result<KtorDataWrapping<StepikEmail>>
+    suspend fun getUserList(idList: List<Int>): Result<KtorDataWrapping<List<User>>>
 }

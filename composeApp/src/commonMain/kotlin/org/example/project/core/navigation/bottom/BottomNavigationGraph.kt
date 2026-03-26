@@ -8,6 +8,7 @@ import org.example.project.feature.course_catalog.presentation.CourseCatalogScre
 import org.example.project.feature.notification.NotificationScreen
 import org.example.project.core.navigation.CustomNavState
 import org.example.project.feature.profile.presentation.ProfileScreen
+import kotlin.math.log
 
 @Composable
 fun BottomNavigationGraph(
@@ -24,7 +25,8 @@ fun BottomNavigationGraph(
         composable(BottomDestinationItems.HOME.route) {
             CourseCatalogScreen(
                 navigateToSearch = navigateToSearch,
-                navigateToCourseDetail = navigateToCourseDetail
+                navigateToCourseDetail = navigateToCourseDetail,
+                logout = logout
             )
         }
 

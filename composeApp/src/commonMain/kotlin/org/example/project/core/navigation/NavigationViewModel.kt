@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
-import org.example.project.core.database.source.LocalUserRepository
 import org.example.project.feature.auth.domain.token.TokenDataRepository
 import org.example.project.feature.onboarding.data.source.BoardingDataStore
 

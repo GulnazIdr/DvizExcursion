@@ -33,6 +33,7 @@ import stepik.composeapp.generated.resources.registration_remember_me_text
 @Composable
 fun LoginScreen(
     navigateToMain: () -> Unit,
+    navigateToStepikAuth: () -> Unit,
     navigateToRegistration: () -> Unit,
     loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
     onBack: () -> Unit,
@@ -128,7 +129,7 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(25.dp))
 
         StepikSignUp(
-            navigateToMain = navigateToMain
+            signup = navigateToStepikAuth
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -141,6 +142,7 @@ private fun LoginScreenPrev() {
     LoginScreen(
         onBack = {},
         navigateToMain = {},
-        navigateToRegistration = {}
+        navigateToRegistration = {},
+        navigateToStepikAuth = {}
     )
 }

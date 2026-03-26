@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.example.project.feature.onboarding.data.source.BoardingDataStore
@@ -15,7 +16,7 @@ class BoardingBoardingDataStoreImpl(
 
     override suspend fun setOnBoardingViewed() {
         dataStorePref.edit { preferences ->
-            preferences[booleanPreferencesKey(BOARDING_VIEWED.toString())] = true
+            preferences[BOARDING_VIEWED] = true
         }
     }
 

@@ -6,7 +6,7 @@ import org.example.project.core.common.result.parseExceptionToNetworkError
 import org.example.project.core.model.User
 import org.example.project.core.network.ktor.user.RemoteUserRepository
 
-class GetUserUseCase(
+class FetchCurrentUserUseCase(
     private val remoteUserRepository: RemoteUserRepository
 ) {
     private var _currentUser: User? = null

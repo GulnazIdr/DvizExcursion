@@ -3,27 +3,49 @@ package org.example.project.core.network.ktor.user
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
-import io.ktor.client.request.header
-import io.ktor.client.utils.EmptyContent.headers
+import io.ktor.client.request.parameter
 import org.example.project.core.model.Email
-import org.example.project.core.model.StepikEmail
 import org.example.project.core.model.User
-import org.example.project.core.network.ktor.CustomServerException
-import org.example.project.core.network.ktor.HttpRoutes
+import org.example.project.core.network.CustomServerException
 import org.example.project.core.network.ktor.models.KtorDataWrapping
-import org.example.project.feature.auth.domain.token.TokenDataRepository
 import org.example.project.feature.auth.domain.token.TokenRepository
-import org.example.project.feature.auth.domain.token.TokenStorage
 
 class RemoteUserRepositoryImpl(
     private val client: HttpClient,
-    private val tokenRepository: TokenRepository,
-    private val tokenDataRepository: TokenDataRepository
+    private val tokenRepository: TokenRepository
 ) : RemoteUserRepository {
     override suspend fun getCurrentUser(): Result<KtorDataWrapping<User>> {
         return runCatching {
-            client.get(urlString = HttpRoutes.CURRENT_USER_PROFILE){
-                header("Authorization", "Bearer ${tokenDataRepository.getAccessToken()}")
+            client.get(urlString = "stepics/1")
+        }.map { response ->
+            when (response.status.value) {
+                401 -> tokenRepository.refreshToken()
+                in 500..511 -> throw CustomServerException("server error $response")
+            }
+
+            val profiles = response.body<StepikCurrentProfileDto>().profiles
+            if (profiles.isEmpty()) throw CustomServerException("current user not found")
+
+            KtorDataWrapping(
+                data = profiles.first().toUser(),
+                isFromCache = false
+            )
+        }.fold(
+            onSuccess = { ktorWrapping ->
+                Result.success(KtorDataWrapping(ktorWrapping.data, false))
+            },
+            onFailure = { error ->
+                Result.failure(error)
+            }
+        )
+    }
+
+    override suspend fun getUserList(idList: List<Int>): Result<KtorDataWrapping<List<User>>> {
+        return runCatching {
+            client.get(urlString = "users"){
+                idList.forEach { id ->
+                    parameter("ids", id)
+                }
             }
         }.map { response ->
             when (response.status.value) {
@@ -31,13 +53,13 @@ class RemoteUserRepositoryImpl(
                 in 500..511 -> throw CustomServerException("server error $response")
             }
             KtorDataWrapping(
-                data = response.body<StepikUserDto>().toUser(),
+                data = response.body<StepikAuthorDto>().users.map { it.toUser() },
                 isFromCache = false
             )
         }.fold(
             onSuccess = { ktorWrapping ->
-                if (ktorWrapping.data == null) {
-                    throw NullPointerException("user doesnt exist")
+                if (ktorWrapping.data.isEmpty()) {
+                    throw CustomServerException("users don't exist")
                 }
                 Result.success(KtorDataWrapping(ktorWrapping.data, false))
             },
@@ -47,15 +69,9 @@ class RemoteUserRepositoryImpl(
         )
     }
 
-    override suspend fun getUserById(id: Int): Result<KtorDataWrapping<StepikEmail>> {
-        TODO("Not yet implemented")
-    }
-
     private suspend fun getEmailAddressesById(id: Int): Result<List<Email>> {
         return runCatching {
-            client.get(urlString = HttpRoutes.EMAILS + "/$id") {
-                header("Authorization", "Bearer ${tokenDataRepository.getAccessToken()}")
-            }
+            client.get(urlString = "email-addresses/$id")
         }.map { response ->
             response.body<StepikEmailDto>().toEmailList()
         }
@@ -72,31 +88,33 @@ class RemoteUserRepositoryImpl(
         )
     }
 
-    private suspend fun StepikUserDto.toUser(): User? {
-        val profile = if (profiles.isNotEmpty()) profiles.first() else null
+    private suspend fun ProfileDto.toUser(): User{
         var email = ""
-
-        return if (profile == null) {
-            null
-        } else {
-            val emailId = if (profile.emailAddresses.isEmpty()) -1 else profile.emailAddresses.first()
-            if (emailId != -1){
-                getEmailAddressesById(emailId).onSuccess { emailList ->
-                    if (emailList.isNotEmpty()) {
-                        email = emailList.first().email
-                    }
+        val emailId = if (emailAddresses.isEmpty()) -1 else emailAddresses.first()
+        if (emailId != -1){
+            getEmailAddressesById(emailId).onSuccess { emailList ->
+                if (emailList.isNotEmpty()) {
+                    email = emailList.first().email
                 }
             }
-
-            User(
-                id = profile.id,
-                name = profile.fullName,
-                details = profile.details,
-                shortBio = profile.shortBio,
-                profileImg = profile.avatar,
-                email = email
-            )
         }
+
+        return User(
+            id = id,
+            name = fullName,
+            details = details,
+            shortBio = shortBio,
+            profileImg = avatar,
+            email = email
+        )
+    }
+
+    private fun AuthorDto.toUser(): User{
+        return User(
+            id = id,
+            name = fullName,
+            profileImg = avatar
+        )
     }
 }
 

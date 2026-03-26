@@ -20,15 +20,30 @@
             </intent-filter>
         </activity>
 
+<!--        <activity-->
+<!--            android:name=""-->
+<!--            tools:ignore="IntentFilterExportedReceiver">-->
+<!--            <intent-filter tools:node="removeAll" />-->
+<!--            <intent-filter android:autoVerify="true">-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+
+<!--                <data android:scheme="https" android:host="francisco.com"-->
+<!--                    android:path="/redirect"/>-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+
         <activity android:name="net.openid.appauth.RedirectUriReceiverActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="https"/>
-                <data android:host="stepik.org" />
-                <data android:path="/oauth2/default/code" />
+                <data android:scheme="http"/>
+                <data android:host="gulnaz.com"/>
+                <data android:path="/callback" />
             </intent-filter>
         </activity>
     </application>

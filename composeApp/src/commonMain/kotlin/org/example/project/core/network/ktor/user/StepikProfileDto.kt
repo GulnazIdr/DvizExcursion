@@ -2,15 +2,14 @@ package org.example.project.core.network.ktor.user
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import org.example.project.core.network.ktor.models.MetaDto
 
 @Serializable
-data class StepikUserDto(
-    val profiles: List<UserDto>
+data class StepikCurrentProfileDto(
+    val profiles: List<ProfileDto>
 )
 
 @Serializable
-data class UserDto(
+data class ProfileDto(
     val id: Int,
     val details: String,
     @SerialName("short_bio")

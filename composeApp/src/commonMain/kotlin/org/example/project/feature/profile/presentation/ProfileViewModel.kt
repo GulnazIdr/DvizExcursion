@@ -21,13 +21,13 @@ import org.example.project.core.designsystem.ui_logic.result.FetchResultUi.Error
 import org.example.project.core.designsystem.ui_logic.result.FetchResultUi.Success
 import org.example.project.core.model.User
 import org.example.project.feature.auth.presentation.models.UserUi
-import org.example.project.feature.profile.domain.GetUserUseCase
+import org.example.project.feature.profile.domain.FetchCurrentUserUseCase
 import org.example.project.feature.profile.domain.LogoutUseCase
 import org.example.project.feature.profile.domain.UpdateUserUseCase
 
 class ProfileViewModel(
     private val updateUserUseCase: UpdateUserUseCase,
-    private val getUserUseCase: GetUserUseCase,
+    private val fetchCurrentUserUseCase: FetchCurrentUserUseCase,
     private val logoutUseCase: LogoutUseCase,
     private val userMapper: UserUiToUserMapper,
     private val userUiToUserMapper: UserToUserUiMapper
@@ -113,7 +113,7 @@ class ProfileViewModel(
 
     private fun getUser(){
         fetchJob = viewModelScope.launch {
-            when (val result = getUserUseCase()) {
+            when (val result = fetchCurrentUserUseCase()) {
                 is FetchDataResult.Success<User> -> {
                     val userUi = userUiToUserMapper.map(result.data)
 

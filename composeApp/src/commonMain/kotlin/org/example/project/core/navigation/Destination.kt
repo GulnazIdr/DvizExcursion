@@ -14,6 +14,9 @@ object Splash: Destination
 object Login: Destination
 
 @Serializable
+object Auth: Destination
+
+@Serializable
 object Registration: Destination
 
 @Serializable

@@ -6,7 +6,7 @@ data class User(
     val details: String = "",
     val shortBio: String = "",
     val profileImg: String = "",
-    val email: String,
+    val email: String = "",
     val phone: String = "",
     val password: String = ""
 )

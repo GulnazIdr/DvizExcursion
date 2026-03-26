@@ -18,6 +18,7 @@ import org.example.project.feature.auth.presentation.register.RegistrationScreen
 import org.example.project.feature.course_detail.presentation.CourseDetailViewModel
 import org.example.project.feature.course_detail.presentation.CourseDetailsCard
 import org.example.project.app.MainScreen
+import org.example.project.feature.auth.presentation.components.AuthPage
 import org.example.project.feature.onboarding.presentation.Boarding
 import org.example.project.feature.onboarding.presentation.Splash
 import org.example.project.feature.search.presentation.SearchScreen
@@ -66,7 +67,14 @@ fun NavigationGraph(
                 LoginScreen(
                     onBack = { navController.navigateUp() },
                     navigateToMain = { navigateToAndPopAll(Main) },
-                    navigateToRegistration = { navController.navigate(Registration) }
+                    navigateToRegistration = { navController.navigate(Registration) },
+                    navigateToStepikAuth = { navController.navigate(Auth) }
+                )
+            }
+
+            composable<Auth> {
+                AuthPage(
+                    navigateToMain = { navigateToAndPopAll(Main) }
                 )
             }
 

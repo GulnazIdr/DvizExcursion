@@ -1,4 +1,4 @@
-package org.example.project.core.domain
+package org.example.project.core.domain.courses
 
 import org.example.project.core.common.result.FetchDataResult
 import org.example.project.core.common.result.NetworkError
@@ -16,7 +16,9 @@ class FetchCoursesUseCase(
 
     fun getCourseFetchResult(): FetchDataResult<CourseSuccessResult, NetworkError?>? = _courseFetchResult
 
-    suspend operator fun invoke(isRefreshing: Boolean): FetchDataResult<CourseSuccessResult, NetworkError?> {
+    suspend operator fun invoke(
+        isRefreshing: Boolean
+    ): FetchDataResult<CourseSuccessResult, NetworkError?> {
 
         if(_courseFetchResult != null && !isRefreshing){
             return _courseFetchResult!!
@@ -57,6 +59,9 @@ class FetchCoursesUseCase(
                     )
                 )
             }
+
+
+
         }.onFailure { exception ->
             //нет кэша
             _courseFetchResult = FetchDataResult.Error(

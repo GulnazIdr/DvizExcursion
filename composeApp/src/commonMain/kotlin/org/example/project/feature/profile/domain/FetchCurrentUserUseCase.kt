@@ -4,10 +4,10 @@ import org.example.project.core.common.result.FetchDataResult
 import org.example.project.core.common.result.NetworkError
 import org.example.project.core.common.result.parseExceptionToNetworkError
 import org.example.project.core.model.User
-import org.example.project.core.network.ktor.user.RemoteUserRepository
+import org.example.project.core.network.ktor.user.source.KtorUserRepository
 
 class FetchCurrentUserUseCase(
-    private val remoteUserRepository: RemoteUserRepository
+    private val remoteUserRepository: KtorUserRepository
 ) {
     private var _currentUser: User? = null
     private var _userFetchResult: FetchDataResult<User, NetworkError?>? = null

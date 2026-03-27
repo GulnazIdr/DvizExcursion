@@ -4,7 +4,7 @@ import org.example.project.core.common.result.FetchDataResult
 import org.example.project.core.common.result.NetworkError
 import org.example.project.core.common.result.parseExceptionToNetworkError
 import org.example.project.core.model.CourseDetail
-import org.example.project.core.network.ktor.course.source.RemoteCourseRepository
+import org.example.project.feature.course_catalog.domain.remote.RemoteCourseRepository
 
 class FetchCourseDetailUseCase(
     private val remoteCourseRepository: RemoteCourseRepository

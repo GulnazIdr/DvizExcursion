@@ -1,11 +1,13 @@
 package org.example.project.core.network.di
 
+import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
@@ -41,6 +43,11 @@ val httpClientModule = module {
             expectSuccess = false
 
             install(Logging){
+                logger = object: Logger{
+                    override fun log(message: String) {
+                        Napier.d("logging $message")
+                    }
+                }
                 level = LogLevel.ALL
             }
 

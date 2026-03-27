@@ -1,30 +1,37 @@
-package org.example.project.core.domain.courses
+package org.example.project.feature.course_catalog.domain
 
 import org.example.project.core.common.result.FetchDataResult
 import org.example.project.core.common.result.NetworkError
 import org.example.project.core.common.result.parseExceptionToNetworkError
+import org.example.project.core.domain.courses.source.CourseRepository
+import org.example.project.core.domain.courses.result.CourseSuccessResult
 import org.example.project.core.model.Course
-import org.example.project.core.network.ktor.course.source.RemoteCourseRepository
+import org.example.project.core.model.StepikCourse
+import org.example.project.core.network.ktor.models.DataWrapping
 
 class FetchCoursesUseCase(
-    private val remoteCourseRepository: RemoteCourseRepository
+    private val courseRepository: CourseRepository
 ) {
     private var currentPage = 1
 
     private val _courseList: MutableList<Course> = mutableListOf()
     private var _courseFetchResult: FetchDataResult<CourseSuccessResult, NetworkError?>? = null
 
-    fun getCourseFetchResult(): FetchDataResult<CourseSuccessResult, NetworkError?>? = _courseFetchResult
-
     suspend operator fun invoke(
         isRefreshing: Boolean
     ): FetchDataResult<CourseSuccessResult, NetworkError?> {
 
-        if(_courseFetchResult != null && !isRefreshing){
-            return _courseFetchResult!!
-        }
+        var result: Result<DataWrapping<StepikCourse>>
 
-        val result = remoteCourseRepository.getCourses(currentPage)
+//        if (isRefreshing){
+//            result = courseRepository.refreshCourses(currentPage)
+//        }else {
+            if (_courseFetchResult != null && !isRefreshing) {
+                return _courseFetchResult!!
+            }else{
+                result = courseRepository.refreshCourses(currentPage)
+            }
+//        }
 
         result.onSuccess { stepik ->
             if (stepik.data.pageInfo.hasNext) {
@@ -72,8 +79,3 @@ class FetchCoursesUseCase(
         return _courseFetchResult!!
     }
 }
-data class CourseSuccessResult(
-    val successData: List<Course>,
-    val hasNext: Boolean
-)
-

@@ -16,12 +16,12 @@ val courseUseCaseModule = module {
     factoryOf(::FetchAuthorsUseCase)
 }
 val courseMapperModule = module {
-    factory { ::CourseUiMapper }
-    factory { ::CourseToCourseDetailUiMapper }
-    factory { ::CourseDetailToCourseDetailUiMapper }
+    factoryOf ( ::CourseUiMapper )
+    factoryOf( ::CourseToCourseDetailUiMapper )
+    factoryOf ( ::CourseDetailToCourseDetailUiMapper )
 }
 
 val userMapperModule = module {
-    factory { ::UserUiToUserMapper }
-    factory { ::UserToUserUiMapper }
+    factoryOf ( ::UserUiToUserMapper )
+    factoryOf ( ::UserToUserUiMapper )
 }

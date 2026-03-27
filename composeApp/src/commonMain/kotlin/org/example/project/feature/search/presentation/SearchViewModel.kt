@@ -14,8 +14,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.example.project.core.common.result.FetchDataResult
 import org.example.project.core.designsystem.ui_logic.mapper.CourseToCourseDetailUiMapper
-import org.example.project.core.domain.FetchCoursesUseCase
-import org.example.project.feature.course_catalog.presentation.models.CourseDetailUi
+import org.example.project.core.domain.courses.FetchCoursesUseCase
+import org.example.project.core.designsystem.ui_logic.model.CourseDetailUi
 
 class SearchViewModel(
     private val fetchCoursesUseCase: FetchCoursesUseCase,

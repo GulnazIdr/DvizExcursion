@@ -9,9 +9,11 @@ interface LocalCourseRepository {
 
     suspend fun getCourses(): Result<StepikCourse>
 
-    suspend fun getCourseById(id: Int): Result<StepikCourseDetailed?>
+    suspend fun getCourseById(id: Int): Result<StepikCourseDetailed>
 
     suspend fun updateCourseDetailed(courseDetail: CourseDetail): Boolean
 
     suspend fun deleteCourse(): Boolean
+
+    suspend fun getCoursesByIds(idList: List<Int>): Result<StepikCourseDetailed>
 }

@@ -2,12 +2,15 @@ package org.example.project.feature.auth.domain
 
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
+import io.ktor.client.request.forms.FormDataContent
+import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.Parameters
 import io.ktor.http.isSuccess
-import net.openid.appauth.TokenResponse
+import kotlinx.serialization.json.Json
+import org.example.project.feature.auth.domain.model.TokenResponse
 import org.example.project.feature.auth.domain.token.TokenDataRepository
 import org.example.project.feature.auth.domain.token.TokenRepository
 import org.example.project.feature.auth.domain.token.TokenStorage
@@ -23,32 +26,30 @@ class TokenRepositoryImpl(
             try {
                 val response = httpClient.post(AuthConfig.TOKEN_URI) {
                     setBody(
-                        Parameters.build {
-                            append("grant_type", "refresh_token")
-                            append("refresh_token", refreshToken)
-                            append("client_id", AuthConfig.CLIENT_ID)
-                            append("client_secret", AuthConfig.CLIENT_SECRET)
-                        }
+                        FormDataContent(
+                            Parameters.build {
+                                append("grant_type", "refresh_token")
+                                append("refresh_token", refreshToken)
+                                append("client_id", AuthConfig.CLIENT_ID)
+                                append("client_secret", AuthConfig.CLIENT_SECRET)
+                            }
+                        )
                     )
-                    // header("Content-Type", "application/x-www-form-urlencoded")
+                    header("Content-Type", "application/x-www-form-urlencoded")
                 }
 
                 if (response.status.isSuccess()) {
-                    val response = response.body<TokenResponse>()
-                    if (response.accessToken != null) {
-                        val isRefreshSaved = tokenDataRepository.saveRefreshToken(
-                            response.refreshToken
-                        )
-                        val isAccessSaved = tokenDataRepository.saveAccessToken(
-                            response.accessToken!!
-                        )
+                    val rawBody = response.bodyAsText()
 
-                        Napier.d("data tokens ${response.accessToken} ${response.refreshToken}")
-
-                        isRefreshSaved && isAccessSaved
-                    } else {
-                        false
-                    }
+                    val json = Json { ignoreUnknownKeys = true }
+                    val tokenResponse = json.decodeFromString<TokenResponse>(rawBody)
+                    val isRefreshSaved = tokenDataRepository.saveRefreshToken(
+                        tokenResponse.refresh_token
+                    )
+                    val isAccessSaved = tokenDataRepository.saveAccessToken(
+                        tokenResponse.access_token
+                    )
+                    isRefreshSaved && isAccessSaved
                 } else {
                     Napier.e("Refresh failed: ${response.status}")
                     false

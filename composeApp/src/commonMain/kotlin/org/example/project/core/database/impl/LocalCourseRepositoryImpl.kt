@@ -61,6 +61,21 @@ class LocalCourseRepositoryImpl (
             false
         }
     }
+
+    override suspend fun getCoursesByIds(idList: List<Int>): Result<StepikCourseDetailed> {
+        val course = mutableListOf<CourseEntity>()
+
+        idList.forEach { id ->
+            runCatching {
+                 course += courseDao.getCourseById(id)
+                    ?: throw CustomRoomException("cache course with $id is not found")
+            }
+        }
+
+        val stepikDetailed = course.toStepikDetailed()
+
+        return Result.success(stepikDetailed)
+    }
 }
 
 private fun CourseDetail.toCourseEntity(): CourseEntity{
@@ -97,6 +112,14 @@ private fun CourseEntity.toStepikDetailed(): StepikCourseDetailed {
         courses = listOf(this.toCourseDetail())
     )
 }
+
+private fun List<CourseEntity>.toStepikDetailed(): StepikCourseDetailed {
+    return StepikCourseDetailed(
+        pageInfo = PageInfo(page = 1, hasNext = false, hasPrevious = false),
+        courses = this.map { it.toCourseDetail() }
+    )
+}
+
 
 private fun CourseEntity.toCourse(): Course {
     return Course(

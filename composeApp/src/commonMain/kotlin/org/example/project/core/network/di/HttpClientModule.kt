@@ -3,12 +3,10 @@ package org.example.project.core.network.di
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.okhttp.OkHttp
-import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
-import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.URLProtocol
@@ -17,10 +15,8 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.example.project.core.network.mapper.MetaToPageInfoMapper
 import org.example.project.feature.auth.domain.token.TokenDataRepository
-import org.example.project.feature.auth.domain.token.TokenRepository
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
-
 val httpClientModule = module {
     single<HttpClientEngine>{
         OkHttp.create()
@@ -30,8 +26,10 @@ val httpClientModule = module {
 
             defaultRequest {
                 headers{
-                    append("Authorization", "Bearer ${get<TokenDataRepository>().getAccessToken()}")
-                    append(HttpHeaders.ContentType, ContentType.Application.Json.toString())
+                    append("Authorization", "Bearer " +
+                            "${get<TokenDataRepository>().getAccessToken()}")
+                    append(HttpHeaders.ContentType,
+                        ContentType.Application.Json.toString())
                 }
                 url {
                     protocol = URLProtocol.HTTPS

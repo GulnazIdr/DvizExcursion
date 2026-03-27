@@ -7,7 +7,7 @@ import org.example.project.core.database.dao.CourseDao
 import org.example.project.core.database.source.LocalCourseRepository
 import org.example.project.core.database.source.LocalUserRepository
 import org.example.project.core.network.ktor.course.source.RemoteCourseRepository
-import org.example.project.core.network.ktor.course.repository.RemoteCourseRepositoryImpl
+import org.example.project.core.network.ktor.course.impl.RemoteCourseRepositoryImpl
 import org.koin.core.module.Module
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -22,7 +22,13 @@ val daoModule = module {
 }
 
 val courseRepositoryModule = module {
-    factory<RemoteCourseRepository> { RemoteCourseRepositoryImpl(get(), get()) }
+    factory<RemoteCourseRepository> {
+        RemoteCourseRepositoryImpl(
+            get(),
+            get(),
+            get(),
+            get())
+    }
     factory<LocalCourseRepository> { LocalCourseRepositoryImpl(get()) }
 }
 

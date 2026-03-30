@@ -47,6 +47,7 @@
     <string name="registration_error_wrong_creds_field">Неверный логин или пароль</string>
     <string name="registration_error_wrong_format_field">Неверный формат</string>
     <string name="registration_error_policy_unchecked_field">Прочтите политику конфиденциальности</string>
+    <string name="auth_unknown_error">Что-то пошло не так. Попробуйте снова позже</string>
 
     <string name="remote_error_no_internet_field">Отсутствие интернета</string>
     <string name="remote_error_request_timeout_field">Превышено время ожидания</string>

@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Stepik</string>
-    <string name="login_token_error">Something went wrong</string>
-    <string name="login_dialog_cancel">Cancel</string>
-    <string name="login_paste_url_text">Paste the link after authorization and click "Sign up with Stepik"</string>
 </resources>

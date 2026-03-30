@@ -47,6 +47,7 @@
     <string name="registration_error_wrong_creds_field">Wrong login or password</string>
     <string name="registration_error_wrong_format_field">Wrong format</string>
     <string name="registration_error_policy_unchecked_field">Read privacy policy</string>
+    <string name="auth_unknown_error">Something went wrong. Please try again later</string>
 
     <string name="remote_error_no_internet_field">No internet connection</string>
     <string name="remote_error_request_timeout_field">Request time out</string>

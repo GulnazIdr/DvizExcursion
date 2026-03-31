@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import io.github.aakira.napier.Napier
 import org.gulnazidr.stepik.app.MainScreen
 import org.gulnazidr.stepik.feature.auth.presentation.components.AuthPage
 import org.gulnazidr.stepik.feature.auth.presentation.login.LoginScreen
@@ -27,6 +28,11 @@ import org.koin.compose.getKoin
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
+import javax.naming.Context
+
+object LeakySingleton {
+    var leakedContext: Context? = null
+}
 
 @Composable
 fun NavigationGraph(
@@ -39,20 +45,32 @@ fun NavigationGraph(
     val currentBackStackEntry = navController.currentBackStackEntry
     val userScope = getKoin().createScope("userSessionScope", named("userSessionScope"))
 
-    fun navigateAndPopAll(route: Destination){
-        navController.navigate(route){
-            val prev = navController.previousBackStackEntry?.destination?.route
-            val current = currentBackStackEntry?.destination?.route
-            if (prev != null) {
-                popUpTo(prev) {
-                    inclusive = true
-                }
-            }else if(current != null){
-                popUpTo(current) {
-                    inclusive = true
-                }
-            }
+    DisposableEffect(Unit){
+        onDispose {
+            userScope.close()
         }
+    }
+
+    fun navigateAndPopAll(route: Destination){
+        navController.popBackStack(navController.graph.startDestinationId, inclusive = true)
+        navController.navigate(route){
+//            val prev = navController.previousBackStackEntry?.destination?.route
+//            val current = currentBackStackEntry?.destination?.route
+//            if (prev != null) {
+//                popUpTo(navController.graph.startDestinationId) {
+//                    inclusive = true
+//                }
+//            }else if(current != null){
+//                popUpTo(current) {
+//                    inclusive = true
+//                }
+//            }
+
+            launchSingleTop = true
+            restoreState = false
+
+        }
+        Napier.wtf("${navController.graph.startDestinationId} ${navController.currentBackStack.value}")
     }
 
     Scaffold(
@@ -70,7 +88,7 @@ fun NavigationGraph(
                 Splash(
                     onDelayFinished = {
                         if (startDestination != Splash) {
-                            navigateAndPopAll(startDestination)
+                            navController.navigate(startDestination)
                         }
                     }
                 )

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "745392812966",
+    "project_id": "stepik-3ea29",
+    "storage_bucket": "stepik-3ea29.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:745392812966:android:f2d457dc9ef2d6ca949567",
+        "android_client_info": {
+          "package_name": "org.gulnazidr.stepik"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbnKrrxXYhLM8HfEADqwP8NdX2hu59elY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

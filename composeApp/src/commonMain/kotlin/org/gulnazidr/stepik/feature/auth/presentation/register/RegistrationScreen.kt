@@ -3,7 +3,6 @@ package org.gulnazidr.stepik.feature.auth.presentation.register
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -19,7 +18,6 @@ import org.gulnazidr.stepik.core.designsystem.components.InputField
 import org.gulnazidr.stepik.core.designsystem.components.NavigationButton
 import org.gulnazidr.stepik.core.designsystem.components.StepikLogo
 import org.gulnazidr.stepik.core.designsystem.components.TextCheckBox
-import org.gulnazidr.stepik.feature.auth.presentation.components.AnimatedBorderCard
 import org.gulnazidr.stepik.feature.auth.presentation.components.AuthTopAppBar
 import org.gulnazidr.stepik.feature.auth.presentation.models.AuthUiEvent
 import org.jetbrains.compose.resources.stringResource
@@ -36,8 +34,7 @@ fun RegistrationScreen(
     navigateToMain: () -> Unit,
     navigateToLogin: () -> Unit,
     registrViewModel: RegistrationViewmodel = koinViewModel<RegistrationViewmodel>(),
-    onBack: () -> Unit,
-    modifier: Modifier = Modifier
+    onBack: () -> Unit
 ) {
     val registrUiState = registrViewModel.registerUiState.collectAsStateWithLifecycle().value
     val loginUiEvent = registrViewModel.authUiEvent
@@ -52,93 +49,88 @@ fun RegistrationScreen(
         }
     }
 
-    AnimatedBorderCard(
-        modifier = modifier.fillMaxSize()
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Column(
-            modifier = Modifier.padding(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            AuthTopAppBar(
-                onBack = onBack,
-                isRegistationScreen = true,
-                onAuth = navigateToLogin,
-                isFirstInBackStack = false
+        AuthTopAppBar(
+            onBack = onBack,
+            isRegistationScreen = true,
+            onAuth = navigateToLogin,
+            isFirstInBackStack = false
+        )
+        Spacer(modifier = Modifier.weight(1f))
+
+        StepikLogo(
+            size = 60.dp
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text(
+            text = stringResource(Res.string.registration_text),
+            style = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onSecondaryContainer
             )
-            Spacer(modifier = Modifier.weight(1f))
+        )
 
-            StepikLogo(
-                size = 60.dp
-            )
+        Spacer(modifier = Modifier.height(40.dp))
 
-            Spacer(modifier = Modifier.height(20.dp))
+        InputField(
+            value = registrUiState.userName,
+            onValueChange = { registrViewModel.onUserNameChanged(it) },
+            hint = stringResource(Res.string.auth_user_name_hint),
+            errorText = registrUiState.nameError?.asString() ?: ""
+        )
 
-            Text(
-                text = stringResource(Res.string.registration_text),
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    color = MaterialTheme.colorScheme.onSecondaryContainer
-                )
-            )
+        Spacer(modifier = Modifier.height(20.dp))
 
-            Spacer(modifier = Modifier.height(40.dp))
+        InputField(
+            value = registrUiState.password,
+            onValueChange = { registrViewModel.onPasswordChanged(it) },
+            hint = stringResource(Res.string.auth_password_hint),
+            isPasswordField = true,
+            errorText = registrUiState.pswdError?.asString() ?: ""
+        )
 
-            InputField(
-                value = registrUiState.userName,
-                onValueChange = { registrViewModel.onUserNameChanged(it) },
-                hint = stringResource(Res.string.auth_user_name_hint),
-                errorText = registrUiState.nameError?.asString() ?: ""
-            )
+        Spacer(modifier = Modifier.height(20.dp))
 
-            Spacer(modifier = Modifier.height(20.dp))
+        InputField(
+            value = registrUiState.email,
+            onValueChange = { registrViewModel.onEmailChanged(it) },
+            hint = stringResource(Res.string.auth_email_hint),
+            errorText = registrUiState.emailError?.asString() ?: ""
+        )
 
-            InputField(
-                value = registrUiState.password,
-                onValueChange = { registrViewModel.onPasswordChanged(it) },
-                hint = stringResource(Res.string.auth_password_hint),
-                isPasswordField = true,
-                errorText = registrUiState.pswdError?.asString() ?: ""
-            )
+        Spacer(modifier = Modifier.height(10.dp))
 
-            Spacer(modifier = Modifier.height(20.dp))
+        TextCheckBox(
+            text = stringResource(Res.string.registration_policy_text),
+            onCheck = { registrViewModel.onPolicyChecked(it) },
+            errorText = registrUiState.policyError?.asString() ?: ""
+        )
 
-            InputField(
-                value = registrUiState.email,
-                onValueChange = { registrViewModel.onEmailChanged(it) },
-                hint = stringResource(Res.string.auth_email_hint),
-                errorText = registrUiState.emailError?.asString() ?: ""
-            )
+        Spacer(modifier = Modifier.height(10.dp))
 
-            Spacer(modifier = Modifier.height(10.dp))
+        Text(
+            text = registrUiState.registerError?.asString() ?: "",
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.error
+            ),
+            modifier = Modifier
+        )
 
-            TextCheckBox(
-                text = stringResource(Res.string.registration_policy_text),
-                onCheck = { registrViewModel.onPolicyChecked(it) },
-                errorText = registrUiState.policyError?.asString() ?: ""
-            )
+        Spacer(modifier = Modifier.height(30.dp))
 
-            Spacer(modifier = Modifier.height(10.dp))
+        NavigationButton(
+            onBtnClick = { registrViewModel.register() },
+            text = stringResource(Res.string.registration_text),
+            isEnabled = registrUiState.isLoginButtonActive
+        )
 
-            Text(
-                text = registrUiState.registerError?.asString() ?: "",
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    color = MaterialTheme.colorScheme.error
-                ),
-                modifier = Modifier
-            )
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            NavigationButton(
-                onBtnClick = { registrViewModel.register() },
-                text = stringResource(Res.string.registration_text),
-                isEnabled = registrUiState.isLoginButtonActive
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-        }
+        Spacer(modifier = Modifier.weight(1f))
     }
-
 }
 
 @Preview

@@ -41,7 +41,7 @@ kotlin {
             implementation(libs.ktor.client.android)
             implementation(libs.kotlinx.coroutines.android)
 
-            implementation("com.liftric:kvault:1.12.0")
+            implementation(libs.kvault)
         }
         commonMain.dependencies {
             implementation(libs.androidx.room.runtime)
@@ -96,7 +96,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.gulnazidr.dviz_excursion"
+    namespace = "org.gulnazidr.stepik"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
@@ -133,11 +133,11 @@ dependencies {
 
 compose.desktop {
     application {
-        mainClass = "org.example.org.stepik.project.MainKt"
+        mainClass = "org.example.org.stepik.org.gulnazidr.stepik.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "org.example.org.stepik.project"
+            packageName = "org.example.org.stepik.org.gulnazidr.stepik"
             packageVersion = "1.0.0"
         }
     }

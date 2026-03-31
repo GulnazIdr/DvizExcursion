@@ -20,6 +20,7 @@ kotlinx-coroutines = "1.10.2"
 kotlinxSerializationJson = "1.9.0"
 ktorClientAndroid = "3.4.1"
 kvault = "1.12.0"
+leakcanaryAndroid = "2.14"
 material3 = "1.10.0-alpha05"
 koin = "4.1.1"
 koinComposeMultiplatform = "4.1.1"
@@ -28,6 +29,7 @@ napier = "2.7.1"
 navigationCompose = "2.9.2"
 nimbusJoseJwt = "10.8"
 oauth2OidcSdk = "11.34"
+tracerPlatform = "1.2.3"
 uiBackhandler = "1.10.2"
 uiDesktop = "1.7.0"
 datastore = "1.2.1"
@@ -40,6 +42,8 @@ accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiper
 appauth = { module = "net.openid:appauth", version.ref = "appauth" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
+google-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+google-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktorClientAndroid" }
@@ -50,6 +54,7 @@ ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "kto
 ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktorClientAndroid" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorClientAndroid" }
 kvault = { module = "com.liftric:kvault", version.ref = "kvault" }
+leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
 lifecycle-viewmodel = {module = "androidx.lifecycle:lifecycle-viewmodel", version.ref="lifecycleViewModel"}
 koin-androidx-compose = {module = "io.insert-koin:koin-androidx-compose", version.ref = "koin"}
 koin-android = {module = "io.insert-koin:koin-android", version.ref = "koin"}
@@ -89,6 +94,11 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-sqlite-wrapper = { module = "androidx.room:room-sqlite-wrapper", version.ref = "room" }
 nimbus-jose-jwt = { module = "com.nimbusds:nimbus-jose-jwt", version.ref = "nimbusJoseJwt" }
 oauth2-oidc-sdk = { module = "com.nimbusds:oauth2-oidc-sdk", version.ref = "oauth2OidcSdk" }
+tracer-crash-report = { module = "ru.ok.tracer:tracer-crash-report" }
+tracer-crash-report-native = { module = "ru.ok.tracer:tracer-crash-report-native" }
+tracer-disk-usage = { module = "ru.ok.tracer:tracer-disk-usage" }
+tracer-heap-dumps = { module = "ru.ok.tracer:tracer-heap-dumps" }
+tracer-platform = { module = "ru.ok.tracer:tracer-platform", version.ref = "tracerPlatform" }
 ui-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler", version.ref = "uiBackhandler" }
 
 [plugins]

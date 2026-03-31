@@ -59,7 +59,9 @@ actual fun AuthPage(
         }
     }
 
-    Box{
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ){
         AndroidView(
             modifier = Modifier,
             factory = { context ->

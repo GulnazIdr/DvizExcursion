@@ -21,9 +21,10 @@ import stepik.composeapp.generated.resources.on_boarding2_get_started_text
 @Composable
 fun OnBoarding2(
     navigateToLogin: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 20.dp)
             .background(MaterialTheme.colorScheme.background),
@@ -39,7 +40,7 @@ fun OnBoarding2(
         NavigationButton(
             onBtnClick = navigateToLogin,
             text = stringResource(Res.string.on_boarding2_get_started_text),
-            modifier = Modifier.padding(bottom = 50.dp)
+           // modifier = Modifier.padding(bottom = 50.dp)
         )
     }
 }

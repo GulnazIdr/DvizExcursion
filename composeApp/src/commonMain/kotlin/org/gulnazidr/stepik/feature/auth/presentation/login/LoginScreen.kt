@@ -14,10 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.github.aakira.napier.Napier
 import org.gulnazidr.stepik.core.designsystem.components.InputField
 import org.gulnazidr.stepik.core.designsystem.components.NavigationButton
 import org.gulnazidr.stepik.core.designsystem.components.StepikLogo
 import org.gulnazidr.stepik.core.designsystem.components.TextCheckBox
+import org.gulnazidr.stepik.core.navigation.LeakySingleton
 import org.gulnazidr.stepik.feature.auth.presentation.components.AuthTopAppBar
 import org.gulnazidr.stepik.feature.auth.presentation.components.StepikSignUp
 import org.gulnazidr.stepik.feature.auth.presentation.models.AuthUiEvent
@@ -37,8 +39,7 @@ fun LoginScreen(
     navigateToRegistration: () -> Unit,
     loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
     onBack: () -> Unit,
-    isFirstInStack: Boolean,
-    modifier: Modifier = Modifier
+    isFirstInStack: Boolean
 ) {
     val loginUiState by loginViewModel.loginUiState.collectAsStateWithLifecycle()
     val loginUiEvent = loginViewModel.authUiEvent
@@ -52,6 +53,9 @@ fun LoginScreen(
             }
         }
     }
+
+
+
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,

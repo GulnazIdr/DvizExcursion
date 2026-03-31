@@ -1,3 +1,5 @@
+import io.gitlab.arturbosch.detekt.Detekt
+import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -9,6 +11,9 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.androidx.room)
     id("org.jetbrains.kotlin.plugin.serialization")
+    id("io.gitlab.arturbosch.detekt")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 room {
@@ -42,6 +47,17 @@ kotlin {
             implementation(libs.kotlinx.coroutines.android)
 
             implementation(libs.kvault)
+
+            implementation(project.dependencies.platform(libs.tracer.platform))
+            implementation(libs.tracer.crash.report)
+            implementation(libs.tracer.crash.report.native)
+            implementation(libs.tracer.heap.dumps)
+            implementation(libs.tracer.disk.usage)
+
+
+            implementation(project.dependencies.platform("com.google.firebase:firebase-bom:34.7.0"))
+            implementation(libs.google.firebase.analytics)
+            implementation(libs.google.firebase.crashlytics)
         }
         commonMain.dependencies {
             implementation(libs.androidx.room.runtime)
@@ -100,7 +116,7 @@ android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "org.gulnazidr.dviz_excursion"
+        applicationId = "org.gulnazidr.stepik"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -112,11 +128,33 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
+
+    signingConfigs {
+        create("release") {
+            storeFile = file("C:\\Users\\gulnaz\\keystore.jks")
+            storePassword = "stepGul18!"
+            keyAlias = "key0"
+            keyPassword = "step"
         }
     }
+
+    buildTypes {
+//        debug {
+//            signingConfig = signingConfigs.findByName("debug")
+//            isMinifyEnabled = false
+//        }
+
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -124,11 +162,28 @@ android {
 }
 
 
+
+
 dependencies {
     add("kspAndroid", libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
 
     debugImplementation(libs.compose.uiTooling)
+    debugImplementation(libs.leakcanary.android)
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
+    source.setFrom(files("src/main/kotlin"))
+}
+
+tasks.withType<Detekt>().configureEach {
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+        txt.required.set(true)
+    }
 }
 
 compose.desktop {
